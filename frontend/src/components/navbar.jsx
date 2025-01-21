@@ -74,7 +74,7 @@ const Navbar = () => {
 
   return (
     <Nav scrolled={scrolled}>
-      <Logo scrolled={scrolled}>ADAA</Logo>
+      <Logo scrolled={scrolled}>A D A A</Logo>
       <Menu>
         <Link to="/">Home</Link>
         <Link to="/products">Products</Link>
