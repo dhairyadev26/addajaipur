@@ -74,7 +74,7 @@ const FooterSection = styled.div`
   h3 {
     margin-bottom: 1rem;
     font-size: 1.5rem;
-    color: #f39c12;
+    color:rgb(240, 221, 221);
   }
 
   p, ul, li {

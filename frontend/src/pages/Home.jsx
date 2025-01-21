@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import backgroundImage from "../assets/bg.png"; // Ensure correct path to image
+import girl from "../assets/girl.png"; // Adjust the path based on your folder structure
+
 
 const HomeWrapper = styled.div`
   height: 200vh; /* Full viewport height */
@@ -8,11 +9,8 @@ const HomeWrapper = styled.div`
   justify-content: center;
   align-items: center;
   position: relative; /* To position the overlay */
-  background-image: url(${backgroundImage});
-  background-size: cover; /* Ensure the image covers the area */
-  background-position: center; /* Center the image */
   background-repeat: no-repeat;
-
+  background: url("girl.png") left center / cover no-repeat; /* Add image */
   /* Optional: Adjust the image size to prevent zooming in too much */
   background-attachment: fixed;
 `;
@@ -23,18 +21,18 @@ const Overlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(255, 248, 231, 0.6); /* Semi-transparent overlay color */
+  background: rgba(224, 145, 157, 0.6); /* Semi-transparent overlay color */
   z-index: 1; /* Ensure the overlay is above the background */
 `;
 
 const HomeContent = styled.div`
   text-align: center;
   color: #4e1928; /* Contrast with the image */
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Sego';
   z-index: 2; /* Make sure text is on top of the overlay */
   padding: 20px;
-  background: rgba(255, 248, 231, 0.7); /* Optional: semi-transparent background for text */
-  border-radius: 10px;
+  background:rgb(244, 219, 226);; /* Optional: semi-transparent background for text */
+  border-radius: 8px;
 `;
 
 const Home = () => {
