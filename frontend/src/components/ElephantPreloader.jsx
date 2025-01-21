@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import elephantGif from "../assets/elephant1.gif";
+import elephantGif from "../assets/elephant.gif";
 
 const PreloaderWrapper = styled.div`
   display: flex;
@@ -11,7 +11,7 @@ const PreloaderWrapper = styled.div`
 `;
 
 const PreloaderImage = styled.img`
-  width: 150px; /* Adjust size as needed */
+  width: 300px; /* Adjust size as needed */
   height: auto;
 `;
 

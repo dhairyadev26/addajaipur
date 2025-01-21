@@ -1,8 +1,17 @@
 import React from "react";
 import styled from "styled-components";
-import girl from "../assets/girl.png"; // Adjust the path based on your folder structure
+import girl from "../assets/girl1.png"; // Adjust the path based on your folder structure
 
-
+const colorAnimation = `
+  @keyframes backgroundColorChange {
+    0% { background-color: #f39c12; } /* Color 1 */
+    20% { background-color: #3498db; } /* Color 2 */
+    40% { background-color: #e74c3c; } /* Color 3 */
+    60% { background-color: #9b59b6; } /* Color 4 */
+    80% { background-color: #2ecc71; } /* Color 5 */
+    100% { background-color: #f39c12; } /* Back to Color 1 */
+  }
+`;
 const HomeWrapper = styled.div`
   height: 200vh; /* Full viewport height */
   display: flex;
@@ -10,19 +19,14 @@ const HomeWrapper = styled.div`
   align-items: center;
   position: relative; /* To position the overlay */
   background-repeat: no-repeat;
-  background-image: url("girl.png") left center / cover no-repeat; /* Add image */
-  /* Optional: Adjust the image size to prevent zooming in too much */
+  background-image: url(${girl}); left center / cover no-repeat; /* Add image */
   background-attachment: fixed;
-`;
+  background-size: contain; /* Adjust image size to fit within the container */
+  background-position:5%; /* Center horizontally, add padding at top */
 
-const Overlay = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(201, 169, 134, 0.98); /* Semi-transparent overlay color */
-  z-index: 1; /* Ensure the overlay is above the background */
+  animation: backgroundColorChange 20s infinite; /* Continuous color change */
+  ${colorAnimation}
+
 `;
 
 const HomeContent = styled.div`
@@ -32,7 +36,6 @@ const HomeContent = styled.div`
   font-size: 3.5rem;
   z-index: 2; /* Make sure text is on top of the overlay */
   padding: 20px;
-  background:transparent; /* Optional: semi-transparent background for text */
   border-radius: 8px;
   position: relative;
   left: -100px; /* Move the text 20px to the left */
@@ -41,7 +44,6 @@ const HomeContent = styled.div`
     font-size: 10rem; /* Significantly larger font size for "ADAA" */
     
   }
-
   h6 {
     font-size: 2.9rem; /* Smaller font size for "Introducing" */
     position: relative;
@@ -63,7 +65,6 @@ const HomeContent = styled.div`
 const Home = () => {
   return (
     <HomeWrapper>
-      <Overlay /> {/* Overlay component */}
       <HomeContent>
         <h6>I n t r o d u c i n g</h6>
         <h1>A D A A</h1>
