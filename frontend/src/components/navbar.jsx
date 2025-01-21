@@ -12,37 +12,36 @@ const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: ${(props) => (props.scrolled ? "0.5rem 1.5rem" : "1rem 2rem")};
-  background-color: ${(props) => (props.scrolled ? "#17201e" : "transparent")};
-  color: ${(props) => (props.scrolled ? "#fff8e7" : "#000000")};
+  padding: ${(props) => (props.scrolled ? "0.5rem 1.5rem" : "0.9rem 1rem")};
+  background-color: ${(props) => (props.scrolled ? "#fff8e7" : "#000000")};
+  color: ${(props) => (props.scrolled ? "#000000" : "#fff8e7")};
   border-radius: ${(props) => (props.scrolled ? "70px" : "0")};
-  box-shadow: ${(props) =>
-    props.scrolled ? "0px 4px 6px rgba(0, 0, 0, 0.2)" : "none"};
+  box-shadow: ${(props) => props.scrolled ? "0px 4px 6px rgba(0, 0, 0, 0.2)" : "none"};
   transition: all 0.4s ease;
 `;
 
 const Logo = styled.div`
-  font-size: ${(props) => (props.scrolled ? "2.3rem" : "2.3rem")};
+  font-size: ${(props) => (props.scrolled ? "1.5rem" : "1.5rem")};
   font-weight: bold;
   font-family: "The Seasons";
   color: inherit;
   text-decoration: none;
 
   @media (max-width: 768px) {
-    font-size: ${(props) => (props.scrolled ? "1.5rem" : "1.5rem")};
+    font-size: ${(props) => (props.scrolled ? "1.2rem" : "1.2rem")};
   }
 `;
 
 const Menu = styled.div`
   display: flex;
-  gap: 1.5rem;
+  gap: 1rem;
 
   @media (max-width: 768px) {
     display: none; /* Hide menu for small screens (can add hamburger later) */
   }
 
   a {
-    font-size: 1.3rem;
+    font-size: 1rem;
     font-family: "Cinzel", serif;
     color: inherit;
     text-decoration: none;
