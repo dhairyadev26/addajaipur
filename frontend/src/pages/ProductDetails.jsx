@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import "../styles/Products.css";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -10,8 +11,19 @@ const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1);
 
   const products = [
-    { id: 1, name: "Jaipur Ethnic Kurta", price: 30, description: "A beautiful ethnic kurta from Jaipur.", image: "kurta.jpg" },
-    { id: 2, name: "Jaipur Ethnic Saree", price: 50, description: "A stylish saree from Jaipur.", image: "saree.jpg" },
+    { id: 1, name: "Jaipur Ethnic Kurta", price: 30, description: "A beautiful ethnic kurta from Jaipur.", image: "kurta1.jpg" },
+    { id: 2, name: "Floral Printed Kurta", price: 35, description: "A beautiful ethnic kurta from Jaipur.", image: "kurta2.jpg" },
+    { id: 3, name: "Casual Cotton Kurta", price: 25, description: "A beautiful ethnic kurta from Jaipur.", image: "kurta3.jpg" },
+    { id: 4, name: "Designer Party Kurta", price: 40, description: "A beautiful ethnic kurta from Jaipur.", image: "kurta4.jpg" },
+    { id: 5, name: "Summer Printed Frock", price: 20, description: "A stylish frock from Jaipur.", image: "frock1.jpg" },
+    { id: 6, name: "Casual Denim Frock", price: 30, description: "A stylish frock from Jaipur.", image: "frock2.jpg" },
+    { id: 7, name: "Party Wear Frock", price: 50, description: "A stylish frock from Jaipur.", image: "frock3.jpg" },
+    { id: 8, name: "Ethnic Printed Frock", price: 35, description: "A stylish frock from Jaipur.", image: "frock4.jpg" },
+    { id: 9, name: "Banarasi Silk Saree", price: 100, description: "A designer saree from Jaipur.", image: "saree1.jpg" },
+    { id: 10, name: "Kanjeevaram Saree", price: 120, description: "A designer saree from Jaipur.", image: "saree2.jpg" },
+    { id: 11, name: "Chiffon Designer Saree", price: 130, description: "A designer saree from Jaipur.", image: "saree3.jpg" },
+    { id: 12, name: "Traditional Cotton Saree", price: 90, description: "A designer saree from Jaipur.", image: "saree4.jpg" },
+
   ];
 
   const product = products.find(item => item.id === parseInt(id));

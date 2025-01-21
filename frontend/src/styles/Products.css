@@ -1,0 +1,97 @@
+/* General Page Styling */
+.products-page {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+}
+
+.products-title {
+  text-align: center;
+  font-size: 2rem;
+  margin: 20px 0;
+  color: #333;
+}
+
+/* Section Styles */
+.kurtis-section {
+  background-color: #ffe4e6; /* Light Pink */
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+.frocks-section {
+  background-color: #fff8e1; /* Light Yellow */
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+.saris-section {
+  background-color: #ffe8e8; /* Light Red */
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+/* Grid and Card Styling */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.product-card {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.product-image {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.product-name {
+  font-size: 1.2rem;
+  margin: 10px 0;
+  color: #555;
+}
+
+.product-price {
+  font-size: 1rem;
+  color: #777;
+}
+
+/* Button Styling */
+.details-button {
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: white;
+  margin-top: 10px;
+}
+
+/* Button Colors */
+.kurtis-button {
+  background-color: #ff8fa3; /* Darker Pink */
+}
+
+.frocks-button {
+  background-color: #ffd54f; /* Darker Yellow */
+}
+
+.saris-button {
+  background-color: #ff6f61; /* Darker Red */
+}
+
+.details-button:hover {
+  opacity: 0.9;
+}
+
