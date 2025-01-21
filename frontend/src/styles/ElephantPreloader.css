@@ -1,0 +1,31 @@
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  
+  .elephant {
+    width: 100px;
+    height: 100px;
+    background-image: url('path-to-your-elephant-svg.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    animation: walk 2s linear infinite;
+  }
+  
+  @keyframes walk {
+    0% {
+      transform: translateX(-100px);
+    }
+    100% {
+      transform: translateX(100vw);
+    }
+  }
+  
