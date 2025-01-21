@@ -42,7 +42,9 @@ const Home = () => {
     <HomeWrapper>
       <Overlay /> {/* Overlay component */}
       <HomeContent>
-        <h1>Welcome to Jaipur Ethnics</h1>
+        <h3>Introducing</h3>
+        <h1>A D A A</h1>
+        <h3>where desing tells a story.</h3>
         <p>Discover the elegance of traditional Rajasthani clothing.</p>
       </HomeContent>
     </HomeWrapper>

@@ -13,23 +13,23 @@ const Nav = styled.nav`
   justify-content: space-between;
   align-items: center;
   padding: ${(props) => (props.scrolled ? "0.5rem 1.5rem" : "1rem 2rem")};
-  background-color: ${(props) => (props.scrolled ? "#4e1928" : "transparent")};
-  color: ${(props) => (props.scrolled ? "#fff8e7" : "#4e1928")};
-  border-radius: ${(props) => (props.scrolled ? "50px" : "0")};
+  background-color: ${(props) => (props.scrolled ? "#17201e" : "transparent")};
+  color: ${(props) => (props.scrolled ? "#fff8e7" : "#000000")};
+  border-radius: ${(props) => (props.scrolled ? "70px" : "0")};
   box-shadow: ${(props) =>
     props.scrolled ? "0px 4px 6px rgba(0, 0, 0, 0.2)" : "none"};
   transition: all 0.4s ease;
 `;
 
 const Logo = styled.div`
-  font-size: ${(props) => (props.scrolled ? "1.2rem" : "1.5rem")};
+  font-size: ${(props) => (props.scrolled ? "2.3rem" : "2.3rem")};
   font-weight: bold;
-  font-family: "Cinzel", serif;
+  font-family: "The Seasons";
   color: inherit;
   text-decoration: none;
 
   @media (max-width: 768px) {
-    font-size: ${(props) => (props.scrolled ? "1rem" : "1.2rem")};
+    font-size: ${(props) => (props.scrolled ? "1.5rem" : "1.5rem")};
   }
 `;
 
@@ -42,7 +42,7 @@ const Menu = styled.div`
   }
 
   a {
-    font-size: 0.9rem;
+    font-size: 1.3rem;
     font-family: "Cinzel", serif;
     color: inherit;
     text-decoration: none;
@@ -74,7 +74,7 @@ const Navbar = () => {
 
   return (
     <Nav scrolled={scrolled}>
-      <Logo scrolled={scrolled}>Jaypur Ethnics</Logo>
+      <Logo scrolled={scrolled}>ADAA</Logo>
       <Menu>
         <Link to="/">Home</Link>
         <Link to="/products">Products</Link>
