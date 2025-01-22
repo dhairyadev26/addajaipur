@@ -12,7 +12,7 @@ const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: ${(props) => (props.scrolled ? "0.5rem 1.5rem" : "0.9rem 1rem")};
+  padding: ${(props) => (props.scrolled ? "0.5rem 1.5rem" : "1rem 1rem")};
   background-color: ${(props) => (props.scrolled ? "#fff8e7" : "#000000")};
   color: ${(props) => (props.scrolled ? "#000000" : "#fff8e7")};
   border-radius: ${(props) => (props.scrolled ? "70px" : "0")};
