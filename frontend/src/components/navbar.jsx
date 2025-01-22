@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { FaHeart } from "react-icons/fa"; // Import heart icon
 
 const Nav = styled.nav`
   position: fixed;
-  top: ${(props) => (props.scrolled ? "10px" : "0")}; /* Offset when scrolled */
+  top: ${(props) => (props.scrolled ? "10px" : "0")};
   left: 50%;
   transform: translateX(-50%);
-  width: ${(props) => (props.scrolled ? "65%" : "100%")}; /* Full width initially, smaller when scrolled */
-  height: ${(props) => (props.scrolled ? "7%" : "10%")}; /* Full width initially, smaller when scrolled */
-
+  width: ${(props) => (props.scrolled ? "65%" : "100%")};
+  height: ${(props) => (props.scrolled ? "7%" : "10%")};
   z-index: 1000;
   display: flex;
   justify-content: space-between;
@@ -40,7 +40,7 @@ const Menu = styled.div`
   gap: 1.5rem;
 
   @media (max-width: 768px) {
-    display: none; /* Hide menu for small screens (can add hamburger later) */
+    display: none;
   }
 
   a {
@@ -48,8 +48,8 @@ const Menu = styled.div`
     font-family: "Cinzel", serif;
     color: inherit;
     text-decoration: none;
-    padding: 0.1rem 0.8rem; /* Reduced padding for smaller hover box */
-    border-radius: 15px; /* Reduced roundness of corners */
+    padding: 0.1rem 0.8rem;
+    border-radius: 15px;
     transition: background-color 0.3s ease, color 0.3s ease;
 
     &:hover {
@@ -57,10 +57,12 @@ const Menu = styled.div`
         props.scrolled ? "#000000" : "rgba(255, 255, 255, 0.2)"};
       color: ${(props) => (props.scrolled ? "#ffffff" : "#ffffff")};
     }
+
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* Space between icon and text */
   }
 `;
-
-
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -86,14 +88,16 @@ const Navbar = () => {
       <Menu scrolled={scrolled}>
         <Link to="/">Home</Link>
         <Link to="/products">Products</Link>
-        <Link to="/about">About</Link>
+        <Link to="/aboutus">Aboutus</Link>
         <Link to="/contact">Contact</Link>
         <Link to="/cart">Cart</Link>
         <Link to="/login">login</Link>
+        <Link to="/wishlist">
+          <FaHeart /> Wishlist
+        </Link>
       </Menu>
     </Nav>
   );
 };
-
 
 export default Navbar;
