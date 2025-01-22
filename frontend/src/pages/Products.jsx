@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/Products.css";
 
-const Products = () => {
+const Products = ({ addToWishlist }) => {
   const kurtis = [
     { id: 1, name: "Jaipur Ethnic Kurta", price: 30, image: "kurta1.jpg" },
     { id: 2, name: "Floral Printed Kurta", price: 35, image: "kurta2.jpg" },
@@ -30,9 +30,12 @@ const Products = () => {
         <img src={product.image} alt={product.name} />
         <p>{product.name}</p>
         <p>Price: ${product.price}</p>
-        <Link to={`/products/${product.id}`}>
-          <button>View Details</button>
-        </Link>
+        <div className="product-actions">
+          <Link to={`/products/${product.id}`}>
+            <button>View Details</button>
+          </Link>
+          <button onClick={() => addToWishlist(product)}>Add to Wishlist</button>
+        </div>
       </div>
     ));
   };
