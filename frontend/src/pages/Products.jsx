@@ -39,20 +39,20 @@ const Products = () => {
 
   return (
     <div className="products-container">
-      <h2>Products</h2>
+      <h2>PRODUCTS</h2>
 
       <div className="product-category">
-        <h3>Kurtis</h3>
+        <h3>KURTIS</h3>
         <div className="product-list">{renderProducts(kurtis)}</div>
       </div>
 
       <div className="product-category">
-        <h3>Frocks</h3>
+        <h3>FROCKS</h3>
         <div className="product-list">{renderProducts(frocks)}</div>
       </div>
 
       <div className="product-category">
-        <h3>Saris</h3>
+        <h3>SARIS</h3>
         <div className="product-list">{renderProducts(saris)}</div>
       </div>
     </div>
