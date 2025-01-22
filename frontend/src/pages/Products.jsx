@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/Products.css";
-
+.
 const Products = ({ addToWishlist }) => {
   const kurtis = [
     { id: 1, name: "Jaipur Ethnic Kurta", price: 30, image: "kurta1.jpg" },
