@@ -15,7 +15,7 @@ const colorAnimation = `
 `;
 
 const HomeWrapper = styled.div`
-  height: 200vh; /* Full viewport height */
+  height: 100vh; /* Full viewport height */
   display: flex;
   justify-content: right;
   align-items: center;
@@ -27,6 +27,8 @@ const HomeWrapper = styled.div`
   background-attachment: fixed;
   animation: backgroundColorChange 20s infinite; /* Continuous color change */
   ${colorAnimation}
+  margin-top: 0; /* Ensure no extra margin from the wrapper */
+  padding-top: 0; /* Remove extra padding from the wrapper */
 `;
 
 const HomeContent = styled.div`
@@ -38,29 +40,31 @@ const HomeContent = styled.div`
   padding: 20px;
   border-radius: 8px;
   position: relative;
-  left: -100px;
+  left: -300px;
 
   img {
     width: 300px; /* Adjust logo size */
     height: auto; /* Maintain aspect ratio */
+    left: -300px;
   }
 
   h6 {
-    font-size: 2.9rem; /* Smaller font size for "Introducing" */
+    font-size: 3rem; /* Smaller font size for "Introducing" */
     position: relative;
-    left: -60px;
+    right: -200px;
+    margin-top: -30px; /* Adjust negative margin to decrease space */
+    padding-top: 0; /* Remove extra padding from the top */
   }
 
-  h4 {
-    font-size: 2.6rem; /* Smaller font size for "where design tells a story" */
-  }
-
+ 
   h7 {
     font-size: 2.3rem; /* Smaller font size */
     position: relative;
     right: -200px;
+   
   }
 `;
+
 
 const Home = () => {
   return (
@@ -68,7 +72,6 @@ const Home = () => {
       <HomeContent>
         <h6>I n t r o d u c i n g</h6>
         <img src={adaaLogo} alt="ADAA Logo" />
-        <h4>J a i p u r</h4>
         <h7>where design tells a story.</h7>
       </HomeContent>
     </HomeWrapper>
