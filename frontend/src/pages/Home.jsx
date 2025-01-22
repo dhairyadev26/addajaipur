@@ -31,7 +31,7 @@ const HomeWrapper = styled.div`
 
 const HomeContent = styled.div`
   text-align: left;
-  color: rgb(248, 230, 235); /* Contrast with the image */
+  color: rgb(255, 255, 255); /* Contrast with the image */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 3.5rem;
   z-index: 2; /* Make sure text is on top of the overlay */
