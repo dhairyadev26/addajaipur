@@ -89,6 +89,7 @@ const Navbar = () => {
         <Link to="/about">About</Link>
         <Link to="/contact">Contact</Link>
         <Link to="/cart">Cart</Link>
+        <Link to="/login">login</Link>
       </Menu>
     </Nav>
   );

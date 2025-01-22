@@ -7,6 +7,9 @@ import Home from "./pages/Home";
 import Products from "./pages/Products";
 import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
+import Login from "./pages/Login"; // Import as default export
+import Signup from "./pages/Signup"; // Import as default export
+
 import { CartProvider } from "./context/CartContext";
 import Preloader from "./components/ElephantPreloader"; // Import the preloader component
 
@@ -35,6 +38,8 @@ function App() {
             <Route path="/products" element={<Products />} />
             <Route path="/products/:id" element={<ProductDetails />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
           </Routes>
           <Footer />
         </>
