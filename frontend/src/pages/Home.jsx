@@ -1,74 +1,75 @@
 import React from "react";
 import styled from "styled-components";
-import girl1 from "../assets/girl1.png"; // Adjust the path based on your folder structure
+import girl from "../assets/girl.png"; // Background image
+import adaaLogo from "../assets/adaa-logo.png"; // ADAA PNG logo
 
+const colorAnimation = `
+  @keyframes backgroundColorChange {
+    0% { background-color: #f2bfa2; } /* Color 1 */
+    20% { background-color: #c3cb38; } /* Color 2 */
+    40% { background-color:rgb(200, 86, 73); } /* Color 3 */
+    60% { background-color: #fbc753; } /* Color 4 */
+    80% { background-color: #67b4c9; } /* Color 5 */
+    100% { background-color: #f2bfa2; } /* Back to Color 1 */
+  }
+`;
 
 const HomeWrapper = styled.div`
   height: 200vh; /* Full viewport height */
   display: flex;
   justify-content: right;
   align-items: center;
-  position: relative; /* To position the overlay */
+  position: relative;
+  background-image: url(${girl});
   background-repeat: no-repeat;
-  background-image: url("girl.png") left center / cover no-repeat; /* Add image */
-  /* Optional: Adjust the image size to prevent zooming in too much */
+  background-position: right 180px top 50px; /* Adjust position: Right + Top */
+  background-size: contain; /* Adjust image size */
   background-attachment: fixed;
-`;
-
-const Overlay = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(201, 169, 134, 0.98); /* Semi-transparent overlay color */
-  z-index: 1; /* Ensure the overlay is above the background */
+  animation: backgroundColorChange 20s infinite; /* Continuous color change */
+  ${colorAnimation}
 `;
 
 const HomeContent = styled.div`
-  text-align:left;
-  color:rgb(248, 230, 235); /* Contrast with the image */
-  font-family: 'Sego';
+  text-align: left;
+  color: rgb(248, 230, 235); /* Contrast with the image */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 3.5rem;
   z-index: 2; /* Make sure text is on top of the overlay */
   padding: 20px;
-  background:transparent; /* Optional: semi-transparent background for text */
   border-radius: 8px;
   position: relative;
-  left: -100px; /* Move the text 20px to the left */
+  left: -100px;
 
-  h1 {
-    font-size: 10rem; /* Significantly larger font size for "ADAA" */
-    
+  img {
+    width: 300px; /* Adjust logo size */
+    height: auto; /* Maintain aspect ratio */
   }
 
   h6 {
     font-size: 2.9rem; /* Smaller font size for "Introducing" */
     position: relative;
-    left: -60px; 
-    
+    left: -60px;
   }
-
-  h7 {
-    font-size: 2.3rem; /* Smaller font size for "where design tells a story" */
-    position: relative;
-    right: -200px; 
-  
 
   h4 {
     font-size: 2.6rem; /* Smaller font size for "where design tells a story" */
-    margin:-40px;
+  }
+
+  h7 {
+    font-size: 2.3rem; /* Smaller font size */
+    position: relative;
+    right: -200px;
+  }
 `;
 
 const Home = () => {
   return (
     <HomeWrapper>
-      <Overlay /> {/* Overlay component */}
       <HomeContent>
         <h6>I n t r o d u c i n g</h6>
-        <h1>A D A A</h1>
+        <img src={adaaLogo} alt="ADAA Logo" />
         <h4>J a i p u r</h4>
-        <h7>where desing tells a story.</h7>
+        <h7>where design tells a story.</h7>
       </HomeContent>
     </HomeWrapper>
   );
