@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom"; // Import Link for navigation
+import React from "react";
+import { Link } from "react-router-dom";
 import "../styles/Products.css";
 
 const Products = () => {
-
   const kurtis = [
     { id: 1, name: "Jaipur Ethnic Kurta", price: 30, image: "kurta1.jpg" },
     { id: 2, name: "Floral Printed Kurta", price: 35, image: "kurta2.jpg" },
@@ -24,30 +24,37 @@ const Products = () => {
     { id: 12, name: "Traditional Cotton Saree", price: 90, image: "saree4.jpg" },
   ];
 
-  const renderProducts = (category, products) => (
-    <div>
-      <h3>{category}</h3>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
-        {products.map((product) => (
-          <div key={product.id} style={{ border: "1px solid #ddd", padding: "1rem", borderRadius: "5px" }}>
-            <img src={product.image} alt={product.name} width={150} />
-            <p>{product.name}</p>
-            <p>Price: ${product.price}</p>
-            <Link to={`/products/${product.id}`}>
-              <button>View Details</button>
-            </Link>
-          </div>
-        ))}
+  const renderProducts = (products) => {
+    return products.map((product) => (
+      <div className="product-card" key={product.id}>
+        <img src={product.image} alt={product.name} />
+        <p>{product.name}</p>
+        <p>Price: ${product.price}</p>
+        <Link to={`/products/${product.id}`}>
+          <button>View Details</button>
+        </Link>
       </div>
-    </div>
-  );
+    ));
+  };
 
   return (
-    <div>
+    <div className="products-container">
       <h2>Products</h2>
-      {renderProducts("Kurtis", kurtis)}
-      {renderProducts("Frocks", frocks)}
-      {renderProducts("Saris", saris)}
+
+      <div className="product-category">
+        <h3>Kurtis</h3>
+        <div className="product-list">{renderProducts(kurtis)}</div>
+      </div>
+
+      <div className="product-category">
+        <h3>Frocks</h3>
+        <div className="product-list">{renderProducts(frocks)}</div>
+      </div>
+
+      <div className="product-category">
+        <h3>Saris</h3>
+        <div className="product-list">{renderProducts(saris)}</div>
+      </div>
     </div>
   );
 };

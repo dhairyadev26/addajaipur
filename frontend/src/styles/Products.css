@@ -1,64 +1,103 @@
-/* Global styles for body */
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f9f9f9;
-  color: #333;
+/* Global styles for html and body */
+html, body {
+  height: 100%; /* Ensure html and body fill the full viewport */
   margin: 0;
   padding: 0;
 }
 
-/* Container for products */
-h2 {
-  text-align: center;
+body {
+  font-family: Arial, sans-serif;
   color: #333;
-  margin-top: 20px;
-  font-size: 2rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensure body stretches at least to full height of the viewport */
 }
 
-h3 {
-  font-size: 1.5rem;
+/* Container for products */
+.products-container {
+  animation: backgroundChange 10s infinite; /* Animation to change the background every 2 seconds */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  height: 100%;
+  padding: 2rem;
+}
+
+/* Background animation keyframes */
+@keyframes backgroundChange {
+  0% { background-color: lightpink; }
+  20% { background-color: lightyellow; }
+  40% { background-color: white; }
+  60% { background-color: lightblue; }
+  80% { background-color: lightcoral; }
+  100% { background-color: lightpink; } /* Cycle back to the start */
+}
+
+/* Page heading */
+h2 {
+  color: #333;
+  font-size: 2.5rem;
+  margin-top: 2cm;
+}
+
+/* Category heading styles */
+.product-category h3 {
+  font-size: 1.8rem;
   color: #5f6368;
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 /* Flexbox container for product cards */
-div > div {
+.product-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1rem;
-  margin-top: 20px;
+  gap: 3.5rem;
+  margin-top: 40px;
+  margin-bottom: 100px;
 }
 
 /* Product card styles */
-div > div > div {
+.product-card {
   background-color: #fff;
   border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  width: 200px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 240px;
   text-align: center;
-  padding: 15px;
+  padding: 20px;
   transition: transform 0.3s ease-in-out;
 }
 
-div > div > div:hover {
-  transform: translateY(-5px);
+.product-card:hover {
+  transform: translateY(-8px);
 }
 
-img {
+/* Image styles */
+.product-card img {
   width: 100%;
-  height: auto;
-  border-radius: 5px;
+  height: 300px;
+  border-radius: 8px;
   object-fit: cover;
 }
 
-p {
+/* Text styles */
+.product-card p {
   color: #555;
   margin: 10px 0;
 }
 
+/* Price style */
+.product-card p:nth-of-type(2) {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+/* Button styles */
 button {
   background-color: #4CAF50;
   color: white;
@@ -76,11 +115,4 @@ button:hover {
 
 a {
   text-decoration: none;
-}
-
-/* Styling for prices */
-p:nth-of-type(2) {
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 15px;
 }
