@@ -69,7 +69,10 @@ function App() {
               path="/products"
               element={<Products addToWishlist={addToWishlist} />}
             />
-            <Route path="/products/:id" element={<ProductDetails />} />
+            <Route
+              path="/products/:id"
+              element={<ProductDetails addToWishlist={addToWishlist} />}
+            />
             <Route path="/cart" element={<Cart />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
