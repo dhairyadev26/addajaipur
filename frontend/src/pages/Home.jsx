@@ -1,7 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import girl from "../assets/girl.png"; // Background image
-import adaaLogo from "../assets/adaa-logo.png"; // ADAA PNG logo
+import adaaLogo from "../assets/logo1.png"; // ADAA PNG logo
+
+
+
 
 const colorAnimation = `
   @keyframes backgroundColorChange {
@@ -15,7 +18,7 @@ const colorAnimation = `
 `;
 
 const HomeWrapper = styled.div`
-  height: 100vh; /* Full viewport height */
+  height: 110vh; /* Full viewport height */
   display: flex;
   justify-content: right;
   align-items: center;
@@ -32,45 +35,49 @@ const HomeWrapper = styled.div`
 `;
 
 const HomeContent = styled.div`
+
   text-align: left;
   color: rgb(255, 255, 255); /* Contrast with the image */
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 3.5rem;
-  z-index: 2; /* Make sure text is on top of the overlay */
+  font-family: 'Maitree', serif; /* Default font for all text */
+  font-size: 5rem;
+  z-index: 2; /* Ensure text is on top of the overlay */
   padding: 20px;
   border-radius: 8px;
   position: relative;
-  left: -300px;
+  left: -200px;
+
+  h5 {
+    font-size: 2.9rem;
+    margin-left: 160px; /* Start position */
+    font-family: 'Maitree', serif;
+    font-weight: 400;
+  }
 
   img {
-    width: 300px; /* Adjust logo size */
+    width: 650px; /* Adjust logo size */
     height: auto; /* Maintain aspect ratio */
-    left: -300px;
+    display: block; /* Ensures the image takes up its own line */
+    margin-left: 170px; /* Slightly offset the image to the right */
+    margin-top: 0px; /* Add space above */
   }
 
-  h6 {
-    font-size: 3rem; /* Smaller font size for "Introducing" */
-    position: relative;
-    right: -200px;
-    margin-top: -30px; /* Adjust negative margin to decrease space */
-    padding-top: 0; /* Remove extra padding from the top */
-  }
-
- 
   h7 {
     font-size: 2.3rem; /* Smaller font size */
-    position: relative;
-    right: -200px;
-   
+    margin-top: 10px; /* Add space above */
+    margin-left: 340px; /* Offset "where design tells a story" further to the right */
+    display: block; /* Ensure "where design tells a story" is on its own line */
+    font-family: 'Maitree', serif; /* Maitree font for <h7> */
   }
 `;
+
+
 
 
 const Home = () => {
   return (
     <HomeWrapper>
       <HomeContent>
-        <h6>I n t r o d u c i n g</h6>
+        <h5>Introducing</h5>
         <img src={adaaLogo} alt="ADAA Logo" />
         <h7>where design tells a story.</h7>
       </HomeContent>
