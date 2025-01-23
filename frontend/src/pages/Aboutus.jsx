@@ -1,18 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom"; // Import Link
 import "../styles/Aboutus.css";
+import founder from "../assets/Founder.png"; 
+import cofounder from "../assets/Cofounder.png"; 
 
 const Aboutus = () => {
   return (
     <div className="about-container">
       <div className="about-left">
         <div className="about-card">
-          <img src="/images/founder.jpg" alt="Founder" />
+          <img src={founder} alt="Founder" />
           <h3>Keshav Shukla</h3>
           <p>Founder of ADAA Jaipur</p>
         </div>
         <div className="about-card">
-          <img src="/images/current-owner.jpg" alt="Current Owner" />
+        <img src={cofounder} alt="Cofounder" />
           <h3>Tulsi Prasad Shukla</h3>
           <p>Current Manager of ADAA Jaipur</p>
         </div>
