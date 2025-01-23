@@ -7,8 +7,8 @@ import Home from "./pages/Home";
 import Products from "./pages/Products";
 import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
-import Login from "./pages/Login"; // Import as default export
-import Signup from "./pages/Signup"; // Import as default export
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 import Aboutus from "./pages/Aboutus";
 import Wishlist from "./pages/Wishlist";
 import { CartProvider } from "./context/CartContext";

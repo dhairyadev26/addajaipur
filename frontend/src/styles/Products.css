@@ -1,6 +1,6 @@
 /* Global styles for html and body */
 html, body {
-  height: 100%; /* Ensure html and body fill the full viewport */
+  height: 100%;
   margin: 0;
   padding: 0;
 }
@@ -10,18 +10,18 @@ body {
   color: #333;
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Ensure body stretches at least to full height of the viewport */
+  min-height: 100vh;
 }
 
 /* Container for products */
 .products-container {
-  animation: backgroundChange 10s infinite; /* Animation to change the background every 2 seconds */
+  animation: backgroundChange 10s infinite;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   text-align: center;
-  height: 100%;
+  height: auto; /* Change to auto to accommodate content */
   padding: 2rem;
 }
 
@@ -32,7 +32,7 @@ body {
   40% { background-color: white; }
   60% { background-color: lightblue; }
   80% { background-color: lightcoral; }
-  100% { background-color: lightpink; } /* Cycle back to the start */
+  100% { background-color: lightpink; }
 }
 
 /* Page heading */
@@ -42,77 +42,188 @@ h2 {
   margin-top: 2cm;
 }
 
-/* Category heading styles */
-.product-category h3 {
-  font-size: 1.8rem;
-  color: #5f6368;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
 /* Flexbox container for product cards */
 .product-list {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 3.5rem;
-  margin-top: 40px;
-  margin-bottom: 100px;
+  flex-wrap: wrap; /* Allows wrapping of product cards */
+  justify-content: center; /* Center the product cards */
+  gap: 2rem; /* Space between cards */
 }
 
 /* Product card styles */
 .product-card {
+  position: relative; /* Position relative for absolute positioning of wishlist icon */
   background-color: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 240px;
-  text-align: center;
-  padding: 20px;
-  transition: transform 0.3s ease-in-out;
-}
-
-.product-card:hover {
-  transform: translateY(-8px);
+  border-radius: .5rem; /* Adjusted for a softer look */
+  box-shadow:.0 .0 .5rem rgba(0,0,0,.15);
+  width: calc(20% - 1rem); /* Four products per row with some spacing */
+  display: flex; /* Use flexbox to align items */
+  flex-direction: column; /* Stack items vertically */
+  align-items: center; /* Center items horizontally */
+  padding-bottom: .5rem; /* Add bottom padding for spacing */
 }
 
 /* Image styles */
 .product-card img {
-  width: 100%;
-  height: 300px;
-  border-radius: 8px;
-  object-fit: cover;
+  width: auto; /* Maintain aspect ratio */
+  height: auto; /* Maintain aspect ratio */
+  max-width:100%; /* Ensure image fits card without overflow */
+  border-radius: .5rem; /* Rounded corners for images */
+}
+
+/* Text styles in product card */
+.product-info {
+  text-align:center; /* Center text within the card */
+}
+
+/* Price style adjustments */
+.price {
+  font-size:.9rem; /* Slightly smaller font size for price text */
+  margin-top:.5rem; /* Spacing above price text */
+}
+
+/* Wishlist icon container */
+.wishlist-icon-container {
+   position: absolute; /* Position the wishlist icon at the top right */
+   top: .5rem;
+   right: .5rem;
+}
+
+/* Image styles */
+.product-card img {
+   width: auto; /* Maintain aspect ratio */
+   height: auto; /* Maintain aspect ratio */
+   max-width:100%; /* Ensure image fits card without overflow */
 }
 
 /* Text styles */
 .product-card p {
-  color: #555;
-  margin: 10px 0;
+ color:#555;
+ margin-top:.5rem; /* Add top margin for spacing */
+ text-align:center; /* Center text within the card */
 }
 
 /* Price style */
 .product-card p:nth-of-type(2) {
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 15px;
+ font-weight:bold;
+ color:#333;
+ margin-bottom:.5rem; /* Add bottom margin for spacing */
 }
 
+.product-card:hover {
+   transform: translateY(-8px);
+}
+
+/* Button styles (if any) */
 /* Button styles */
 button {
-  background-color: #4CAF50;
-  color: white;
+  
   padding: 10px 15px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 1rem;
-  transition: background-color 0.3s;
-}
+  transition: background-color 0.3s;}
 
 button:hover {
-  background-color: #45a049;
+ transform: scale(1.05);
+}
+/* Removed button styles as they were not used in your product card */
+
+/* Price styles for discounts and original prices */
+.price {
+   font-size:1.2rem;
+   margin-top:.5rem;
 }
 
-a {
-  text-decoration: none;
+.discounted-price {
+   color:#4CAF50; /* Green for discounted price */
+   font-weight:bold;
+}
+
+.original-price {
+   color:#999; /* Gray for original price */
+   text-decoration:none; /* Strikethrough for original price removed as it's not used here*/
+   margin-left:.5rem;
+}
+
+.discount-percentage {
+   color:#FF5722; /* Orange for discount percentage */
+   font-weight:bold;
+}
+
+/* Notification styles remain unchanged */
+/* Notification styles */
+.notification {
+  position: fixed;
+  top: 20px; /* Adjusted for better visibility */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.8); /* Dark background for contrast */
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  text-align: center;
+  z-index: 1000;
+  animation: fadeInOut 3s ease-in-out; 
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px); /* Slide in effect */
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px); /* Slide out effect */
+  }
+}
+
+.notification.success {
+ background-color: rgba(0,128,0,.8); /* Green for success messages */
+}
+
+.notification.error {
+ background-color: rgba(255,0,0,.8); /* Red for error messages */
+}
+
+/* Wishlist icon hover effect remains unchanged */
+/* Wishlist icon hover effect */
+.wishlist-icon:hover {
+  transform: scale(1.2);
+ }
+
+/* Image gallery styles remain unchanged */
+.image-gallery {
+  display: flex;
+  flex-wrap: wrap; /* Allows wrapping of images */
+}
+
+.image-gallery img {
+  width: auto; /* Maintain aspect ratio */
+  height: auto; /* Maintain aspect ratio */
+  max-width: 100%; /* Ensure image fits card */
+  margin-right: .5rem; /* Spacing between images */
+}
+
+/* Responsive design adjustments */
+@media (max-width:768px) {
+ .product-list {
+     flex-direction: column; 
+     align-items:center; 
+ }
+
+ .product-card { 
+     width:auto; 
+     margin-bottom:.5rem; 
+ }
 }
