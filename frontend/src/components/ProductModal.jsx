@@ -58,14 +58,17 @@ const ProductModal = ({ product, onClose }) => {
         top: "50%",
         left: "50%",
         transform: "translate(-50%, -50%)",
-        width: "70%",
-        height: "70%",
+        width: "80%",
+        height: "80%",
+        maxWidth: "1000px",
+        maxHeight: "800px",
         backgroundColor: "#fff",
         borderRadius: "10px",
         boxShadow: "0 4px 10px rgba(0, 0, 0, 0.3)",
         zIndex: 1000,
         overflow: "hidden",
         display: "flex",
+        flexDirection: "row",
       }}
     >
       {/* Close Button */}
@@ -87,7 +90,7 @@ const ProductModal = ({ product, onClose }) => {
       {/* Left Side: Images */}
       <div
         style={{
-          width:"50",
+          width: "60%",
           display: "flex",
           flexDirection: "row",
           backgroundColor: "#f9f9f9",
@@ -111,7 +114,7 @@ const ProductModal = ({ product, onClose }) => {
               src={img}
               alt={`Thumbnail ${index + 1}`}
               style={{
-                width: "100%",
+                width: "90%",
                 margin: "5px 0",
                 cursor: "pointer",
                 border:
@@ -138,8 +141,9 @@ const ProductModal = ({ product, onClose }) => {
             src={images[currentImageIndex]}
             alt="Product Main"
             style={{
-              width: "80%",
-             maxHeight: "600px",
+              width: "90%",
+              maxHeight: "90%",
+              objectFit: "contain",
               borderRadius: "5px",
               transition: "opacity 2s ease-in-out",
             }}
@@ -155,6 +159,7 @@ const ProductModal = ({ product, onClose }) => {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "20px",
+          overflowY: "auto",
         }}
       >
         <h2>{product.name}</h2>
@@ -196,7 +201,7 @@ const ProductModal = ({ product, onClose }) => {
         <p style={{ color: "green" }}>{product.discountPercentage}% off</p>
 
         {/* Size Selection */}
-        <div style={{ margin: "20px 0" }}>
+        <div style={{ margin: "18px 0"}}>
           <label style={{ fontSize: "16px", marginRight: "10px" }}>
             Select Size:
           </label>
@@ -205,7 +210,7 @@ const ProductModal = ({ product, onClose }) => {
               key={size}
               style={{
                 padding: "10px",
-                margin: "0 5px",
+                margin: "0 4px",
                 borderRadius: "5px",
                 border:
                   selectedSize === size
