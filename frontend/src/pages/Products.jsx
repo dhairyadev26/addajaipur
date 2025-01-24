@@ -106,6 +106,19 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
             <img src={product.image} alt={product.name} />
             <div className="product-info">
               <p>{product.name}</p>
+              {/* Product Ratings */}
+              {product.rating && (
+                <p className="product-rating">
+                  <span className="stars">
+                    {"★".repeat(Math.round(product.rating.rate)) +
+                      "☆".repeat(5 - Math.round(product.rating.rate))}
+                  </span>
+                  <span className="rating-score">
+                    {product.rating.rate.toFixed(1)} / 5
+                  </span>
+                  <span className="rating-count">({product.rating.count} reviews)</span>
+                </p>
+              )}
               <p className="price">
                 <span className="discounted-price">${discountedPrice.toFixed(2)}</span>
                 <span className="original-price">

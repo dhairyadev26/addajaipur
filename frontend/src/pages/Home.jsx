@@ -163,7 +163,7 @@ const ParagraphSection = styled.div`
   p {
     max-width: 800px;
     margin: 0 auto;
-    text-align: justify;
+    text-align: center;
   }
 `;
 
