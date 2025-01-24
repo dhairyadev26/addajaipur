@@ -25,7 +25,7 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 30px;
+    gap: 50px;
   }
   
   /* Contact Details Section */
@@ -36,11 +36,11 @@
     border-radius: 20px;
     
   }
-  
+
   /* Align Labels and Values */
   .contact-info {
     display: grid;
-    gap: 15px;
+    gap: 30px;
   }
   
   .info-row {
@@ -65,10 +65,10 @@
   /* Contact Form Section */
   .contact-form {
     flex: 1;
-    background-color: #4f9d8d77;
+    background-color: #9b4738db;
     padding: 50px;
     border-radius: 20px;
-    box-shadow: 0 13px 15px rgb(53, 83, 84);
+    box-shadow: #0b0b0b;
   }
   
   .contact-form form {
@@ -92,7 +92,7 @@
   }
   
   .contact-form button {
-    background-color: #2f4f67;
+    background-color: #d5a495bd;
     color: white;
     padding: 10px 15px;
     border: none;
@@ -102,7 +102,7 @@
   }
   
   .contact-form button:hover {
-    background-color: #243b4d;
+    background-color: #53251d96;
   }
   
   /* Map Section */

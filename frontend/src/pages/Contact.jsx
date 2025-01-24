@@ -1,6 +1,6 @@
 import React from "react";
 import "../styles/Contact.css";
-import contactimg from "../assets/contact.png"; // Replace with your image path
+import contactimg from "../assets/horse.png"; // Replace with your image path
 
 const Contact = () => {
   return (
@@ -19,15 +19,15 @@ const Contact = () => {
             <div className="contact-info">
               <div className="info-row">
                 <h3>Phone:</h3>
-                <p>(+081) 5678 1234</p>
+                <p>+91 98281 70003</p>
               </div>
               <div className="info-row">
                 <h3>Email:</h3>
-                <p>mail@nurse.com</p>
+                <p>adaajaipur4india@gmail.com</p>
               </div>
               <div className="info-row">
                 <h3>Address:</h3>
-                <p>London Eye, London</p>
+                <p>H-5, RIICO Industrial Area, Mansarovar, Jaipur, Rajasthan 302020</p>
               </div>
             </div>
           </div>
