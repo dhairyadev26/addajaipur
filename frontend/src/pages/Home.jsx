@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { keyframes } from "styled-components";
 import girl from "../assets/girl.png";
 import adaaLogo from "../assets/logo1.png";
@@ -9,8 +9,9 @@ import img4 from "../assets/img4.png";
 import img5 from "../assets/img5.png";
 import img6 from "../assets/img6.png";
 import img7 from "../assets/img7.png";
+import Products from "./Products"; // Import Products component
 
-
+// Define the keyframe animation for background color changes
 const colorAnimation = `
   @keyframes backgroundColorChange {
     0% { background-color: #f2bfa2; }
@@ -33,7 +34,6 @@ const HomeWrapper = styled.div`
   animation: backgroundColorChange 20s infinite;
   ${colorAnimation}
   z-index: 0;
-
   -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 85%, rgba(0, 0, 0, 0) 100%);
   mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 90%, rgba(0, 0, 0, 0) 100%);
   -webkit-mask-size: 100% 100%;
@@ -77,13 +77,14 @@ const HomeContent = styled.div`
 
 const NewContentSection = styled.div`
   position: relative;
-  padding: 50px;
-  background-color: #f7f7f7;
+  padding-top: 0px;
+  padding-bottom: 30px;
+  background-color: #fff7e9;
   color: #333;
 
   h2 {
     font-size: 2.5rem;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
     text-align: center;
   }
 
@@ -109,44 +110,55 @@ const SliderWrapper = styled.div`
   position: relative;
   width: 100%;
   overflow: hidden;
-  height: 490px;
-  background-color:#ffefd5;
+  height: 420px;
+  background: linear-gradient(to bottom, #fff7e9, #ffefd5 60%, #e6d4b2);
 `;
 
 const SliderTrack = styled.div`
   display: flex;
-  animation: ${slideAnimation} 60s linear infinite; /* Smooth scrolling animation */
-  width: calc(200%); /* Double the width to accommodate duplicates */
+  animation: ${slideAnimation} 60s linear infinite;
+  width: calc(200%);
 `;
 
 const ImageWrapper = styled.div`
   flex: none;
-  padding-top:15px;
-  width: 12%; /* Adjust based on the number of images visible */
-  height: 480px;
+  padding-top:24px;
+  width: 10%;
+  height: 420px;
 
   img {
-    width: 95%;
-    height: 100%;
+    width: 78%;
+    height: 95%;
     object-fit: cover;
-    border-radius: 15px; /* Smooth, professional rounded corners */
+    border-radius: 15px;
     box-shadow: 
-      0 4px 6px rgba(0, 0, 0, 0.1), /* Light shadow for subtle depth */
-      0 1px 3px rgba(0, 0, 0, 0.06); /* Additional layer for realism */
+      0 8px 15px rgba(255, 255, 255, 0.5),
+      0 0 25px rgba(255, 255, 255, 0.8),
+      0 0 35px rgba(255, 255, 255, 0.6),
+      0 0 50px rgba(255, 255, 255, 0.9);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
 
   img:hover {
-    transform: translateY(-8px); /* Slight lift on hover */
+    transform: translateY(-10px);
     box-shadow: 
-      0 10px 15px rgba(0, 0, 0, 0.2), /* Deeper shadow for focus */
-      0 4px 6px rgba(0, 0, 0, 0.1); /* Maintain soft aesthetic */
+      0 10px 20px rgba(255, 255, 255, 0.6),
+      0 0 30px rgba(255, 255, 255, 0.9),
+      0 0 45px rgba(255, 255, 255, 1),
+      0 0 60px rgba(255, 255, 255, 1);
   }
 `;
 
 const Home = () => {
-  const images = [img1, img2, img3, img4, img5, img6, img7]; // Your image sources
-  const repeatedImages = [...images, ...images]; 
+  const [showAllProducts, setShowAllProducts] = useState(false);
+
+  const handleViewAllClick = () => {
+    setShowAllProducts(true);
+  };
+
+  const images = [img1, img2, img3, img4, img5, img6, img7];
+  const repeatedImages = [...images, ...images];
+
   return (
     <div>
       {/* Home Section */}
@@ -157,8 +169,6 @@ const Home = () => {
           <h7>where design tells a story.</h7>
         </HomeContent>
       </HomeWrapper>
-
-      
 
       {/* Gallery Section */}
       <NewContentSection>
@@ -176,6 +186,23 @@ const Home = () => {
           Explore our gallery showcasing our passion for design, creativity, and innovation.
         </p>
       </NewContentSection>
+
+      {/* Featured Products Section */}
+      <div className="home-container">
+        <h2>Featured Products</h2>
+        <div className="products-container" style={{ backgroundColor: "#f0f0f0", padding: "20px", borderRadius: "10px" }}>
+          <div className="product-list">
+            {/* Pass the showAll state to Products component to control visibility */}
+            <Products showAll={showAllProducts} />
+          </div>
+
+          {!showAllProducts && (
+            <button className="view-all-button" onClick={handleViewAllClick}>
+              View All
+            </button>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
