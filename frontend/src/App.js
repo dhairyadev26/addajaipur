@@ -9,7 +9,7 @@ import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import Aboutus from "./pages/Aboutus";
+import AboutUs from "./pages/Aboutus";
 import Wishlist from "./pages/Wishlist";
 import { CartProvider } from "./context/CartContext";
 import Preloader from "./components/ElephantPreloader";
@@ -31,17 +31,20 @@ function App() {
   // Add to wishlist
   const addToWishlist = (product) => {
     if (!wishlist.some((item) => item.id === product.id)) {
-      setWishlist([...wishlist, product]);
+      setWishlist((prevWishlist) => [...prevWishlist, product]);
       showNotification(`${product.name} added to wishlist!`);
     } else {
-      showNotification(`${product.name} is already in wishlist!`);
+      showNotification(`${product.name} is already in the wishlist!`);
     }
   };
 
   // Remove from wishlist
   const removeFromWishlist = (id) => {
-    setWishlist(wishlist.filter((item) => item.id !== id));
-    showNotification("Item removed from wishlist!");
+    const removedItem = wishlist.find((item) => item.id === id);
+    setWishlist((prevWishlist) => prevWishlist.filter((item) => item.id !== id));
+    if (removedItem) {
+      showNotification(`${removedItem.name} removed from wishlist!`);
+    }
   };
 
   // Show notification
@@ -59,24 +62,38 @@ function App() {
         <Preloader /> // Show preloader while loading
       ) : (
         <>
-          <Navbar />
+          <Navbar wishlistCount={wishlist.length} />
           <div className="notification-container">
             {notification && <div className="notification">{notification}</div>}
           </div>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home addToWishlist={addToWishlist}
+                  removeFromWishlist={removeFromWishlist}
+                  wishlist={wishlist}/>} />
             <Route
               path="/products"
-              element={<Products addToWishlist={addToWishlist} />}
+              element={
+                <Products
+                  addToWishlist={addToWishlist}
+                  removeFromWishlist={removeFromWishlist}
+                  wishlist={wishlist}
+                />
+              }
             />
             <Route
               path="/products/:id"
-              element={<ProductDetails addToWishlist={addToWishlist} />}
+              element={
+                <ProductDetails
+                  addToWishlist={addToWishlist}
+                  removeFromWishlist={removeFromWishlist}
+                  wishlist={wishlist}
+                />
+              }
             />
             <Route path="/cart" element={<Cart />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/aboutus" element={<Aboutus />} />
+            <Route path="/aboutus" element={<AboutUs />} />
             <Route
               path="/wishlist"
               element={

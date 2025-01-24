@@ -3,24 +3,11 @@ import { Link } from "react-router-dom";
 import "../styles/Products.css";
 import { FaHeart } from "react-icons/fa";
 import ProductModal from "../components/ProductModal";
-
-// Import images directly
 import product1 from "../assets/product1.png";
-// Import other images as needed
-// import kurta2 from "../assets/kurta2.jpg";
-// import kurta3 from "../assets/kurta3.jpg";
-// import kurta4 from "../assets/kurta4.jpg";
-// import frock1 from "../assets/frock1.jpg";
-// import frock2 from "../assets/frock2.jpg";
-// import saree1 from "../assets/saree1.jpg";
-// import saree2 from "../assets/saree2.jpg";
 
-const Products = ({ addToWishlist }) => {
-  const [wishlistItems, setWishlistItems] = useState([]);
-  const [notification, setNotification] = useState("");
+const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
 
-  // Product data with original price, discount percentage, ratings, and images
   const kurtis = [
     {
       id: 1,
@@ -96,21 +83,13 @@ const Products = ({ addToWishlist }) => {
 
   const products = [...kurtis, ...frocks, ...saris];
 
-  const handleWishlistToggle = (product) => {
-    if (wishlistItems.includes(product.id)) {
-      setWishlistItems(wishlistItems.filter((id) => id !== product.id));
-    } else {
-      setWishlistItems([...wishlistItems, product.id]);
-      addToWishlist(product);
-      showNotification(`${product.name} added to wishlist`);
-    }
-  };
 
-  const showNotification = (message) => {
-    setNotification(message);
-    setTimeout(() => {
-      setNotification("");
-    }, 3000);
+  const handleWishlistToggle = (product) => {
+    if (wishlist.some((item) => item.id === product.id)) {
+      removeFromWishlist(product.id);
+    } else {
+      addToWishlist(product);
+    }
   };
 
   const renderProducts = () =>
@@ -119,25 +98,14 @@ const Products = ({ addToWishlist }) => {
         product.originalPrice -
         (product.originalPrice * product.discountPercentage) / 100;
 
+      const isInWishlist = wishlist.some((item) => item.id === product.id);
+
       return (
         <div className="product-card" key={product.id}>
           <Link to={`/products/${product.id}`} className="product-link">
             <img src={product.image} alt={product.name} />
             <div className="product-info">
               <p>{product.name}</p>
-              {/* Product Ratings */}
-              {product.rating && (
-                <p className="product-rating">
-                  <span className="stars">
-                    {"★".repeat(Math.round(product.rating.rate)) +
-                      "☆".repeat(5 - Math.round(product.rating.rate))}
-                  </span>
-                  <span className="rating-score">
-                    {product.rating.rate.toFixed(1)} / 5
-                  </span>
-                  <span className="rating-count">({product.rating.count} reviews)</span>
-                </p>
-              )}
               <p className="price">
                 <span className="discounted-price">${discountedPrice.toFixed(2)}</span>
                 <span className="original-price">
@@ -151,17 +119,13 @@ const Products = ({ addToWishlist }) => {
             <span
               className="wishlist-icon"
               onClick={(e) => {
-                e.stopPropagation(); // Prevent click from triggering Link navigation
+                e.stopPropagation();
                 handleWishlistToggle(product);
               }}
             >
-              <FaHeart
-                color={wishlistItems.includes(product.id) ? "red" : "gray"}
-                size={24}
-              />
+              <FaHeart color={isInWishlist ? "red" : "gray"} size={24} />
             </span>
           </div>
-          {/* Quick View Button */}
           <button onClick={() => setSelectedProduct(product)}>Quick View</button>
         </div>
       );
@@ -170,10 +134,7 @@ const Products = ({ addToWishlist }) => {
   return (
     <div className="products-container">
       <h2>PRODUCTS</h2>
-      {notification && <div className="notification">{notification}</div>}
       <div className="product-list">{renderProducts()}</div>
-
-      {/* Render ProductModal if selectedProduct is not null */}
       {selectedProduct && (
         <ProductModal
           product={selectedProduct}

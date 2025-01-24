@@ -149,7 +149,7 @@ const ImageWrapper = styled.div`
   }
 `;
 
-const Home = () => {
+const Home = ({ wishlist, addToWishlist, removeFromWishlist }) => {
   const [showAllProducts, setShowAllProducts] = useState(false);
 
   const handleViewAllClick = () => {
@@ -190,10 +190,21 @@ const Home = () => {
       {/* Featured Products Section */}
       <div className="home-container">
         <h2>Featured Products</h2>
-        <div className="products-container" style={{ backgroundColor: "#f0f0f0", padding: "20px", borderRadius: "10px" }}>
+        <div
+          className="products-container"
+          style={{
+            backgroundColor: "#f0f0f0",
+            padding: "20px",
+            borderRadius: "10px",
+          }}
+        >
           <div className="product-list">
-            {/* Pass the showAll state to Products component to control visibility */}
-            <Products showAll={showAllProducts} />
+            <Products
+              showAll={showAllProducts}
+              wishlist={wishlist}
+              addToWishlist={addToWishlist}
+              removeFromWishlist={removeFromWishlist}
+            />
           </div>
 
           {!showAllProducts && (
