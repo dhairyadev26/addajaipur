@@ -77,7 +77,7 @@ const HomeContent = styled.div`
 
 const NewContentSection = styled.div`
   position: relative;
-  padding-bottom: 50px;
+  padding-bottom: 0px;
   background-color:rgb(255, 238, 212);
   color: #333;
 
@@ -151,6 +151,22 @@ const ImageWrapper = styled.div`
   }
 `;
 
+const ParagraphSection = styled.div`
+  padding: 20px 0;
+  text-align: center;
+  background-color: transparent; /* Keep it transparent or set a background if needed */
+  color: black; /* Set text color to white */
+  font-size: 1.2rem;
+  line-height: 1.6;
+  font-family: 'Maitree', serif;
+
+  p {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: justify;
+  }
+`;
+
 const Home = ({ wishlist, addToWishlist, removeFromWishlist }) => {
   const [showAllProducts, setShowAllProducts] = useState(false);
 
@@ -184,10 +200,14 @@ const Home = ({ wishlist, addToWishlist, removeFromWishlist }) => {
             ))}
           </SliderTrack>
         </SliderWrapper>
+      </NewContentSection>
+
+      {/* New Paragraph Section */}
+      <ParagraphSection>
         <p>
           Explore our gallery showcasing our passion for design, creativity, and innovation.
         </p>
-      </NewContentSection>
+      </ParagraphSection>
 
       {/* Featured Products Section */}
       <div className="home-container">
