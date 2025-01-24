@@ -77,15 +77,14 @@ const HomeContent = styled.div`
 
 const NewContentSection = styled.div`
   position: relative;
-  padding-top: 30px;
   padding-bottom: 50px;
-  background-color:rgb(255, 251, 243);
+  background-color:rgb(255, 238, 212);
   color: #333;
 
   h2 {
     font-size: 2.5rem;
     color:rgb(135, 65, 89);
-    margin-bottom: 60px;
+    margin-bottom: 20px;
     text-align: center;
     font-family: "The Season"
   }
@@ -96,6 +95,7 @@ const NewContentSection = styled.div`
     text-align: justify;
     max-width: 800px;
     margin: 0 auto;
+    
   }
 `;
 
@@ -113,7 +113,7 @@ const SliderWrapper = styled.div`
   width: 100%;
   overflow: hidden;
   height: 420px;
-  background: linear-gradient(to bottom,rgb(253, 243, 227),rgb(249, 249, 249) 60%,rgb(254, 251, 241));
+  background: linear-gradient(to bottom,rgb(255, 238, 212),rgb(249, 249, 249) 60%,rgb(254, 251, 241));
 `;
 
 const SliderTrack = styled.div`
@@ -195,7 +195,6 @@ const Home = ({ wishlist, addToWishlist, removeFromWishlist }) => {
         <div
           className="products-container"
           style={{
-            backgroundColor: "",
             padding: "20px",
             borderRadius: "10px",
           }}
