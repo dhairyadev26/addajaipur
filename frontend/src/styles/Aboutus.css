@@ -16,12 +16,12 @@
 }
 
 .rajasthan-image img {
-  width: 400px;
-  height: 500px;
+  width: 550px;
+  height: 600px;
   margin-top: 70px;
   border-radius: 20px;
   object-fit: cover;
-  box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.914);
+  box-shadow: 8px 15px 19px rgba(0, 0, 0.914, 0.914);
 }
 
 .rajasthan-description {

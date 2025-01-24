@@ -10,6 +10,7 @@ import Cart from "./pages/Cart";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import AboutUs from "./pages/Aboutus";
+import Contact from "./pages/Contact";
 import Wishlist from "./pages/Wishlist";
 import { CartProvider } from "./context/CartContext";
 import Preloader from "./components/ElephantPreloader";
@@ -94,6 +95,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/aboutus" element={<AboutUs />} />
+            <Route path="/contact" element={<Contact />} />
             <Route
               path="/wishlist"
               element={

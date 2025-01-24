@@ -11,7 +11,7 @@ const GlobalStyles = createGlobalStyle`
 
 body {
   font-family: 'Maitree';
-  background: #fff8e7;
+  background:rgb(253, 249, 241);
   color: #333;
   line-height: 1.6;
   padding-top: 0rem; /* Adjust to match the navbar's height */

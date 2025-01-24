@@ -77,15 +77,17 @@ const HomeContent = styled.div`
 
 const NewContentSection = styled.div`
   position: relative;
-  padding-top: 0px;
-  padding-bottom: 30px;
-  background-color: #fff7e9;
+  padding-top: 30px;
+  padding-bottom: 50px;
+  background-color:rgb(255, 251, 243);
   color: #333;
 
   h2 {
     font-size: 2.5rem;
-    margin-bottom: 0px;
+    color:rgb(135, 65, 89);
+    margin-bottom: 60px;
     text-align: center;
+    font-family: "The Season"
   }
 
   p {
@@ -111,7 +113,7 @@ const SliderWrapper = styled.div`
   width: 100%;
   overflow: hidden;
   height: 420px;
-  background: linear-gradient(to bottom, #fff7e9, #ffefd5 60%, #e6d4b2);
+  background: linear-gradient(to bottom,rgb(253, 243, 227),rgb(249, 249, 249) 60%,rgb(254, 251, 241));
 `;
 
 const SliderTrack = styled.div`
@@ -130,7 +132,7 @@ const ImageWrapper = styled.div`
     width: 78%;
     height: 95%;
     object-fit: cover;
-    border-radius: 15px;
+    border-radius: 70px;
     box-shadow: 
       0 8px 15px rgba(255, 255, 255, 0.5),
       0 0 25px rgba(255, 255, 255, 0.8),
@@ -193,7 +195,7 @@ const Home = ({ wishlist, addToWishlist, removeFromWishlist }) => {
         <div
           className="products-container"
           style={{
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "",
             padding: "20px",
             borderRadius: "10px",
           }}
