@@ -1,4 +1,5 @@
 import product1 from "../assets/product1.png";
+import p2 from "../assets/S-H-1.avif";
 
 export const products = [
   {
@@ -28,7 +29,7 @@ export const products = [
     rating: { rate: 4.0, count: 95 },
     category: "kurta",
     description: "A floral printed kurta with a modern touch.",
-    image: "../assets/S-H-1.avif",
+    image:p2,
     images: [
         require("../assets/S-H-1.avif"),
         require("../assets/product1.png"),

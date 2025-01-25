@@ -19,8 +19,8 @@ const ProductDetails = () => {
   }
 
   // Derived fields
-  const price =
-    product.originalPrice - (product.originalPrice * (product.discountPercentage || 0)) / 100;
+  const discountedPrice =
+    product.originalPrice - (product.originalPrice * product.discountPercentage) / 100;
 
   const images = product.images || [require("../assets/product1.png")];
 
@@ -117,10 +117,16 @@ const ProductDetails = () => {
             Rating: <strong>{product.rating?.rate || "N/A"} ★</strong>
           </p>
 
-          <p style={{ fontSize: "20px", fontWeight: "bold" }}>
-            Price: ${price.toFixed(2)}
+          
+          <p style={{ fontSize: "20px", fontWeight: "bold", margin: "10px 0" }}>
+            <span className="discounted-price">${discountedPrice.toFixed(2)}</span>{" "}
+            <span className="original-price" style={{ textDecoration: "line-through", color: "gray", marginLeft: "10px" }}>
+              ${product.originalPrice.toFixed(2)}
+            </span>
           </p>
-
+          <p className="discount-percentage" style={{ color: "#28a745", fontWeight: "bold" }}>
+            {product.discountPercentage}% off
+          </p>
           {/* Display Colors */}
           {product.colors && (
             <div style={{ margin: "10px 0" }}>
@@ -161,22 +167,41 @@ const ProductDetails = () => {
               <button
                 key={size}
                 disabled={stock === 0}
+                className={stock === 0 ? "out-of-stock" : size === selectedSize ? "selected" : ""}
                 style={{
                   margin: "0 5px",
                   padding: "10px",
                   borderRadius: "5px",
-                  border:
-                    size === selectedSize && stock > 0
-                      ? "2px solid #007bff"
-                      : "1px solid gray",
-                  backgroundColor: size === selectedSize && stock > 0 ? "#007bff" : "#fff",
-                  color: size === selectedSize && stock > 0 ? "#fff" : "#000",
+                  border: stock === 0
+                    ? "1px solid #ddd"
+                    : size === selectedSize
+                    ? "2px solid #007bff"
+                    : "1px solid gray",
+                  backgroundColor: stock === 0
+                    ? "#f2f2f2"
+                    : size === selectedSize
+                    ? "#007bff"
+                    : "#fff",
+                  color: stock === 0 ? "#ccc" : size === selectedSize ? "#fff" : "#000",
+                  position: "relative",
                   cursor: stock > 0 ? "pointer" : "not-allowed",
-                  textDecoration: stock === 0 ? "line-through" : "none",
                 }}
                 onClick={() => stock > 0 && setSelectedSize(size)}
               >
                 {size}
+                {stock === 0 && (
+                  <span
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      width: "100%",
+                      height: "2px",
+                      background: "rgba(0, 0, 0, 0.3)",
+                      transform: "translate(-50%, -50%) rotate(45deg)",
+                    }}
+                  ></span>
+                )}
               </button>
             ))}
           </div>
