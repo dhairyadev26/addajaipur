@@ -3,8 +3,10 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { products } from "../data/productsData"; // Importing products data
 import "../styles/Products.css";
+import { FaHeart } from "react-icons/fa";
 
-const ProductDetails = () => {
+
+const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { addToCart } = useCart();
@@ -35,6 +37,15 @@ const ProductDetails = () => {
     alert(`${quantity} ${product.name}(s) in size ${selectedSize} added to cart.`);
     navigate("/cart");
   };
+
+  const handleWishlistToggle = () => {
+    if (wishlist.some((item) => item.id === product.id)) {
+      removeFromWishlist(product.id);
+    } else {
+      addToWishlist(product);
+    }
+  };
+  const isInWishlist = wishlist.some((item) => item.id === product.id);
 
   return (
     <div style={{ padding: "20px" }}>
@@ -127,6 +138,35 @@ const ProductDetails = () => {
           <p className="discount-percentage" style={{ color: "#28a745", fontWeight: "bold" }}>
             {product.discountPercentage}% off
           </p>
+            
+           {/* Wishlist Toggle */}
+           <div style={{ marginBottom: "20px" }}>
+            <button
+              onClick={handleWishlistToggle}
+              style={{
+                padding: "10px 20px",
+                backgroundColor: isInWishlist ? "red" : "#ddd",
+                color: isInWishlist ? "#fff" : "#000",
+                border: "none",
+                borderRadius: "5px",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+              }}
+            >
+              <FaHeart color={isInWishlist ? "white" : "gray"} />
+              {isInWishlist ? "Remove from Wishlist" : "Add to Wishlist"}
+            </button>
+          </div>
+           {/* Display Category */}
+           {product.category && (
+            <p style={{ fontSize: "16px", color: "#555", margin: "10px 0" }}>
+              Category: <strong>{product.category}</strong>
+            </p>
+          )}
+
+          
           {/* Display Colors */}
           {product.colors && (
             <div style={{ margin: "10px 0" }}>
