@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import styled, { keyframes } from "styled-components";
 import girl from "../assets/girl.png";
 import adaaLogo from "../assets/logo1.png";
-import img1 from "../assets/img11.png";
-import img2 from "../assets/img22.png";
-import img3 from "../assets/img33.png";
-import img4 from "../assets/img44.png";
-import img5 from "../assets/img55.png";
-import img6 from "../assets/img66.png";
-import img7 from "../assets/img77.png";
+import img1 from "../assets/h2.jpg";
+import img2 from "../assets/h3.jpg";
+import img3 from "../assets/h4.jpg";
+import img4 from "../assets/h5.jpg";
+import img5 from "../assets/h6.jpg";
+import img6 from "../assets/h7.jpg";
+import img7 from "../assets/h8.jpg";
 import Products from "./Products"; // Import Products component
 
 // Define the keyframe animation for background color changes
@@ -78,7 +78,7 @@ const HomeContent = styled.div`
 const NewContentSection = styled.div`
   position: relative;
   padding-bottom: 0px;
-  background-color:rgb(251, 233, 209);
+  background-color:rgb(251, 244, 235);
   color: #333;
 
   h2 {
@@ -113,7 +113,7 @@ const SliderWrapper = styled.div`
   width: 100%;
   overflow: hidden;
   height: 420px;
-  background: linear-gradient(to bottom,rgb(251, 233, 209),rgb(249, 249, 249) 60%,rgb(251, 247, 234));
+  background: linear-gradient(to bottom,rgb(251, 245, 237),rgb(249, 249, 249) 60%,rgb(251, 247, 234));
 `;
 
 const SliderTrack = styled.div`

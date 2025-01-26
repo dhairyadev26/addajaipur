@@ -28,9 +28,9 @@ const styles = {
   },
   iconsContainer: {
     display: "flex",
-    justifyContent: "space-around",
+    justifyContent: "center",
     alignItems: "center",
-    gap: "30px",
+    gap: "40px",
     marginTop: "20px",
   },
   iconWrapper: {
@@ -38,7 +38,7 @@ const styles = {
     flexDirection: "column",
     alignItems: "center",
     textAlign: "center",
-    color: "#2980b9", // Icon and text color
+    color: "#804341", // Icon and text color
   },
   icon: {
     width: "70px",
@@ -55,6 +55,7 @@ const styles = {
   iconText: {
     fontSize: "14px",
     fontWeight: "bold",
+    marginTop: "-20px",
   },
 };
 const handleMouseEnter = (e) => {
@@ -119,6 +120,9 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
   };
   const isInWishlist = wishlist.some((item) => item.id === product.id);
 
+
+
+
   return (
     <div style={{ padding: "20px" }}>
       {/* Main Product Details */}
@@ -133,14 +137,20 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
           boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
         }}
       >
+
+
+
+
        {/* Image Slider */}
        <div style={{ flex: "1", position: "relative" }}>
           <img
             src={images[activeImage]}
             alt={product.name}
             style={{
-              width: "100%",
-              height: "400px",
+              width: "90%",
+              height: "60%",
+              padding:"80px",
+              marginLeft: "35%",
               objectFit: "cover",
               borderRadius: "10px",
               opacity: isOutOfStock ? 0.5 : 1,
@@ -171,209 +181,268 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
               justifyContent: "center",
             }}
           >
-            {images.map((img, index) => (
-              <img
-                key={index}
-                src={img}
-                alt={`Thumbnail ${index}`}
-                style={{
-                  width: "80px",
-                  height: "80px",
-                  objectFit: "cover",
-                  borderRadius: "5px",
-                  cursor: "pointer",
-                  border: activeImage === index ? "2px solid #007bff" : "1px solid gray",
-                }}
-                onClick={() => setActiveImage(index)}
-              />
-            ))}
-          </div>
-        </div>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "120px"}}>
+  {images.map((img, index) => (
+    <img
+      key={index}
+      src={img}
+      alt={`Thumbnail ${index}`}
+      style={{
+        width: "80px",
+        height: "80px",
+        objectFit: "cover",
+        marginLeft: "-350px",
+        marginTop: "-320px",
+        borderRadius: "5px",
+        cursor: "pointer",
+        border: activeImage === index ? "3px solid rgb(176, 66, 46)" : "1px solid gray",
+        marginBottom: "10px", // Adds space between the images
+      }}
+      onClick={() => setActiveImage(index)}
+    />
+  ))}
+</div>
+</div>
+</div>
+
+
+
+
         {/* Product Info */}
         <div style={{ flex: "1" }}>
-          <h2>{product.name}</h2>
+          <h2 style = {{marginBottom: "-1%"}}>{product.name}</h2>
           <p>{product.description || "No description available."}</p>
 
+
+
+
           {/* Display Rating */}
-          <p style={{ fontSize: "18px", color: "#FFD700", margin: "10px 0" }}>
+          <p style={{ fontSize: "18px", color: "#000", margin: "10px 0" }}>
             Rating: <strong>{product.rating?.rate || "N/A"} ★</strong>
           </p>
-
-          
-          <p style={{ fontSize: "20px", fontWeight: "bold", margin: "10px 0" }}>
+          <p style={{ fontSize: "20px", fontWeight: "bold", margin: "10px 0", marginTop: "-10px", }}>
             <span className="discounted-price">${discountedPrice.toFixed(2)}</span>{" "}
             <span className="original-price" style={{ textDecoration: "line-through", color: "gray", marginLeft: "10px" }}>
               ${product.originalPrice.toFixed(2)}
             </span>
           </p>
-          <p className="discount-percentage" style={{ color: "#28a745", fontWeight: "bold" }}>
+          <p className="discount-percentage" style={{ color: "#273e54", fontWeight: "bold", marginTop:"-10px", }}>
             {product.discountPercentage}% off
           </p>
-            
+
+
+
+
              {/* Tax and Shipping Section */}
-          <p style={{ color: "#555", fontSize: "14px" }}>
+          <p style={{ color: "#555", fontSize: "14px", marginTop: "-1px",  }}>
             Tax included.{" "}
             <Link
               to="/shipping-policy"
-              style={{ color: "#2980b9", textDecoration: "underline", cursor: "pointer" }}
+              style={{ color: "#804341", textDecoration: "underline", cursor: "pointer", marginTop: "-10px", }}
             >
               Shipping
             </Link>{" "}
             calculated at checkout.
           </p>
-          
-           {/* Wishlist Toggle */}
-           <div style={{ marginBottom: "20px" }}>
-            <button
-              onClick={handleWishlistToggle}
-              style={{
-                padding: "10px 20px",
-                backgroundColor: isInWishlist ? "red" : "#ddd",
-                color: isInWishlist ? "#fff" : "#000",
-                border: "none",
-                borderRadius: "5px",
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                gap: "10px",
-              }}
-            >
-              <FaHeart color={isInWishlist ? "white" : "gray"} />
-              {isInWishlist ? "Remove from Wishlist" : "Add to Wishlist"}
-            </button>
-          </div>
-           {/* Display Category */}
-           {product.category && (
-            <p style={{ fontSize: "16px", color: "#555", margin: "10px 0" }}>
-              Category: <strong>{product.category}</strong>
-            </p>
-          )}
 
-          
-          {/* Display Colors */}
-          {product.colors && (
-            <div style={{ margin: "10px 0" }}>
-              <p>Colors:</p>
-              <div style={{ display: "flex", gap: "10px" }}>
-                {product.colors.map((color, index) => (
-                  <div
-                    key={index}
-                    style={{
-                      width: "25px",
-                      height: "25px",
-                      borderRadius: "50%",
-                      backgroundColor: color,
-                      border: "1px solid #ddd",
-                      cursor: "pointer",
-                    }}
-                  ></div>
-                ))}
-              </div>
-            </div>
-          )}
 
-          {/* Product Details in Bullet Points */}
-          {product.details && (
-            <ul style={{ margin: "10px 0", padding: "0 20px", listStyleType: "disc" }}>
-              {product.details.map((detail, index) => (
-                <li key={index} style={{ margin: "5px 0" }}>
-                  {detail}
-                </li>
-              ))}
-            </ul>
-          )}
 
-          {/* Size Selector */}
-          <div style={{ margin: "20px 0" }}>
-            <label style={{ marginRight: "10px" }}>Size:</label>
-            {product.sizes?.map(({ size, stock }) => (
-              <button
-                key={size}
-                disabled={stock === 0}
-                className={stock === 0 ? "out-of-stock" : size === selectedSize ? "selected" : ""}
-                style={{
-                  margin: "0 5px",
-                  padding: "10px",
-                  borderRadius: "5px",
-                  border: stock === 0
-                    ? "1px solid #ddd"
-                    : size === selectedSize
-                    ? "2px solid #007bff"
-                    : "1px solid gray",
-                  backgroundColor: stock === 0
-                    ? "#f2f2f2"
-                    : size === selectedSize
-                    ? "#007bff"
-                    : "#fff",
-                  color: stock === 0 ? "#ccc" : size === selectedSize ? "#fff" : "#000",
-                  position: "relative",
-                  cursor: stock > 0 ? "pointer" : "not-allowed",
-                }}
-                onClick={() => stock > 0 && setSelectedSize(size)}
-              >
-                {size}
-                {stock === 0 && (
-                  <span
-                    style={{
-                      position: "absolute",
-                      top: "50%",
-                      left: "50%",
-                      width: "100%",
-                      height: "2px",
-                      background: "rgba(0, 0, 0, 0.3)",
-                      transform: "translate(-50%, -50%) rotate(45deg)",
-                    }}
-                  ></span>
-                )}
-              </button>
-            ))}
-          </div>
 
-          {/* Quantity Selector */}
-          <div style={{ marginBottom: "20px" }}>
-            <label style={{ marginRight: "10px" }}>Quantity:</label>
-            <button
-              style={{
-                padding: "5px 10px",
-                marginRight: "5px",
-                borderRadius: "5px",
-                border: "1px solid gray",
-                cursor: "pointer",
-              }}
-              onClick={() => setQuantity(Math.max(1, quantity - 1))}
-            >
-              -
-            </button>
-            <span style={{ margin: "0 10px" }}>{quantity}</span>
-            <button
-              style={{
-                padding: "5px 10px",
-                borderRadius: "5px",
-                border: "1px solid gray",
-                cursor: "pointer",
-              }}
-              onClick={() => setQuantity(quantity + 1)}
-            >
-              +
-            </button>
-          </div>
-          <div style={styles.container}>
-          
-
-             {/* Delivery & Return Link */}
-      {/* Delivery & Return Link */}
-  <div className="delivery-return-section">
-    <button onClick={openModal} className="delivery-return-link">
-      Delivery & Return
-    </button>
+           {/* Display Colors */}
+{product.colors && (
+  <div style={{ margin: "10px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+    <div style={{ display: "flex", gap: "10px" }}>
+      {product.colors.map((color, index) => (
+        <div
+          key={index}
+          style={{
+            width: "25px",
+            height: "25px",
+            borderRadius: "50%",
+            backgroundColor: color,
+            border: "1px solid #ddd",
+            cursor: "pointer",
+          }}
+        ></div>
+      ))}
+    </div>
   </div>
+)}
 
+
+
+
+           {/* Size Selector */}
+<div style={{ margin: "20px 0", display: "flex", justifyContent: "center", alignItems: "center", flexWrap: "wrap" }}>
+  <label style={{ marginRight: "10px" }}>Size:</label>
+  {product.sizes?.map(({ size, stock }) => (
+    <button
+      key={size}
+      disabled={stock === 0}
+      className={stock === 0 ? "out-of-stock" : size === selectedSize ? "selected" : ""}
+      style={{
+        margin: "0 5px",
+        padding: "10px",
+        borderRadius: "5px",
+        border: stock === 0
+          ? "1px solid #ddd"
+          : size === selectedSize
+          ? "2px solid #000"
+          : "1px solid gray",
+        backgroundColor: stock === 0
+          ? "#f2f2f2"
+          : size === selectedSize
+          ? "#d98484"
+          : "#fff",
+        color: stock === 0 ? "#ccc" : size === selectedSize ? "#fff" : "#000",
+        position: "relative",
+        cursor: stock > 0 ? "pointer" : "not-allowed",
+      }}
+      onClick={() => stock > 0 && setSelectedSize(size)}
+    >
+      {size}
+      {stock === 0 && (
+        <span
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            width: "100%",
+            height: "2px",
+            background: "rgba(0, 0, 0, 0.3)",
+            transform: "translate(-50%, -50%) rotate(45deg)",
+          }}
+        ></span>
+      )}
+    </button>
+  ))}
+</div>
+
+
+
+
+
+           {/* Quantity Selector */}
+<div style={{ marginBottom: "20px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+  <label style={{ marginRight: "10px" }}>Quantity:</label>
+  <button
+    style={{
+      padding: "5px 10px",
+      marginRight: "5px",
+      borderRadius: "5px",
+      border: "1px solid gray",
+      cursor: "pointer",
+    }}
+    onClick={() => setQuantity(Math.max(1, quantity - 1))}
+  >
+    -
+  </button>
+  <span style={{ margin: "0 10px" }}>{quantity}</span>
+  <button
+    style={{
+      padding: "5px 10px",
+      borderRadius: "5px",
+      border: "1px solid gray",
+      cursor: "pointer",
+    }}
+    onClick={() => setQuantity(quantity + 1)}
+  >
+    +
+  </button>
+</div>
+<div style={styles.container}> 
+
+
+
+              {/* Add to Cart Button */}
+         <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "10px", marginTop: "-20px", }}>
+  <button
+    onClick={handleAddToCart}
+    disabled={isOutOfStock}
+    style={{
+      padding: "10px 100px",
+      backgroundColor: isOutOfStock ? "#ccc" : "#804341",
+      color: "#fff",
+      border: "#fff",
+      borderRadius: "5px",
+      cursor: isOutOfStock ? "not-allowed" : "pointer",
+    }}
+  >
+    Add to Cart
+  </button>
+  <button
+  onClick={() => navigate(-1)}
+  style={{
+    padding: "9px 6px",
+    backgroundColor: "transparent",
+    color: "#000",
+    border: "1px solid #000",  // Added black border
+    borderRadius: "5px",
+    cursor: "pointer",
+  }}
+>
+  Back
+</button>
+
+</div>
+
+
+
+
+
+           {/* Wishlist Toggle */}
+<div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+  <button
+    onClick={handleWishlistToggle}
+    style={{
+      padding: '10px 80px',
+      backgroundColor: isInWishlist ? '#0a0a0a' : '#ddd',
+      color: isInWishlist ? '#fff' : '#000',
+      border: 'none',
+      borderRadius: '5px',
+      cursor: 'pointer',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '10px',
+      marginTop: '16px',
+    }}
+  >
+    <span style={{
+  fontSize: isInWishlist ? '18px' : '18px',
+  fontWeight: isInWishlist ? 'normal' : 'normal',  // Makes the "Add to Wishlist" text bold
+  letterSpacing: isInWishlist ? 'normal' : '1px', // Adds some spacing between letters
+}}>
+  {isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}
+</span>
+  </button>
+</div>
+
+
+
+
+
+      {/* Delivery & Return Link */}
+      <div className="delivery-return-section">
+            <button onClick={openModal} className="delivery-return-link"
+            style={{
+              padding: "10px 20px",
+              backgroundColor: "transparent",  // Transparent background
+              color: "black",  // Black text color
+              border: "1px solid black",  // Black border
+              borderRadius: "5px",
+              cursor: "pointer",
+              display: "block",  // To allow centering
+              margin: "0 auto",  // Center the button horizontally
+            }} >
+            Delivery & Return
+            </button>
+          </div>
 
       {/* Popup Modal */}
       {isModalOpen && (
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-box" onClick={(e) => e.stopPropagation()}>
-            <button className="close-btn" onClick={closeModal}>
+            <button className="close-btn"  onClick={closeModal} style={{ position: 'absolute', right: '50px', top: '650px' }} >
               &times;
             </button>
             <h2>Delivery & Return</h2>
@@ -445,39 +514,46 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
         </div>
       </div>
     </div>
- 
-          {/* Add to Cart Button */}
-          <button
-            onClick={handleAddToCart}
-            disabled={isOutOfStock}
-            style={{
-              padding: "10px 20px",
-              backgroundColor: isOutOfStock ? "#ccc" : "#28a745",
-              color: "#fff",
-              border: "none",
-              borderRadius: "5px",
-              cursor: isOutOfStock ? "not-allowed" : "pointer",
-              marginRight: "10px",
-            }}
-          >
-            Add to Cart
-          </button>
-          <button
-            onClick={() => navigate(-1)}
-            style={{
-              padding: "10px 20px",
-              backgroundColor: "#007bff",
-              color: "#fff",
-              border: "none",
-              borderRadius: "5px",
-              cursor: "pointer",
-            }}
-          >
-            Back
-          </button>
+
+
+
+        {/* Display Category */}
+          {product.category && (
+            <p style={{ fontSize: "16px", color: "#555", margin: "10px" }}>
+              Category: <strong>{product.category}</strong>
+            </p>
+          )}
+
+
+
+
+          {/* Product Details in Bullet Points */}
+          {product.details && (
+  <div style={{ textAlign: "center" }}>
+    <ul
+      style={{
+        display: "inline-block",
+        textAlign: "left",
+        listStylePosition: "inside",
+        marginBottom: "-10px",
+        padding: "0 20px",
+      }}
+    >
+      {product.details.map((detail, index) => (
+        <li key={index} style={{ margin: "5px 0" }}>
+          {detail}
+        </li>
+      ))}
+    </ul>
+  </div>
+)}
+
+
+
+
          {/* Similar Products Section */}
 {similarProducts.length > 0 && (
-  <div style={{ marginTop: "40px", padding: "20px", backgroundColor: "#f4f4f4", borderRadius: "10px" }}>
+  <div style={{ marginTop: "30px", padding: "20px", backgroundColor: "#fcf4eb", borderRadius: "10px", marginLeft: "-100%", marginRight: "20px" }}>
     <h3 style={{ fontSize: "22px", fontWeight: "bold", marginBottom: "20px" }}>Similar Products</h3>
     <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
       {similarProducts.map((similarProduct) => (

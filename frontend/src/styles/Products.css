@@ -156,7 +156,7 @@ button:hover {
 }
 
 .discounted-price {
-   color:#4CAF50; /* Green for discounted price */
+   color:#1e3242; /* Green for discounted price */
    font-weight:bold;
 }
 
@@ -167,7 +167,7 @@ button:hover {
 }
 
 .discount-percentage {
-   color:#FF5722; /* Orange for discount percentage */
+   color:#3c7a92; /* Orange for discount percentage */
    font-weight:bold;
 }
 
