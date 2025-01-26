@@ -2,12 +2,22 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/Products.css";
 import { FaHeart } from "react-icons/fa";
+import { FaPlus, FaMinus } from "react-icons/fa";
 import ProductModal from "../components/ProductModal";
 import { products } from "../data/productsData";
 
 const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [sortOption, setSortOption] = useState("");
+  const [filters, setFilters] = useState({
+    category: [],
+    priceRange: [],
+  });
+  const [expandedSections, setExpandedSections] = useState({
+    category: true,
+    priceRange: true,
+    discount: true,
+  });
 
   const handleWishlistToggle = (product) => {
     if (wishlist.some((item) => item.id === product.id)) {
@@ -21,8 +31,64 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
     setSortOption(e.target.value);
   };
 
+  const handleFilterChange = (e) => {
+    const { name, value, checked } = e.target;
+    setFilters((prevFilters) => {
+      const updatedFilters = { ...prevFilters };
+      if (checked) {
+        updatedFilters[name] = [...(prevFilters[name] || []), value];
+      } else {
+        updatedFilters[name] = prevFilters[name].filter((item) => item !== value);
+      }
+      return updatedFilters;
+    });
+  };
+
+  const toggleSection = (section) => {
+    setExpandedSections((prev) => ({
+      ...prev,
+      [section]: !prev[section],
+    }));
+  };
+
+  const getPriceRanges = () => {
+    const maxPrice = Math.max(
+      ...products.map((product) => product.originalPrice)
+    );
+    const ranges = [];
+    for (let i = 0; i <= maxPrice; i += 500) {
+      ranges.push({ min: i, max: i + 499 });
+    }
+    return ranges;
+  };
+
+  const getFilteredProducts = () => {
+    return products.filter((product) => {
+      const discountedPrice =
+        product.originalPrice -
+        (product.originalPrice * product.discountPercentage) / 100;
+
+      const matchesCategory =
+        !filters.category.length || filters.category.includes(product.category);
+      const matchesPriceRange =
+        !filters.priceRange.length ||
+        filters.priceRange.some((range) => {
+          const [min, max] = range.split("-").map(Number);
+          return discountedPrice >= min && discountedPrice <= max;
+        });
+        const matchesDiscount =
+  !filters.discount?.length || // Use optional chaining with a fallback
+  filters.discount.some((range) => {
+    const [min, max] = range.split("-").map(Number);
+    return product.discountPercentage >= min && product.discountPercentage <= max;
+  });
+
+      return matchesCategory && matchesPriceRange && matchesDiscount;
+    });
+  };
+
   const getSortedProducts = () => {
-    let sortedProducts = [...products];
+    let sortedProducts = getFilteredProducts();
 
     switch (sortOption) {
       case "price-high-to-low":
@@ -62,7 +128,7 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
   const renderProducts = () =>
     getSortedProducts().map((product) => {
       const discountedPrice =
-        product.originalPrice - 
+        product.originalPrice -
         (product.originalPrice * product.discountPercentage) / 100;
 
       const isInWishlist = wishlist.some((item) => item.id === product.id);
@@ -112,26 +178,119 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
     });
 
   return (
-    <div className="products-container">
-      <h2>PRODUCTS</h2>
-      <div className="sort-options">
-        <label htmlFor="sort">Sort by:</label>
-        <select id="sort" value={sortOption} onChange={handleSortChange}>
-          <option value="">Select</option>
-          <option value="price-high-to-low">Price (Highest First)</option>
-          <option value="price-low-to-high">Price (Lowest First)</option>
-          <option value="discount">Discount</option>
-          <option value="newest">What's New</option>
-          <option value="rating">Ratings</option>
-        </select>
+    <div className="products-page">
+      <div className="filters-container">
+        <h3>Filters</h3>
+        <div className="filter-section">
+          <div className="filter-header" onClick={() => toggleSection("category")}>
+            <h4>Category</h4>
+            {expandedSections.category ? <FaMinus /> : <FaPlus />}
+          </div>
+          {expandedSections.category && (
+            <div className="filter-category">
+              {[...new Set(products.map((product) => product.category))]
+                .filter((category) => category)
+                .map((category) => (
+                  <div className="filter-item" key={category}>
+                    <input
+                      type="checkbox"
+                      id={`category-${category}`}
+                      name="category"
+                      value={category}
+                      onChange={handleFilterChange}
+                    />
+                    <label htmlFor={`category-${category}`}>{category}</label>
+                  </div>
+                ))}
+            </div>
+          )}
+        </div>
+        <div className="filter-section">
+          <div className="filter-header" onClick={() => toggleSection("priceRange")}>
+            <h4>Price Range</h4>
+            {expandedSections.priceRange ? <FaMinus /> : <FaPlus />}
+          </div>
+          {expandedSections.priceRange && (
+            <div className="filter-price">
+              {getPriceRanges()
+                .filter((range) =>
+                  products.some(
+                    (product) =>
+                      product.originalPrice -
+                        (product.originalPrice * product.discountPercentage) / 100 >=
+                        range.min &&
+                      product.originalPrice -
+                        (product.originalPrice * product.discountPercentage) / 100 <=
+                        range.max
+                  )
+                )
+                .map((range, index) => (
+                  <div className="filter-item" key={index}>
+                    <input
+                      type="checkbox"
+                      id={`price-${index}`}
+                      name="priceRange"
+                      value={`${range.min}-${range.max}`}
+                      onChange={handleFilterChange}
+                    />
+                    <label htmlFor={`price-${index}`}>
+                      ${range.min} - ${range.max}
+                    </label>
+                  </div>
+                ))}
+            </div>
+          )}
+          <div className="filter-section">
+  <div className="filter-header" onClick={() => toggleSection("discount")}>
+    <h4>Discount</h4>
+    {expandedSections.discount ? <FaMinus /> : <FaPlus />}
+  </div>
+  {expandedSections.discount && (
+    <div className="filter-discount">
+      {[0, 20, 40, 60, 80].map((start, index) => {
+        const end = start + 20 > 100 ? 100 : start + 20;
+        return (
+          <div className="filter-item" key={index}>
+            <input
+              type="checkbox"
+              id={`discount-${index}`}
+              name="discount"
+              value={`${start}-${end}`}
+              onChange={handleFilterChange}
+            />
+            <label htmlFor={`discount-${index}`}>
+              {start}% - {end > 100 ? "100%" : `${end}%`}
+            </label>
+          </div>
+        );
+      })}
+    </div>
+  )}
+</div>
+
+        </div>
       </div>
-      <div className="product-list">{renderProducts()}</div>
-      {selectedProduct && (
-        <ProductModal
-          product={selectedProduct}
-          onClose={() => setSelectedProduct(null)}
-        />
-      )}
+      <div className="products-container">
+        <h2>PRODUCTS</h2>
+        <div className="sort-options">
+          <label htmlFor="sort">Sort by:</label>
+          <select id="sort" value={sortOption} onChange={handleSortChange}>
+            <option value="">Select</option>
+            <option value="price-high-to-low">Price (Highest First)</option>
+            <option value="price-low-to-high">Price (Lowest First)</option>
+            <option value="discount">Discount</option>
+            <option value="newest">What's New</option>
+            <option value="rating">Ratings</option>
+          </select>
+        </div>
+        <div className="product-list">{renderProducts()}</div>
+        {selectedProduct && (
+          <ProductModal
+            product={selectedProduct}
+            onClose={() => setSelectedProduct(null)}
+          />
+        )}
+      </div>
     </div>
   );
 };

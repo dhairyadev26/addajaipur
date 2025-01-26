@@ -93,7 +93,7 @@ export const products = [
   {
     id: 7,
     name: "Banarasi Silk Saree",
-    originalPrice: 100,
+    originalPrice: 2000,
     discountPercentage: 30,
     rating: { rate: 4.8, count: 210 },
     image: product1,
@@ -101,7 +101,7 @@ export const products = [
   {
     id: 8,
     name: "Kanjeevaram Saree",
-    originalPrice: 120,
+    originalPrice: 1200,
     discountPercentage: 25,
     rating: { rate: 4.6, count: 190 },
     image: product1,
