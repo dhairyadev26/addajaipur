@@ -1,0 +1,130 @@
+
+
+/* Container layout for the login page */
+.signup-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70%;
+    max-width: 1200px;
+    height: 50%;
+    margin-bottom: 60px;
+    margin-top: 80px;
+    margin-left:auto;
+    margin-right:auto;
+    background-color: rgb(251, 236, 222);
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+  }
+  
+  /* Left section with the image */
+  .image-section {
+    flex: 1;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    gap: 20px;
+  }
+  
+  .image-section img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  /* Right section with the form */
+  .form-section {
+    flex: 1;
+    padding: 50px;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #fdf3ea;
+  }
+  
+  h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 28px;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 5px;
+  }
+  
+  input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ecddd8;
+    border-radius: 5px;
+  }
+  
+  .auth-button {
+    background-color: #a21d1d;
+    color: rgb(252, 246, 242);
+    padding: 12px;
+    border: none;
+    align-items: center;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .auth-button:hover {
+    background-color: #a41a1a92;
+  }
+  
+  /* Links and extra options */
+  .extra-links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .extra-links a {
+    font-size: 14px;
+    color: #d02d1e;
+    text-decoration: none;
+  }
+  
+  .extra-links a:hover {
+    text-decoration: underline;
+  }
+  
+  p {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 20px;
+  }
+  
+  p a {
+    color: #cc1b1b;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  p a:hover {
+    text-decoration: underline;
+  }
+  

@@ -2,6 +2,7 @@ import React from "react";
 import "../styles/Contact.css";
 import contactimg from "../assets/horse.png"; // Replace with your image path
 
+
 const Contact = () => {
   return (
     <div className="contact-page">
@@ -50,7 +51,7 @@ const Contact = () => {
         <div className="map-section">
           <iframe
             title="Google Maps"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9938.197866874696!2d-0.11954326645418485!3d51.50329764986307!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487604cb687a5e8f%3A0x4d6e58b1b8fd7765!2sLondon%20Eye!5e0!3m2!1sen!2sus!4v1648554399602!5m2!1sen!2sus"
+            src="https://www.google.com/mas/embed?pb=!1m18!1m12!1m3!1d9938.197866874696!2d-0.11954326645418485!3d51.50329764986307!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487604cb687a5e8f%3A0x4d6e58b1b8fd7765!2sLondon%20Eye!5e0!3m2!1sen!2sus!4v1648554399602!5m2!1sen!2sus"
             width="100%"
             height="300"
             style={{ border: "0" }}

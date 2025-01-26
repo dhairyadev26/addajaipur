@@ -4,6 +4,7 @@ import founder from "../assets/Founder.png";
 import cofounder from "../assets/Cofounder.png";
 import about1img from "../assets/about1.jpg"; // Add Rajasthan image
 
+
 const Aboutus = () => {
   return (
     <div className="about-container">

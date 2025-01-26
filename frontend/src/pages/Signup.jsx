@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom"; // Import Link
-import "../styles/Login.css";
+import "../styles/Signup.css";
+import img from "../assets/about2.jpeg";
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -14,9 +15,16 @@ const Signup = () => {
   };
 
   return (
-    <div className="auth-container">
+
+    <div className="signup-container">
+          {/* Left section with an image */}
+          <div className="image-section">
+          <img src={img} alt="Contact Us Banner" className="banner-image" />
+          </div>
+
+    <div className="form-section">
       <h2>Sign Up</h2>
-      <form onSubmit={handleSignup} className="auth-form">
+      <form onSubmit={handleSignup} className="form">
         <div className="form-group">
           <label>Name:</label>
           <input
@@ -51,6 +59,7 @@ const Signup = () => {
       <p>
         Already have an account? <Link to="/login">Login</Link>
       </p>
+    </div>
     </div>
   );
 };
