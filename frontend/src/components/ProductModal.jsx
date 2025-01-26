@@ -3,35 +3,28 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 
 const ProductModal = ({ product, onClose }) => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0); // For main image index
-  const [selectedSize, setSelectedSize] = useState(""); // For size selection
-  const [quantity, setQuantity] = useState(1); // For quantity selection
+  const [activeImage, setActiveImage] = useState(0);
+  const [selectedSize, setSelectedSize] = useState(null);
+  const [quantity, setQuantity] = useState(1);
   const { addToCart } = useCart();
   const navigate = useNavigate(); // Hook for navigation
 
-  // Array of available sizes
-  const sizes = ["S", "M", "L", "XL", "XXL"];
-
-  // Array of images for carousel
-  const images = [
-    product.image,
-    "https://via.placeholder.com/150/FF0000", // Replace with actual images
-    "https://via.placeholder.com/150/00FF00",
-    "https://via.placeholder.com/150/0000FF",
-    "https://via.placeholder.com/150/FFFF00",
-  ];
+  
+    const images = product.images || [require("../assets/product1.png")];
+  
+    const isOutOfStock = product.sizes?.every((size) => size.stock === 0);
 
   // Auto-slide only for the main image
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+      setActiveImage((prevIndex) => (prevIndex + 1) % images.length);
     }, 1000); // Change image every 1 second
 
     return () => clearInterval(interval); // Cleanup on unmount
   }, [images.length]);
 
   const handleThumbnailClick = (index) => {
-    setCurrentImageIndex(index); // Set main image on thumbnail click
+    setActiveImage(index); // Set main image on thumbnail click
   };
 
   const handleAddToCart = () => {
@@ -94,8 +87,25 @@ const ProductModal = ({ product, onClose }) => {
           display: "flex",
           flexDirection: "row",
           backgroundColor: "#f9f9f9",
+          opacity: isOutOfStock ? 0.5 : 1,
         }}
-      >
+      >{isOutOfStock && (
+        <p
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            backgroundColor: "rgba(0, 0, 0, 0.7)",
+            color: "#fff",
+            padding: "10px 20px",
+            borderRadius: "5px",
+            fontSize: "18px",
+          }}
+        >
+          Product is out of stock
+        </p>
+      )}
         {/* Thumbnails */}
         <div
           style={{
@@ -107,6 +117,7 @@ const ProductModal = ({ product, onClose }) => {
             overflowY: "auto",
             padding: "10px",
           }}
+        
         >
           {images.map((img, index) => (
             <img
@@ -118,7 +129,7 @@ const ProductModal = ({ product, onClose }) => {
                 margin: "5px 0",
                 cursor: "pointer",
                 border:
-                  currentImageIndex === index
+                setActiveImage === index
                     ? "2px solid #007bff"
                     : "1px solid gray",
                 borderRadius: "5px",
@@ -138,7 +149,7 @@ const ProductModal = ({ product, onClose }) => {
           }}
         >
           <img
-            src={images[currentImageIndex]}
+            src={images[activeImage]}
             alt="Product Main"
             style={{
               width: "90%",
@@ -200,32 +211,51 @@ const ProductModal = ({ product, onClose }) => {
         </p>
         <p style={{ color: "green" }}>{product.discountPercentage}% off</p>
 
-        {/* Size Selection */}
-        <div style={{ margin: "18px 0"}}>
-          <label style={{ fontSize: "16px", marginRight: "10px" }}>
-            Select Size:
-          </label>
-          {sizes.map((size) => (
-            <button
-              key={size}
-              style={{
-                padding: "10px",
-                margin: "0 4px",
-                borderRadius: "5px",
-                border:
-                  selectedSize === size
+        {/* Size Selector */}
+        <div style={{ margin: "20px 0" }}>
+            <label style={{ marginRight: "10px" }}>Size:</label>
+            {product.sizes?.map(({ size, stock }) => (
+              <button
+                key={size}
+                disabled={stock === 0}
+                className={stock === 0 ? "out-of-stock" : size === selectedSize ? "selected" : ""}
+                style={{
+                  margin: "0 5px",
+                  padding: "10px",
+                  borderRadius: "5px",
+                  border: stock === 0
+                    ? "1px solid #ddd"
+                    : size === selectedSize
                     ? "2px solid #007bff"
                     : "1px solid gray",
-                backgroundColor: selectedSize === size ? "#007bff" : "#fff",
-                color: selectedSize === size ? "#fff" : "#000",
-                cursor: "pointer",
-              }}
-              onClick={() => setSelectedSize(size)}
-            >
-              {size}
-            </button>
-          ))}
-        </div>
+                  backgroundColor: stock === 0
+                    ? "#f2f2f2"
+                    : size === selectedSize
+                    ? "#007bff"
+                    : "#fff",
+                  color: stock === 0 ? "#ccc" : size === selectedSize ? "#fff" : "#000",
+                  position: "relative",
+                  cursor: stock > 0 ? "pointer" : "not-allowed",
+                }}
+                onClick={() => stock > 0 && setSelectedSize(size)}
+              >
+                {size}
+                {stock === 0 && (
+                  <span
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      width: "100%",
+                      height: "2px",
+                      background: "rgba(0, 0, 0, 0.3)",
+                      transform: "translate(-50%, -50%) rotate(45deg)",
+                    }}
+                  ></span>
+                )}
+              </button>
+            ))}
+          </div>
 
         {/* Quantity Selector */}
         <div style={{ marginBottom: "20px" }}>

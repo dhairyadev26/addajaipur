@@ -54,6 +54,7 @@ export const products = [
     originalPrice: 25,
     discountPercentage: 10,
     rating: { rate: 3.8, count: 70 },
+    category: "kurta",
     image: product1,
     colors: ["#ff5733", "#33ff57", "#3357ff"],
     sizes: [
@@ -67,6 +68,7 @@ export const products = [
     id: 4,
     name: "Designer Party Kurta",
     originalPrice: 40,
+    category: "saree",
     discountPercentage: 25,
     rating: { rate: 4.9, count: 150 },
     image: product1,
@@ -76,6 +78,7 @@ export const products = [
     name: "Summer Floral Frock",
     originalPrice: 20,
     discountPercentage: 15,
+    category: "saree",
     rating: { rate: 4.2, count: 110 },
     image: product1,
   },

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { products } from "../data/productsData"; // Importing products data
@@ -73,6 +73,10 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
   const [selectedSize, setSelectedSize] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [activeImage, setActiveImage] = useState(0);
+   // Scroll to top on component mount or when the `id` changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
    // Hooks should always be called at the top level
    const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -84,7 +88,10 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
   if (!product) {
     return <p>Product not found</p>;
   }
-
+  // Filter similar products by category
+  const similarProducts = products.filter(
+    (item) => item.category === product.category && item.id !== product.id
+  );
   // Derived fields
   const discountedPrice =
     product.originalPrice - (product.originalPrice * product.discountPercentage) / 100;
@@ -112,9 +119,6 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
   };
   const isInWishlist = wishlist.some((item) => item.id === product.id);
 
-
-
-
   return (
     <div style={{ padding: "20px" }}>
       {/* Main Product Details */}
@@ -129,8 +133,8 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
           boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
         }}
       >
-        {/* Image Slider */}
-        <div style={{ flex: "1", position: "relative" }}>
+       {/* Image Slider */}
+       <div style={{ flex: "1", position: "relative" }}>
           <img
             src={images[activeImage]}
             alt={product.name}
@@ -185,7 +189,6 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
             ))}
           </div>
         </div>
-
         {/* Product Info */}
         <div style={{ flex: "1" }}>
           <h2>{product.name}</h2>
@@ -472,6 +475,62 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
           >
             Back
           </button>
+         {/* Similar Products Section */}
+{similarProducts.length > 0 && (
+  <div style={{ marginTop: "40px", padding: "20px", backgroundColor: "#f4f4f4", borderRadius: "10px" }}>
+    <h3 style={{ fontSize: "22px", fontWeight: "bold", marginBottom: "20px" }}>Similar Products</h3>
+    <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
+      {similarProducts.map((similarProduct) => (
+        <div
+          key={similarProduct.id}
+          style={{
+            width: "200px",
+            border: "1px solid #ddd",
+            borderRadius: "10px",
+            backgroundColor: "#fff",
+            padding: "10px",
+            boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
+            textAlign: "center",
+          }}
+        >
+          <img
+            src={similarProduct.images?.[0] || require("../assets/product1.png")}
+            alt={similarProduct.name}
+            style={{
+              width: "100%",
+              height: "150px",
+              objectFit: "cover",
+              borderRadius: "8px",
+              marginBottom: "10px",
+            }}
+          />
+          <h4 style={{ fontSize: "16px", fontWeight: "bold", marginBottom: "5px" }}>{similarProduct.name}</h4>
+          <p style={{ color: "#28a745", fontWeight: "bold" }}>
+            ${(
+              similarProduct.originalPrice -
+              (similarProduct.originalPrice * similarProduct.discountPercentage) / 100
+            ).toFixed(2)}
+          </p>
+          <button
+            style={{
+              padding: "8px 15px",
+              backgroundColor: "#007bff",
+              color: "#fff",
+              border: "none",
+              borderRadius: "5px",
+              cursor: "pointer",
+              marginTop: "10px",
+            }}
+            onClick={() => navigate(`/products/${similarProduct.id}`)}
+          >
+            View Details
+          </button>
+        </div>
+      ))}
+    </div>
+  </div>
+)}
+
         </div>
       </div>
     </div>
