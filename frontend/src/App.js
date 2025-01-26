@@ -14,6 +14,8 @@ import Contact from "./pages/Contact";
 import Wishlist from "./pages/Wishlist";
 import { CartProvider } from "./context/CartContext";
 import Preloader from "./components/ElephantPreloader";
+import ShippingPolicy from "./pages/ShippingPolicy";
+
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -96,6 +98,7 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/aboutus" element={<AboutUs />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/shipping-policy" element={<ShippingPolicy />} />
             <Route
               path="/wishlist"
               element={

@@ -4,8 +4,68 @@ import { useCart } from "../context/CartContext";
 import { products } from "../data/productsData"; // Importing products data
 import "../styles/Products.css";
 import { FaHeart } from "react-icons/fa";
+import securepaymentIcon from "../assets/securepayment.svg";
+import truckIcon from "../assets/truck.svg";
+import exchangeIcon from "../assets/exchange.svg";
+import { Link } from "react-router-dom";
 
 
+
+const styles = {
+  container: {
+    padding: "20px",
+    fontFamily: "Arial, sans-serif",
+    color: "#333",
+  },
+  title: {
+    fontSize: "24px",
+    fontWeight: "bold",
+    marginBottom: "10px",
+  },
+  description: {
+    fontSize: "16px",
+    marginBottom: "20px",
+  },
+  iconsContainer: {
+    display: "flex",
+    justifyContent: "space-around",
+    alignItems: "center",
+    gap: "30px",
+    marginTop: "20px",
+  },
+  iconWrapper: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    textAlign: "center",
+    color: "#2980b9", // Icon and text color
+  },
+  icon: {
+    width: "70px",
+    height: "70px",
+    marginBottom: "8px",
+    filter: "grayscale(100%)", // Make the icon gray initially
+    transition: "filter 0.3s, transform 0.3s",
+    
+  },
+  iconHover: {
+    filter: "grayscale(0%)",
+    transform: "scale(1.1)",
+  },
+  iconText: {
+    fontSize: "14px",
+    fontWeight: "bold",
+  },
+};
+const handleMouseEnter = (e) => {
+  e.target.style.filter = styles.iconHover.filter;
+  e.target.style.transform = styles.iconHover.transform;
+};
+
+const handleMouseLeave = (e) => {
+  e.target.style.filter = styles.icon.filter;
+  e.target.style.transform = "scale(1)";
+};
 const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -13,6 +73,11 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
   const [selectedSize, setSelectedSize] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [activeImage, setActiveImage] = useState(0);
+   // Hooks should always be called at the top level
+   const [isModalOpen, setIsModalOpen] = useState(false);
+
+   const openModal = () => setIsModalOpen(true);
+   const closeModal = () => setIsModalOpen(false);
 
   const product = products.find((item) => item.id === parseInt(id));
 
@@ -46,6 +111,9 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
     }
   };
   const isInWishlist = wishlist.some((item) => item.id === product.id);
+
+
+
 
   return (
     <div style={{ padding: "20px" }}>
@@ -139,6 +207,18 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
             {product.discountPercentage}% off
           </p>
             
+             {/* Tax and Shipping Section */}
+          <p style={{ color: "#555", fontSize: "14px" }}>
+            Tax included.{" "}
+            <Link
+              to="/shipping-policy"
+              style={{ color: "#2980b9", textDecoration: "underline", cursor: "pointer" }}
+            >
+              Shipping
+            </Link>{" "}
+            calculated at checkout.
+          </p>
+          
            {/* Wishlist Toggle */}
            <div style={{ marginBottom: "20px" }}>
             <button
@@ -274,7 +354,95 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
               +
             </button>
           </div>
+          <div style={styles.container}>
+          
 
+             {/* Delivery & Return Link */}
+      {/* Delivery & Return Link */}
+  <div className="delivery-return-section">
+    <button onClick={openModal} className="delivery-return-link">
+      Delivery & Return
+    </button>
+  </div>
+
+
+      {/* Popup Modal */}
+      {isModalOpen && (
+        <div className="modal-overlay" onClick={closeModal}>
+          <div className="modal-box" onClick={(e) => e.stopPropagation()}>
+            <button className="close-btn" onClick={closeModal}>
+              &times;
+            </button>
+            <h2>Delivery & Return</h2>
+            <p>
+              <strong>ADAA JAIPUR</strong>
+            </p>
+            <p>
+              We ship through registered and trusted courier partners for orders
+              within India. Please note that Saturdays, Sundays, and Public
+              Holidays are not set as working days for standard deliveries.
+            </p>
+            <p>
+              <strong>DOMESTIC SHIPPING:</strong>
+            </p>
+            <p>
+              We offer free shipping for all domestic orders. Delivery time for
+              shipping is an estimated 3-10 days. The deliveries are dispatched
+              to the shipping address recorded at checkout. All orders are
+              processed from our warehouse in Jaipur.
+            </p>
+            <p>
+              <strong>Help</strong>
+            </p>
+            <p>
+              Give us a shout if you have any other questions and/or concerns.
+            </p>
+            <p>
+              Email: <a href="mailto:adaajaipur4india@gmail.com">adaajaipur4india@gmail.com</a>
+            </p>
+            <p>Phone: +91 20982812070003</p>
+          </div>
+        </div>
+      )}
+              {/*  Icon */}
+      <div style={styles.iconsContainer}>
+        <div style={styles.iconWrapper}>
+          <img
+            src={truckIcon}
+            alt="Free Delivery"
+            style={styles.icon}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          />
+          <span style={styles.iconText}>Free Delivery</span>
+        </div>
+
+        {/* Delivery Icon */}
+        <div style={styles.iconWrapper}>
+          <img
+            src={securepaymentIcon}
+            alt="Secure Payment"
+            style={styles.icon}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          />
+          <span style={styles.iconText}>Secure Payment</span>
+        </div>
+
+        {/* Price Guarantee Icon */}
+        <div style={styles.iconWrapper}>
+          <img
+            src={exchangeIcon}
+            alt="Easy Exchange"
+            style={styles.icon}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          />
+          <span style={styles.iconText}>Easy Exchange</span>
+        </div>
+      </div>
+    </div>
+ 
           {/* Add to Cart Button */}
           <button
             onClick={handleAddToCart}
