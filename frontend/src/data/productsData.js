@@ -93,7 +93,7 @@ export const products = [
   {
     id: 6,
     name: "Casual Denim Frock",
-    originalPrice: 30,
+    originalPrice: 120,
     discountPercentage: 10,
     rating: { rate: 3.9, count: 85 },
     image: product1,

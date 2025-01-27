@@ -12,18 +12,20 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
   const [filters, setFilters] = useState({
     category: [],
     priceRange: [],
-    discount: [],
+    discount: [], 
     rating: [], // Added for rating
-    size: [],   // Added for size
-    color:[],
+    size: [], 
+    color: [],
+
   });
   const [expandedSections, setExpandedSections] = useState({
     category: true,
     priceRange: true,
     discount: true,
-    rating: true,
-    size: true,
-    color:true,
+    rating: true, // Added for rating
+    size: true, 
+    color: true,
+    
   });
   const getUniqueColors = () => {
     const colorMap = new Map();
@@ -44,9 +46,6 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
     }));
   };
   
-  
-  
-  // Function to get unique sizes
   const getUniqueSizes = () => {
     const sizeSet = new Set();
   
@@ -112,36 +111,35 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
 
   const getFilteredProducts = () => {
     return products.filter((product) => {
+      const discountedPrice =
+        product.originalPrice -
+        (product.originalPrice * product.discountPercentage) / 100;
+
       const matchesCategory =
-        !filters.category?.length || filters.category.includes(product.category);
-  
-      const matchesPrice =
-        !filters.priceRange?.length ||
-        filters.priceRange.some(
-          (range) =>
-            product.price >= range.min && product.price <= range.max
-        );
-  
-      const matchesDiscount =
-        !filters.discount?.length ||
-        filters.discount.some(
-          (discountRange) =>
-            product.discountPercentage >= discountRange.min &&
-            product.discountPercentage <= discountRange.max
-        );
-  
-      const matchesRating =
-        !filters.rating?.length ||
-        filters.rating.some((rating) => product.rating.rate >= rating);
-  
-      const matchesSize =
-        !filters.size?.length ||
-        filters.size.some((selectedSize) =>
-          product.sizes?.some(
-            (sizeObj) => sizeObj.size === selectedSize && sizeObj.stock > 0
-          )
-        );
-        const matchesColor =
+        !filters.category.length || filters.category.includes(product.category);
+      const matchesPriceRange =
+        !filters.priceRange.length ||
+        filters.priceRange.some((range) => {
+          const [min, max] = range.split("-").map(Number);
+          return discountedPrice >= min && discountedPrice <= max;
+        });
+        const matchesDiscount =
+  !filters.discount?.length || // Use optional chaining with a fallback
+  filters.discount.some((range) => {
+    const [min, max] = range.split("-").map(Number);
+    return product.discountPercentage >= min && product.discountPercentage <= max;
+  });
+  const matchesRating =
+  !filters.rating?.length ||
+  filters.rating.some((minRating) => product.rating.rate >= Number(minRating));
+  const matchesSize =
+  !filters.size?.length ||
+  filters.size.some((selectedSize) =>
+    product.sizes?.some(
+      (sizeObj) => sizeObj.size === selectedSize && sizeObj.stock > 0
+    )
+  );
+  const matchesColor =
   !filters.color?.length ||
   filters.color.some((selectedColor) =>
     product.colors?.some(
@@ -149,20 +147,11 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
     )
   );
 
-      
 
-      // Return true if the product matches all active filters
-      return (
-        matchesCategory &&
-        matchesPrice &&
-        matchesDiscount &&
-        matchesRating &&
-        matchesSize &&
-        matchesColor
-      );
+      return matchesCategory && matchesPriceRange && matchesDiscount&& matchesRating &&matchesSize && matchesColor;
     });
   };
-  
+
   const getSortedProducts = () => {
     let sortedProducts = getFilteredProducts();
 
@@ -258,66 +247,151 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
       <div className="filters-container">
         <h3>Filters</h3>
         <div className="filter-section">
-          <div className="filter-header" onClick={() => toggleSection("category")}>
-            <h4>Category</h4>
-            {expandedSections.category ? <FaMinus /> : <FaPlus />}
-          </div>
-          {expandedSections.category && (
-            <div className="filter-category">
-              {[...new Set(products.map((product) => product.category))]
-                .filter((category) => category)
-                .map((category) => (
-                  <div className="filter-item" key={category}>
-                    <input
-                      type="checkbox"
-                      id={`category-${category}`}
-                      name="category"
-                      value={category}
-                      onChange={handleFilterChange}
-                    />
-                    <label htmlFor={`category-${category}`}>{category}</label>
-                  </div>
-                ))}
+  <div
+    className="filter-header"
+    onClick={() => toggleSection("category")}
+    style={{
+      cursor: "pointer",
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+    }}
+  >
+    <h4>Category</h4>
+    {expandedSections.category ? <FaMinus /> : <FaPlus />}
+  </div>
+  {expandedSections.category && (
+    <div className="filter-category">
+      {[...new Set(products.map((product) => product.category))]
+        .filter((category) => category)
+        .map((category) => {
+          // Calculate product count for each category
+          const productCount = products.filter(
+            (product) => product.category === category
+          ).length;
+
+          return (
+            <div
+              className="filter-item"
+              key={category}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginBottom: "8px",
+              }}
+            >
+              <input
+                type="checkbox"
+                id={`category-${category}`}
+                name="category"
+                value={category}
+                onChange={handleFilterChange}
+                style={{ marginRight: "8px" }}
+              />
+              <label
+                htmlFor={`category-${category}`}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  width: "100%",
+                }}
+              >
+                <span style={{ marginRight: "8px" }}>{category}</span>
+                <span style={{ color: "#888" }}>({productCount})</span>
+              </label>
             </div>
-          )}
-        </div>
+          );
+        })}
+    </div>
+  )}
+</div>
+
         <div className="filter-section">
-          <div className="filter-header" onClick={() => toggleSection("priceRange")}>
-            <h4>Price Range</h4>
-            {expandedSections.priceRange ? <FaMinus /> : <FaPlus />}
-          </div>
-          {expandedSections.priceRange && (
-            <div className="filter-price">
-              {getPriceRanges()
-                .filter((range) =>
-                  products.some(
-                    (product) =>
-                      product.originalPrice -
-                        (product.originalPrice * product.discountPercentage) / 100 >=
-                        range.min &&
-                      product.originalPrice -
-                        (product.originalPrice * product.discountPercentage) / 100 <=
-                        range.max
-                  )
-                )
-                .map((range, index) => (
-                  <div className="filter-item" key={index}>
-                    <input
-                      type="checkbox"
-                      id={`price-${index}`}
-                      name="priceRange"
-                      value={`${range.min}-${range.max}`}
-                      onChange={handleFilterChange}
-                    />
-                    <label htmlFor={`price-${index}`}>
-                      ${range.min} - ${range.max}
-                    </label>
-                  </div>
-                ))}
+  <div
+    className="filter-header"
+    onClick={() => toggleSection("priceRange")}
+    style={{
+      cursor: "pointer",
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+    }}
+  >
+    <h4>Price Range</h4>
+    {expandedSections.priceRange ? <FaMinus /> : <FaPlus />}
+  </div>
+  {expandedSections.priceRange && (
+    <div className="filter-price">
+      {getPriceRanges()
+        .filter((range) =>
+          products.some(
+            (product) =>
+              product.originalPrice -
+                (product.originalPrice * product.discountPercentage) / 100 >=
+                range.min &&
+              product.originalPrice -
+                (product.originalPrice * product.discountPercentage) / 100 <=
+                range.max
+          )
+        )
+        .map((range, index) => {
+          // Calculate product count for the price range
+          const productCount = products.filter(
+            (product) =>
+              product.originalPrice -
+                (product.originalPrice * product.discountPercentage) / 100 >=
+                range.min &&
+              product.originalPrice -
+                (product.originalPrice * product.discountPercentage) / 100 <=
+                range.max
+          ).length;
+
+          return (
+            <div
+              className="filter-item"
+              key={index}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginBottom: "8px",
+              }}
+            >
+              <input
+                type="checkbox"
+                id={`price-${index}`}
+                name="priceRange"
+                value={`${range.min}-${range.max}`}
+                onChange={handleFilterChange}
+                style={{ marginRight: "8px" }}
+              />
+              <label
+                htmlFor={`price-${index}`}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  width: "100%",
+                }}
+              >
+                <span style={{ marginRight: "8px" }}>
+                  ${range.min} - ${range.max}
+                </span>
+                <span style={{ color: "#888" }}>({productCount})</span>
+              </label>
             </div>
-          )}
+          );
+        })}
+    </div>
+  )}
+
+
           <div className="filter-section">
-  <div className="filter-header" onClick={() => toggleSection("discount")}>
+  <div
+    className="filter-header"
+    onClick={() => toggleSection("discount")}
+    style={{ cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center" }}
+  >
     <h4>Discount</h4>
     {expandedSections.discount ? <FaMinus /> : <FaPlus />}
   </div>
@@ -325,17 +399,40 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
     <div className="filter-discount">
       {[0, 20, 40, 60, 80].map((start, index) => {
         const end = start + 20 > 100 ? 100 : start + 20;
+
+        // Calculate product count for the current discount range
+        const productCount = products.filter((product) => {
+          const discount = product.discountPercentage;
+          return discount >= start && discount < end;
+        }).length;
+
         return (
-          <div className="filter-item" key={index}>
+          <div
+            className="filter-item"
+            key={index}
+            style={{ display: "flex", alignItems: "center", marginBottom: "8px" }}
+          >
             <input
               type="checkbox"
               id={`discount-${index}`}
               name="discount"
               value={`${start}-${end}`}
               onChange={handleFilterChange}
+              style={{ marginRight: "8px" }}
             />
-            <label htmlFor={`discount-${index}`}>
-              {start}% - {end > 100 ? "100%" : `${end}%`}
+            <label
+              htmlFor={`discount-${index}`}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                width: "100%",
+              }}
+            >
+              <span style={{ marginRight: "8px" }}>
+                {start}% - {end > 100 ? "100%" : `${end}%`}
+              </span>
+              <span style={{ color: "#888" }}>({productCount})</span>
             </label>
           </div>
         );
@@ -343,52 +440,110 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
     </div>
   )}
 </div>
+
 <div className="filter-section">
-  <div className="filter-header" onClick={() => toggleSection("rating")}>
+  <div
+    className="filter-header"
+    onClick={() => toggleSection("rating")}
+    style={{ cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center" }}
+  >
     <h4>Rating</h4>
     {expandedSections.rating ? <FaMinus /> : <FaPlus />}
   </div>
   {expandedSections.rating && (
     <div className="filter-rating">
-      {[5, 4, 3, 2, 1].map((stars) => (
-        <div className="filter-item" key={stars}>
-          <input
-            type="checkbox"
-            id={`rating-${stars}`}
-            name="rating"
-            value={stars}
-            onChange={handleFilterChange}
-          />
-          <label htmlFor={`rating-${stars}`}>
-            {"★".repeat(stars)} and up
-          </label>
-        </div>
-      ))}
+      {[5, 4, 3, 2, 1].map((stars) => {
+        // Calculate product count for ratings equal to or higher than the current star level
+        const productCount = products.filter(
+          (product) => product.rating?.rate >= stars
+        ).length;
+
+        return (
+          <div
+            className="filter-item"
+            key={stars}
+            style={{ display: "flex", alignItems: "center", marginBottom: "8px" }}
+          >
+            <input
+              type="checkbox"
+              id={`rating-${stars}`}
+              name="rating"
+              value={stars}
+              onChange={handleFilterChange}
+              style={{ marginRight: "8px" }}
+            />
+            <label
+              htmlFor={`rating-${stars}`}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                width: "100%",
+              }}
+            >
+              <span style={{ marginRight: "8px" }}>
+                {"★".repeat(stars)} and up
+              </span>
+              <span style={{ color: "#888" }}>({productCount})</span>
+            </label>
+          </div>
+        );
+      })}
     </div>
   )}
 </div>
+
 <div className="filter-section">
-  <div className="filter-header" onClick={() => toggleSection("size")}>
+  <div
+    className="filter-header"
+    onClick={() => toggleSection("size")}
+    style={{ cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center" }}
+  >
     <h4>Size</h4>
     {expandedSections.size ? <FaMinus /> : <FaPlus />}
   </div>
   {expandedSections.size && (
     <div className="filter-size">
-      {getUniqueSizes().map((size) => (
-        <div className="filter-item" key={size}>
-          <input
-            type="checkbox"
-            id={`size-${size}`}
-            name="size"
-            value={size}
-            onChange={handleFilterChange}
-          />
-          <label htmlFor={`size-${size}`}>{size}</label>
-        </div>
-      ))}
+      {getUniqueSizes().map((size) => {
+        // Calculate product count for the current size
+        const productCount = products.filter((product) =>
+          product.sizes?.some((productSize) => productSize.size === size)
+        ).length;
+
+        return (
+          <div
+            className="filter-item"
+            key={size}
+            style={{ display: "flex", alignItems: "center", marginBottom: "8px" }}
+          >
+            <input
+              type="checkbox"
+              id={`size-${size}`}
+              name="size"
+              value={size}
+              onChange={handleFilterChange}
+              style={{ marginRight: "8px" }}
+            />
+            <label
+              htmlFor={`size-${size}`}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                width: "100%",
+              }}
+            >
+              <span style={{ marginRight: "8px" }}>{size}</span>
+              <span style={{ color: "#888" }}>({productCount})</span>
+            </label>
+          </div>
+        );
+      })}
     </div>
   )}
 </div>
+
+
 <div className="filter-section">
   <h4>
     <span
@@ -463,6 +618,7 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
     </div>
   )}
 </div>
+
 
         </div>
       </div>
