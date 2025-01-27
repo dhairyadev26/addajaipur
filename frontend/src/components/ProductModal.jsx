@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect,useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 
@@ -8,6 +8,15 @@ const ProductModal = ({ product, onClose }) => {
   const [quantity, setQuantity] = useState(1);
   const { addToCart } = useCart();
   const navigate = useNavigate(); // Hook for navigation
+    const sizes = useMemo(() => product?.sizes || [], [product]);
+    // Update quantity when size changes
+    useEffect(() => {
+      if (selectedSize) {
+        const selectedStock =
+          sizes.find((size) => size.size === selectedSize)?.stock || 0;
+        setQuantity((prevQuantity) => Math.min(prevQuantity, selectedStock));
+      }
+    }, [selectedSize, sizes]);
 
   
     const images = product.images || [require("../assets/product1.png")];
@@ -22,6 +31,7 @@ const ProductModal = ({ product, onClose }) => {
 
     return () => clearInterval(interval); // Cleanup on unmount
   }, [images.length]);
+
 
   const handleThumbnailClick = (index) => {
     setActiveImage(index); // Set main image on thumbnail click
@@ -43,7 +53,9 @@ const ProductModal = ({ product, onClose }) => {
     navigate(`/products/${product.id}`); // Navigate to the product details page
     onClose(); // Close the modal when navigating
   };
-
+  const selectedStock = selectedSize
+    ? sizes.find((size) => size.size === selectedSize)?.stock || 0
+    : 0;
   return (
     <div
       style={{
@@ -212,81 +224,102 @@ const ProductModal = ({ product, onClose }) => {
         <p style={{ color: "green" }}>{product.discountPercentage}% off</p>
 
         {/* Size Selector */}
-        <div style={{ margin: "20px 0" }}>
-            <label style={{ marginRight: "10px" }}>Size:</label>
-            {product.sizes?.map(({ size, stock }) => (
-              <button
-                key={size}
-                disabled={stock === 0}
-                className={stock === 0 ? "out-of-stock" : size === selectedSize ? "selected" : ""}
-                style={{
-                  margin: "0 5px",
-                  padding: "10px",
-                  borderRadius: "5px",
-                  border: stock === 0
-                    ? "1px solid #ddd"
-                    : size === selectedSize
-                    ? "2px solid #007bff"
-                    : "1px solid gray",
-                  backgroundColor: stock === 0
-                    ? "#f2f2f2"
-                    : size === selectedSize
-                    ? "#007bff"
-                    : "#fff",
-                  color: stock === 0 ? "#ccc" : size === selectedSize ? "#fff" : "#000",
-                  position: "relative",
-                  cursor: stock > 0 ? "pointer" : "not-allowed",
-                }}
-                onClick={() => stock > 0 && setSelectedSize(size)}
-              >
-                {size}
-                {stock === 0 && (
-                  <span
-                    style={{
-                      position: "absolute",
-                      top: "50%",
-                      left: "50%",
-                      width: "100%",
-                      height: "2px",
-                      background: "rgba(0, 0, 0, 0.3)",
-                      transform: "translate(-50%, -50%) rotate(45deg)",
-                    }}
-                  ></span>
-                )}
-              </button>
-            ))}
-          </div>
+<div style={{ margin: "20px 0", display: "flex", justifyContent: "center", alignItems: "center", flexWrap: "wrap" }}>
+  <label style={{ marginRight: "10px" }}>Size:</label>
+  {product.sizes?.map(({ size, stock }) => (
+    <button
+      key={size}
+      disabled={stock === 0}
+      className={stock === 0 ? "out-of-stock" : size === selectedSize ? "selected" : ""}
+      style={{
+        margin: "0 5px",
+        padding: "10px",
+        borderRadius: "5px",
+        border: stock === 0
+          ? "1px solid #ddd"
+          : size === selectedSize
+          ? "2px solid #000"
+          : "1px solid gray",
+        backgroundColor: stock === 0
+          ? "#f2f2f2"
+          : size === selectedSize
+          ? "#d98484"
+          : "#fff",
+        color: stock === 0 ? "#ccc" : size === selectedSize ? "#fff" : "#000",
+        position: "relative",
+        cursor: stock > 0 ? "pointer" : "not-allowed",
+      }}
+      onClick={() => stock > 0 && setSelectedSize(size)}
+    >
+      {size}
+      {stock === 0 && (
+        <span
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            width: "100%",
+            height: "2px",
+            background: "rgba(0, 0, 0, 0.3)",
+            transform: "translate(-50%, -50%) rotate(45deg)",
+          }}
+        ></span>
+      )}
+    </button>
+  ))}
+</div>
 
-        {/* Quantity Selector */}
-        <div style={{ marginBottom: "20px" }}>
-          <label style={{ fontSize: "16px", marginRight: "10px" }}>
-            Quantity:
-          </label>
-          <button
-            style={{
-              padding: "5px 10px",
-              marginRight: "5px",
-              borderRadius: "5px",
-              border: "1px solid gray",
-              cursor: "pointer",
-            }}
-            onClick={() => setQuantity(Math.max(1, quantity - 1))}
-          >
-            -
-          </button>
-          <span style={{ margin: "0 10px" }}>{quantity}</span>
-          <button
-            style={{
-              padding: "5px 10px",
-              borderRadius: "5px",
-              border: "1px solid gray",
-              cursor: "pointer",
-            }}
-            onClick={() => setQuantity(quantity + 1)}
-          >
-            +
-          </button>
-        </div>
+ {/* Quantity Selector */}
+ <div style={{
+          marginBottom: "20px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <label style={{ marginRight: "10px" }}>Quantity:</label>
+        <button
+          style={{
+            padding: "5px 10px",
+            marginRight: "5px",
+            borderRadius: "5px",
+            border: "1px solid gray",
+            cursor: "pointer",
+          }}
+          onClick={() => setQuantity(Math.max(1, quantity - 1))}
+          disabled={quantity === 1} // Disable decrement button if quantity is 1
+        >
+          -
+        </button>
+        <span style={{ margin: "0 10px" }}>{quantity}</span>
+        <button
+          style={{
+            padding: "5px 10px",
+            borderRadius: "5px",
+            border: "1px solid gray",
+            cursor: selectedStock > quantity ? "pointer" : "not-allowed",
+          }}
+          onClick={() =>
+            setQuantity(prevQuantity => Math.min(prevQuantity + 1, selectedStock))
+          }
+          disabled={quantity >= selectedStock} // Disable increment button if quantity reaches stock
+        >
+          +
+        </button>
+      
+
+      {/* Stock Warning */}
+      {selectedStock > 0 && (
+        <p style={{ color: "red", textAlign: "center", fontSize: "14px" }}>
+          {selectedStock - quantity === 1
+            ? "Only 1 item left!"
+            : selectedStock - quantity === 2
+            ? "Only 2 items left!"
+            : ""}
+        </p>
+      )}
+    </div>
+
 
         {/* Buttons */}
         <button

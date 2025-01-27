@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { products } from "../data/productsData"; // Importing products data
@@ -74,6 +74,16 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
   const [selectedSize, setSelectedSize] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [activeImage, setActiveImage] = useState(0);
+  const product = products.find((item) => item.id === parseInt(id));
+  const sizes = useMemo(() => product?.sizes || [], [product]);
+  // Update quantity when size changes
+  useEffect(() => {
+    if (selectedSize) {
+      const selectedStock =
+        sizes.find((size) => size.size === selectedSize)?.stock || 0;
+      setQuantity((prevQuantity) => Math.min(prevQuantity, selectedStock));
+    }
+  }, [selectedSize, sizes]);
    // Scroll to top on component mount or when the `id` changes
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -84,11 +94,18 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
    const openModal = () => setIsModalOpen(true);
    const closeModal = () => setIsModalOpen(false);
 
-  const product = products.find((item) => item.id === parseInt(id));
+  // Find the current product
 
   if (!product) {
     return <p>Product not found</p>;
   }
+
+  const selectedStock = selectedSize
+    ? sizes.find((size) => size.size === selectedSize)?.stock || 0
+    : 0;
+
+  
+    
   // Filter similar products by category
   const similarProducts = products.filter(
     (item) => item.category === product.category && item.id !== product.id
@@ -339,38 +356,57 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
   ))}
 </div>
 
+ {/* Quantity Selector */}
+ <div style={{
+          marginBottom: "20px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <label style={{ marginRight: "10px" }}>Quantity:</label>
+        <button
+          style={{
+            padding: "5px 10px",
+            marginRight: "5px",
+            borderRadius: "5px",
+            border: "1px solid gray",
+            cursor: "pointer",
+          }}
+          onClick={() => setQuantity(Math.max(1, quantity - 1))}
+          disabled={quantity === 1} // Disable decrement button if quantity is 1
+        >
+          -
+        </button>
+        <span style={{ margin: "0 10px" }}>{quantity}</span>
+        <button
+          style={{
+            padding: "5px 10px",
+            borderRadius: "5px",
+            border: "1px solid gray",
+            cursor: selectedStock > quantity ? "pointer" : "not-allowed",
+          }}
+          onClick={() =>
+            setQuantity(prevQuantity => Math.min(prevQuantity + 1, selectedStock))
+          }
+          disabled={quantity >= selectedStock} // Disable increment button if quantity reaches stock
+        >
+          +
+        </button>
+      
 
+      {/* Stock Warning */}
+      {selectedStock > 0 && (
+        <p style={{ color: "red", textAlign: "center", fontSize: "14px" }}>
+          {selectedStock - quantity === 1
+            ? "Only 1 item left!"
+            : selectedStock - quantity === 2
+            ? "Only 2 items left!"
+            : ""}
+        </p>
+      )}
+    </div>
 
-
-
-           {/* Quantity Selector */}
-<div style={{ marginBottom: "20px", display: "flex", justifyContent: "center", alignItems: "center" }}>
-  <label style={{ marginRight: "10px" }}>Quantity:</label>
-  <button
-    style={{
-      padding: "5px 10px",
-      marginRight: "5px",
-      borderRadius: "5px",
-      border: "1px solid gray",
-      cursor: "pointer",
-    }}
-    onClick={() => setQuantity(Math.max(1, quantity - 1))}
-  >
-    -
-  </button>
-  <span style={{ margin: "0 10px" }}>{quantity}</span>
-  <button
-    style={{
-      padding: "5px 10px",
-      borderRadius: "5px",
-      border: "1px solid gray",
-      cursor: "pointer",
-    }}
-    onClick={() => setQuantity(quantity + 1)}
-  >
-    +
-  </button>
-</div>
 <div style={styles.container}> 
 
 
