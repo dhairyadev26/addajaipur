@@ -10,6 +10,11 @@ export const products = [
     rating: { rate: 4.5, count: 120 },
     category: "kurta",
     image: product1,
+    images: [
+      require("../assets/F-L-1.avif"),
+      require("../assets/F-L-3.avif"),
+      require("../assets/F-L-2.jpg"),
+    ],
     description: "A beautiful ethnic kurta from Jaipur.",
     details: [
       "Made from premium quality fabric",
@@ -17,10 +22,7 @@ export const products = [
       "Available in multiple sizes",
     ],
     colors: [
-      { "code": "#2980b9", "name": "Blue" },
-      { "code": "#f39c12", "name": "Orange" },
-      { "code": "#27ae60", "name": "Green" },
-      
+      { "code": "#fdc940", "name": "Yellow" },
     ],
     sizes: [
       { size: "One Size", stock: 10 },
@@ -28,7 +30,7 @@ export const products = [
   },
   {
     id: 2,
-    name: "Floral Printed Kurta",
+    name: "The Keseri Salwar Set",
     originalPrice: 35,
     discountPercentage: 20,
     rating: { rate: 4.0, count: 95 },
@@ -36,9 +38,9 @@ export const products = [
     description: "A floral printed kurta with a modern touch.",
     image:p2,
     images: [
-        require("../assets/S-H-1.avif"),
-        require("../assets/product1.png"),
-        require("../assets/product1.png"),
+        require("../assets/K-G-1.webp"),
+        require("../assets/K-G-2.webp"),
+        require("../assets/K-G-3.webp"),
       ],
       details: [
         "Lightweight and breathable fabric",
@@ -46,8 +48,7 @@ export const products = [
         "Ideal for casual outings",
       ],
       colors: [{ "code": "#f39c12", "name": "Orange" },
-        { "code": "#27ae60", "name": "Green" },
-        { "code": "#2980b1", "name": "Blue" },
+        { "code": "#bb3613", "name": "Red" }, 
       ],
     sizes: [
       { size: "6", stock: 2 },

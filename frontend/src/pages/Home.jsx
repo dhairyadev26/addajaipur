@@ -78,7 +78,7 @@ const HomeContent = styled.div`
 const NewContentSection = styled.div`
   position: relative;
   padding-bottom: 0px;
-  background-color:rgb(251, 244, 235);
+  background-color:rgb(253, 247, 239);
   color: #333;
 
   h2 {
@@ -113,7 +113,7 @@ const SliderWrapper = styled.div`
   width: 100%;
   overflow: hidden;
   height: 420px;
-  background: linear-gradient(to bottom,rgb(251, 245, 237),rgb(249, 249, 249) 60%,rgb(251, 247, 234));
+  background: linear-gradient(to bottom,rgb(251, 245, 237),rgb(255, 246, 234)60%,rgb(251, 247, 234));
 `;
 
 const SliderTrack = styled.div`
@@ -132,7 +132,7 @@ const ImageWrapper = styled.div`
     width: 78%;
     height: 95%;
     object-fit: cover;
-    border-radius: 70px;
+    border-radius: 50px;
     box-shadow: 
       0 8px 15px rgba(255, 255, 255, 0.5),
       0 0 25px rgba(255, 255, 255, 0.8),

@@ -1,48 +1,74 @@
 import React from "react";
-import styled from "styled-components";
+import "../styles/Products.css";
+
+
+// Define inline style objects
+const styles = {
+  productCard: {
+    position: 'relative', // Position relative for absolute positioning of wishlist icon
+    backgroundcolor: rgba(255, 0, 0, 0.5),
+    borderRadius: '5rem', // Rounded corners
+    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)', // Shadow for depth
+    width: 'calc(30% - 1rem)', // Four products per row with spacing
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    paddingBottom: '0rem', // Bottom padding for spacing
+    backdropFilter: 'blur(5px)', // Optional: Adds blur effect behind the card
+    transition: 'background-color 0.3s ease', // Smooth transition for hover effect
+  },
+  productCardHover: {
+    transform: 'translateY(-8px)', // Hover effect to lift the card
+    backgroundColor: 'rgb(255, 255, 255)', // Make it slightly more opaque on hover
+  },
+  image: {
+    width: 'auto', // Maintain aspect ratio
+    height: 'auto', // Maintain aspect ratio
+    maxWidth: '100%', // Ensure image fits card without overflow
+    borderRadius: '.5rem', // Rounded corners for images
+  },
+  productInfo: {
+    textAlign: 'center', // Center text within the card
+  },
+  price: {
+    fontSize: '.9rem', // Slightly smaller font size for price text
+    marginTop: '.5rem', // Spacing above price text
+  },
+  wishlistIconContainer: {
+    position: 'absolute', // Position the wishlist icon at the top right
+    top: '.5rem',
+    right: '.5rem',
+  },
+  productItem: {
+    color: '#555', // Color for text
+    marginTop: '.5rem', // Add margin for spacing
+    textAlign: 'center', // Center text
+  },
+  boldPrice: {
+    fontWeight: 'bold',
+    color: '#333', // Dark color for price
+    marginBottom: '.5rem', // Add margin at bottom
+  },
+};
 
 const ProductCard = ({ product }) => {
   return (
-    <Card>
-      <Image src={product.image} alt={product.name} />
-      <Info>
+    <div
+      className="product-card"
+      style={styles.productCard}
+    >
+      <img
+        src={product.image}
+        alt={product.name}
+        style={styles.image}
+      />
+      <div style={styles.productInfo}>
         <h3>{product.name}</h3>
-        <p>${product.price}</p>
-      </Info>
-    </Card>
+        <p style={styles.price}>${product.price}</p>
+      </div>
+    </div>
   );
 };
 
 export default ProductCard;
 
-const Card = styled.div`
-  width: 300px;
-  padding: 1rem;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s, box-shadow 0.3s;
-
-  &:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-  }
-`;
-
-const Image = styled.img`
-  width: 100%;
-  border-radius: 10px;
-`;
-
-const Info = styled.div`
-  margin-top: 1rem;
-
-  h3 {
-    font-size: 1.2rem;
-    color: #d35400;
-  }
-
-  p {
-    color: #555;
-  }
-`;
