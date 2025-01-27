@@ -462,6 +462,205 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
               </div>
             )}
           </div>
+
+          {/* rating Filter */}
+          <div style={{ marginBottom: "16px" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                cursor: "pointer",
+                marginBottom: "8px",
+              }}
+            onClick={() => toggleSection("rating")}
+          >
+            <h4>Rating</h4>
+            {expandedSections.rating ? <FaMinus /> : <FaPlus />}
+          </div>
+          {expandedSections.rating && (
+            <div className="filter-rating">
+              {[5, 4, 3, 2, 1].map((stars) => {
+                // Calculate product count for ratings equal to or higher than the current star level
+                const productCount = products.filter(
+                  (product) => product.rating?.rate >= stars
+                ).length;
+
+                return (
+                  <div
+                    className="filter-item"
+                    key={stars}
+                    style={{ display: "flex", alignItems: "center", marginBottom: "8px" }}
+                  >
+                    <input
+                      type="checkbox"
+                      id={`rating-${stars}`}
+                      name="rating"
+                      value={stars}
+                      onChange={handleFilterChange}
+                      style={{ marginRight: "8px" }}
+                    />
+                    <label
+                      htmlFor={`rating-${stars}`}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        width: "100%",
+                      }}
+                    >
+                      <span style={{ marginRight: "8px" }}>
+                        {"★".repeat(stars)} and up
+                      </span>
+                      <span style={{ color: "#888" }}>({productCount})</span>
+                    </label>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+          </div>
+          
+          {/* Size Filter */}
+          <div style={{ marginBottom: "16px" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                cursor: "pointer",
+                marginBottom: "8px",
+              }}
+            onClick={() => toggleSection("size")}
+          >
+            <h4>Size</h4>
+            {expandedSections.size ? <FaMinus /> : <FaPlus />}
+          </div>
+          {expandedSections.size && (
+            <div className="filter-size">
+              {getUniqueSizes().map((size) => {
+                // Calculate product count for the current size
+                const productCount = products.filter((product) =>
+                  product.sizes?.some((productSize) => productSize.size === size)
+                ).length;
+
+                return (
+                  <div
+                    className="filter-item"
+                    key={size}
+                    style={{ display: "flex", alignItems: "center", marginBottom: "8px" }}
+                  >
+                    <input
+                      type="checkbox"
+                      id={`size-${size}`}
+                      name="size"
+                      value={size}
+                      onChange={handleFilterChange}
+                      style={{ marginRight: "8px" }}
+                    />
+                    <label
+                      htmlFor={`size-${size}`}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        width: "100%",
+                      }}
+                    >
+                      <span style={{ marginRight: "8px" }}>{size}</span>
+                      <span style={{ color: "#888" }}>({productCount})</span>
+                    </label>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+          </div>
+
+         
+          <div style={{ marginBottom: "16px" }}>
+          <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                cursor: "pointer",
+                marginBottom: "8px",
+              }}
+              onClick={() =>
+                setExpandedSections((prev) => ({
+                  ...prev,
+                  colors: !prev.colors,
+                }))
+              }
+          > <h4>Colors</h4>
+
+            {expandedSections.size ? <FaMinus /> : <FaPlus />}
+            </div>
+           
+          {expandedSections.colors && (
+            <div className="filter-options">
+              {getUniqueColors().map((color) => {
+                // Get the count of products for this color name
+                const productCount = products.filter((product) =>
+                  product.colors?.some((prodColor) => prodColor.name === color.name)
+                ).length;
+
+                return (
+                  <div
+                    key={color.name}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      marginBottom: "8px",
+                    }}
+                  >
+                    <input
+                      type="checkbox"
+                      id={`color-${color.name}`}
+                      checked={filters.color.includes(color.name)}
+                      onChange={(e) => {
+                        const updatedColors = e.target.checked
+                          ? [...filters.color, color.name]
+                          : filters.color.filter((c) => c !== color.name);
+
+                        setFilters((prev) => ({
+                          ...prev,
+                          color: updatedColors,
+                        }));
+                      }}
+                      style={{ marginRight: "8px" }}
+                    />
+                    <label
+                      htmlFor={`color-${color.name}`}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <span
+                        style={{
+                          width: "16px",
+                          height: "16px",
+                          borderRadius: "50%",
+                          backgroundColor: color.code,
+                          marginRight: "8px",
+                          border: "1px solid #ccc",
+                        }}
+                      ></span>
+                      <span style={{ marginRight: "8px" }}>{color.name}</span>
+                      <span style={{ color: "#888" }}>({productCount})</span>
+                    </label>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+
+
+
       </div>
 
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
