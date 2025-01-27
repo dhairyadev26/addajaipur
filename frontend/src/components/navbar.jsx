@@ -64,8 +64,40 @@ const Menu = styled.div`
   }
 `;
 
+const ProfileButton = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000000;
+  color: #ffffff;
+  font-family: "Cinzel", serif;
+  font-size: 1rem;
+  font-weight: bold;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #444444;
+  }
+`;
+
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
+
+  // Simulate user profile data
+  const [userProfile] = useState({
+    name: "John Doe", // Replace with dynamic data if available
+  });
+
+  // Extract initials
+  const getInitials = (name) => {
+    const [firstName, lastName] = name.split(" ");
+    return `${firstName?.charAt(0) || ""}${lastName?.charAt(0) || ""}`.toUpperCase();
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -91,11 +123,14 @@ const Navbar = () => {
         <Link to="/aboutus">Aboutus</Link>
         <Link to="/contact">Contact</Link>
         <Link to="/cart">Cart</Link>
-        <Link to="/login">login</Link>
+        <Link to="/login">Login</Link>
         <Link to="/wishlist">
           <FaHeart /> Wishlist
         </Link>
       </Menu>
+      <Link to="/profile">
+        <ProfileButton>{getInitials(userProfile.name)}</ProfileButton>
+      </Link>
     </Nav>
   );
 };
