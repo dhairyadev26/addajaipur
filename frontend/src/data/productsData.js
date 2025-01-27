@@ -16,7 +16,12 @@ export const products = [
       "Perfect for festive occasions",
       "Available in multiple sizes",
     ],
-    colors: ["#34495e", "#2ecc71"],
+    colors: [
+      { "code": "#2980b9", "name": "Blue" },
+      { "code": "#f39c12", "name": "Orange" },
+      { "code": "#27ae60", "name": "Green" },
+      
+    ],
     sizes: [
       { size: "One Size", stock: 10 },
     ],
@@ -40,7 +45,10 @@ export const products = [
         "Elegant floral prints",
         "Ideal for casual outings",
       ],
-      colors: ["#f1c40f", "#9b59b6", "#1abc9c"],
+      colors: [{ "code": "#f39c12", "name": "Orange" },
+        { "code": "#27ae60", "name": "Green" },
+        { "code": "#2980b1", "name": "Blue" },
+      ],
     sizes: [
       { size: "6", stock: 2 },
       { size: "7", stock: 10 },

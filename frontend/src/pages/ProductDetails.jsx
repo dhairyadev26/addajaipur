@@ -248,27 +248,48 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
 
 
 
-           {/* Display Colors */}
-{product.colors && (
-  <div style={{ margin: "10px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+          {product.colors && (
+  <div
+    style={{
+      margin: "10px",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+    }}
+  >
     <div style={{ display: "flex", gap: "10px" }}>
       {product.colors.map((color, index) => (
         <div
           key={index}
           style={{
-            width: "25px",
-            height: "25px",
-            borderRadius: "50%",
-            backgroundColor: color,
-            border: "1px solid #ddd",
-            cursor: "pointer",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "5px",
           }}
-        ></div>
+        >
+          {/* Color Circle */}
+          <div
+            style={{
+              width: "25px",
+              height: "25px",
+              borderRadius: "50%",
+              backgroundColor: color.code,
+              border: "1px solid #ddd",
+              cursor: "pointer",
+            }}
+          ></div>
+          {/* Color Code */}
+          <span style={{ fontSize: "12px", color: "#555" }}></span>
+          {/* Color Name */}
+          <span style={{ fontSize: "12px", fontWeight: "bold", color: "#333" }}>
+            {color.name}
+          </span>
+        </div>
       ))}
     </div>
   </div>
 )}
-
 
 
 
@@ -391,7 +412,7 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
 
 
            {/* Wishlist Toggle */}
-<div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
   <button
     onClick={handleWishlistToggle}
     style={{
@@ -407,13 +428,23 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
       marginTop: '16px',
     }}
   >
-    <span style={{
-  fontSize: isInWishlist ? '18px' : '18px',
-  fontWeight: isInWishlist ? 'normal' : 'normal',  // Makes the "Add to Wishlist" text bold
-  letterSpacing: isInWishlist ? 'normal' : '1px', // Adds some spacing between letters
-}}>
-  {isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}
-</span>
+    {/* Heart Icon */}
+    <FaHeart
+      style={{
+        fill: isInWishlist ? 'red' : 'white',
+        stroke: 'red',
+      }}
+    />
+    {/* Button Text */}
+    <span
+      style={{
+        fontSize: '18px',
+        fontWeight: 'normal',
+        letterSpacing: isInWishlist ? 'normal' : '1px',
+      }}
+    >
+      {isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}
+    </span>
   </button>
 </div>
 

@@ -12,13 +12,61 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
   const [filters, setFilters] = useState({
     category: [],
     priceRange: [],
+    discount: [],
+    rating: [], // Added for rating
+    size: [],   // Added for size
+    color:[],
   });
   const [expandedSections, setExpandedSections] = useState({
     category: true,
     priceRange: true,
     discount: true,
+    rating: true,
+    size: true,
+    color:true,
   });
-
+  const getUniqueColors = () => {
+    const colorMap = new Map();
+  
+    products.forEach((product) => {
+      if (Array.isArray(product.colors)) {
+        product.colors.forEach(({ name, code }) => {
+          if (!colorMap.has(name)) {
+            colorMap.set(name, code); // Store only the first code for each name
+          }
+        });
+      }
+    });
+  
+    return Array.from(colorMap.entries()).map(([name, code]) => ({
+      name,
+      code, // Single code for each color name
+    }));
+  };
+  
+  
+  
+  // Function to get unique sizes
+  const getUniqueSizes = () => {
+    const sizeSet = new Set();
+  
+    // Ensure products exist and is an array
+    if (Array.isArray(products)) {
+      products.forEach((product) => {
+        // Ensure product.sizes is defined and is an array
+        if (Array.isArray(product.sizes)) {
+          product.sizes.forEach((sizeObj) => {
+            if (sizeObj.stock > 0) {
+              sizeSet.add(sizeObj.size); // Include only sizes with stock
+            }
+          });
+        }
+      });
+    }
+  
+    return Array.from(sizeSet).sort(); // Return sorted unique sizes
+  };
+  
   const handleWishlistToggle = (product) => {
     if (wishlist.some((item) => item.id === product.id)) {
       removeFromWishlist(product.id);
@@ -64,29 +112,57 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
 
   const getFilteredProducts = () => {
     return products.filter((product) => {
-      const discountedPrice =
-        product.originalPrice -
-        (product.originalPrice * product.discountPercentage) / 100;
-
       const matchesCategory =
-        !filters.category.length || filters.category.includes(product.category);
-      const matchesPriceRange =
-        !filters.priceRange.length ||
-        filters.priceRange.some((range) => {
-          const [min, max] = range.split("-").map(Number);
-          return discountedPrice >= min && discountedPrice <= max;
-        });
-        const matchesDiscount =
-  !filters.discount?.length || // Use optional chaining with a fallback
-  filters.discount.some((range) => {
-    const [min, max] = range.split("-").map(Number);
-    return product.discountPercentage >= min && product.discountPercentage <= max;
-  });
+        !filters.category?.length || filters.category.includes(product.category);
+  
+      const matchesPrice =
+        !filters.priceRange?.length ||
+        filters.priceRange.some(
+          (range) =>
+            product.price >= range.min && product.price <= range.max
+        );
+  
+      const matchesDiscount =
+        !filters.discount?.length ||
+        filters.discount.some(
+          (discountRange) =>
+            product.discountPercentage >= discountRange.min &&
+            product.discountPercentage <= discountRange.max
+        );
+  
+      const matchesRating =
+        !filters.rating?.length ||
+        filters.rating.some((rating) => product.rating.rate >= rating);
+  
+      const matchesSize =
+        !filters.size?.length ||
+        filters.size.some((selectedSize) =>
+          product.sizes?.some(
+            (sizeObj) => sizeObj.size === selectedSize && sizeObj.stock > 0
+          )
+        );
+        const matchesColor =
+  !filters.color?.length ||
+  filters.color.some((selectedColor) =>
+    product.colors?.some(
+      (color) => color.name === selectedColor // Match based on color name
+    )
+  );
 
-      return matchesCategory && matchesPriceRange && matchesDiscount;
+      
+
+      // Return true if the product matches all active filters
+      return (
+        matchesCategory &&
+        matchesPrice &&
+        matchesDiscount &&
+        matchesRating &&
+        matchesSize &&
+        matchesColor
+      );
     });
   };
-
+  
   const getSortedProducts = () => {
     let sortedProducts = getFilteredProducts();
 
@@ -260,6 +336,126 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
             />
             <label htmlFor={`discount-${index}`}>
               {start}% - {end > 100 ? "100%" : `${end}%`}
+            </label>
+          </div>
+        );
+      })}
+    </div>
+  )}
+</div>
+<div className="filter-section">
+  <div className="filter-header" onClick={() => toggleSection("rating")}>
+    <h4>Rating</h4>
+    {expandedSections.rating ? <FaMinus /> : <FaPlus />}
+  </div>
+  {expandedSections.rating && (
+    <div className="filter-rating">
+      {[5, 4, 3, 2, 1].map((stars) => (
+        <div className="filter-item" key={stars}>
+          <input
+            type="checkbox"
+            id={`rating-${stars}`}
+            name="rating"
+            value={stars}
+            onChange={handleFilterChange}
+          />
+          <label htmlFor={`rating-${stars}`}>
+            {"★".repeat(stars)} and up
+          </label>
+        </div>
+      ))}
+    </div>
+  )}
+</div>
+<div className="filter-section">
+  <div className="filter-header" onClick={() => toggleSection("size")}>
+    <h4>Size</h4>
+    {expandedSections.size ? <FaMinus /> : <FaPlus />}
+  </div>
+  {expandedSections.size && (
+    <div className="filter-size">
+      {getUniqueSizes().map((size) => (
+        <div className="filter-item" key={size}>
+          <input
+            type="checkbox"
+            id={`size-${size}`}
+            name="size"
+            value={size}
+            onChange={handleFilterChange}
+          />
+          <label htmlFor={`size-${size}`}>{size}</label>
+        </div>
+      ))}
+    </div>
+  )}
+</div>
+<div className="filter-section">
+  <h4>
+    <span
+      onClick={() =>
+        setExpandedSections((prev) => ({
+          ...prev,
+          colors: !prev.colors,
+        }))
+      }
+    >
+      {expandedSections.colors ? "-" : "+"}
+    </span>{" "}
+    Colors
+  </h4>
+  {expandedSections.colors && (
+    <div className="filter-options">
+      {getUniqueColors().map((color) => {
+        // Get the count of products for this color name
+        const productCount = products.filter((product) =>
+          product.colors?.some((prodColor) => prodColor.name === color.name)
+        ).length;
+
+        return (
+          <div
+            key={color.name}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginBottom: "8px",
+            }}
+          >
+            <input
+              type="checkbox"
+              id={`color-${color.name}`}
+              checked={filters.color.includes(color.name)}
+              onChange={(e) => {
+                const updatedColors = e.target.checked
+                  ? [...filters.color, color.name]
+                  : filters.color.filter((c) => c !== color.name);
+
+                setFilters((prev) => ({
+                  ...prev,
+                  color: updatedColors,
+                }));
+              }}
+              style={{ marginRight: "8px" }}
+            />
+            <label
+              htmlFor={`color-${color.name}`}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                cursor: "pointer",
+              }}
+            >
+              <span
+                style={{
+                  width: "16px",
+                  height: "16px",
+                  borderRadius: "50%",
+                  backgroundColor: color.code,
+                  marginRight: "8px",
+                  border: "1px solid #ccc",
+                }}
+              ></span>
+              <span style={{ marginRight: "8px" }}>{color.name}</span>
+              <span style={{ color: "#888" }}>({productCount})</span>
             </label>
           </div>
         );
