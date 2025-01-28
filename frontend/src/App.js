@@ -12,15 +12,16 @@ import Signup from "./pages/Signup";
 import AboutUs from "./pages/Aboutus";
 import Contact from "./pages/Contact";
 import Wishlist from "./pages/Wishlist";
+import Profile from "./pages/Profile";
 import { CartProvider } from "./context/CartContext";
 import Preloader from "./components/ElephantPreloader";
 import ShippingPolicy from "./pages/ShippingPolicy";
-
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [wishlist, setWishlist] = useState([]);
   const [notification, setNotification] = useState(""); // Notification message
+  const [userProfile, setUserProfile] = useState({ email: "", name: "" }); // User Profile Data
 
   // Simulate loading or perform actual setup tasks
   useEffect(() => {
@@ -58,6 +59,12 @@ function App() {
     }, 3000);
   };
 
+  // Update profile data
+  const updateProfile = (updatedProfile) => {
+    setUserProfile(updatedProfile);
+    showNotification("Profile updated successfully!");
+  };
+
   return (
     <CartProvider>
       <GlobalStyles />
@@ -70,9 +77,16 @@ function App() {
             {notification && <div className="notification">{notification}</div>}
           </div>
           <Routes>
-            <Route path="/" element={<Home addToWishlist={addToWishlist}
+            <Route
+              path="/"
+              element={
+                <Home
+                  addToWishlist={addToWishlist}
                   removeFromWishlist={removeFromWishlist}
-                  wishlist={wishlist}/>} />
+                  wishlist={wishlist}
+                />
+              }
+            />
             <Route
               path="/products"
               element={
@@ -98,6 +112,12 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/aboutus" element={<AboutUs />} />
             <Route path="/contact" element={<Contact />} />
+            <Route
+              path="/profile"
+              element={
+                <Profile userProfile={userProfile} updateProfile={updateProfile} />
+              }
+            />
             <Route path="/shipping-policy" element={<ShippingPolicy />} />
             <Route
               path="/wishlist"
