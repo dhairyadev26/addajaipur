@@ -167,10 +167,11 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
             src={images[activeImage]}
             alt={product.name}
             style={{
-              width: "90%",
-              height: "40%",
+              width: "100%",
+              height: "55%",
               padding:"80px",
-              marginLeft: "28%",
+              marginLeft: "20%",
+              marginRight: "30px",
               objectFit: "cover",
               borderRadius: "10px",
               opacity: isOutOfStock ? 0.5 : 1,
@@ -211,12 +212,12 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
         width: "80px",
         height: "80px",
         objectFit: "cover",
-        marginLeft: "-390px",
-        marginTop: "-340px",
+        marginLeft: "-450px",
+        marginTop: "-420px",
         borderRadius: "5px",
         cursor: "pointer",
         border: activeImage === index ? "3px solid rgb(176, 66, 46)" : "1px solid gray",
-        marginBottom: "10px", // Adds space between the images
+        marginBottom: "100px", // Adds space between the images
       }}
       onClick={() => setActiveImage(index)}
     />
@@ -229,7 +230,7 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
 
 
         {/* Product Info */}
-        <div style={{ flex: "1" }}>
+        <div style={{ flex: "1", fontSize: "30px" }}>
           <h2 style = {{marginBottom: "-1%"}}>{product.name}</h2>
           <p>{product.description || "No description available."}</p>
 
@@ -237,10 +238,10 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
 
 
           {/* Display Rating */}
-          <p style={{ fontSize: "18px", color: "#000", margin: "10px 0" }}>
+          <p style={{ fontSize: "20px", color: "#000", margin: "10px 0" }}>
             Rating: <strong>{product.rating?.rate || "N/A"} ★</strong>
           </p>
-          <p style={{ fontSize: "20px", fontWeight: "bold", margin: "10px 0", marginTop: "-10px", }}>
+          <p style={{ fontSize: "30px", fontWeight: "bold", margin: "10px 0", marginTop: "-10px", }}>
             <span className="discounted-price">${discountedPrice.toFixed(2)}</span>{" "}
             <span className="original-price" style={{ textDecoration: "line-through", color: "gray", marginLeft: "10px" }}>
               ${product.originalPrice.toFixed(2)}
@@ -254,7 +255,7 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
 
 
              {/* Tax and Shipping Section */}
-          <p style={{ color: "#555", fontSize: "14px", marginTop: "-1px",  }}>
+          <p style={{ color: "#555", fontSize: "17px", marginTop: "-1px",  }}>
             Tax included.{" "}
             <Link
               to="/shipping-policy"
@@ -589,7 +590,7 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
 
         {/* Display Category */}
           {product.category && (
-            <p style={{ fontSize: "16px", color: "#555", margin: "10px" }}>
+            <p style={{ fontSize: "20px", color: "#555", margin: "10px" }}>
               Category: <strong>{product.category}</strong>
             </p>
           )}
@@ -599,7 +600,7 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
 
           {/* Product Details in Bullet Points */}
           {product.details && (
-  <div style={{ textAlign: "center" }}>
+  <div style={{ textAlign: "center", fontSize: "17px" }}>
     <ul
       style={{
         display: "inline-block",
@@ -644,7 +645,7 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
             alt={similarProduct.name}
             style={{
               width: "100%",
-              height: "150px",
+              height: "180px",
               objectFit: "cover",
               borderRadius: "8px",
               marginBottom: "10px",

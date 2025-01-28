@@ -73,7 +73,8 @@ h2 {
 
 /* Text styles in product card */
 .product-info {
-  text-align: center; /* Center text within the card */
+  text-align: center;
+  font-size: "20px"; /* Center text within the card */
 }
 
 /* Price style adjustments */
@@ -98,7 +99,8 @@ h2 {
 
 /* Text styles */
 .product-card p {
- color: #555;
+ color: #010101;
+ font: 1rem Arial  san sarif;
  margin-top: .5rem; /* Add top margin for spacing */
  text-align: center; /* Center text within the card */
 }
@@ -139,7 +141,9 @@ button:hover {
 
 .product-rating .stars {
   color: gold;
+  align-items: "center";
   margin-right: 5px;
+  margin-left: 20px;
 }
 
 .product-rating .rating-count {
