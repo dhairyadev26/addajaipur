@@ -19,39 +19,40 @@ export const CartProvider = ({ children }) => {
     });
   };
 
-  // Function to add to the cart
   const addToCart = (product, quantity, size) => {
     setCart((prevCart) => {
-      // Check if the product already exists in the cart with the same size
+      // Check if the product with the same size already exists in the cart
       const existingProduct = prevCart.find(
         (item) => item.id === product.id && item.size === size
       );
-
+  
       const discountedPrice =
         product.originalPrice -
         (product.originalPrice * product.discountPercentage) / 100;
-
+  
       if (existingProduct) {
-        // Update quantity if the product exists
+        // Update quantity if the product already exists
         return prevCart.map((item) =>
           item.id === product.id && item.size === size
             ? { ...item, quantity: item.quantity + quantity }
             : item
         );
       } else {
-        // Add the new product with calculated price
+        // Add the new product, including its sizes array
         return [
           ...prevCart,
           {
             ...product,
             quantity,
             size,
-            price: discountedPrice, // Ensure price is included
+            sizes: product.sizes, // Include all size and stock data
+            price: discountedPrice, // Ensure the price is included
           },
         ];
       }
     });
   };
+  
 
   // Get total price
   const getTotalPrice = () => {

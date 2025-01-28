@@ -123,10 +123,13 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
       alert("Please select a size before adding to cart!");
       return;
     }
+  
     addToCart(product, quantity, selectedSize);
+  
     alert(`${quantity} ${product.name}(s) in size ${selectedSize} added to cart.`);
     navigate("/cart");
   };
+  
 
   const handleWishlistToggle = () => {
     if (wishlist.some((item) => item.id === product.id)) {
