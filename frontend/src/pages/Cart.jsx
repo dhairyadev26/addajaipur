@@ -1,76 +1,66 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useCart } from "../context/CartContext";
+import { useOrders } from '../context/OrdersContext'; 
 import Modal from "react-modal";
+import { useNavigate } from "react-router-dom";
 import "../styles/CartStyles.css";
 Modal.setAppElement("#root");
 
 const Cart = ({ product }) => {
   const { cart, addToCart, removeFromCart, getTotalPrice } = useCart();
+  const navigate = useNavigate(); // Initialize navigate
   const [currentStep, setCurrentStep] = useState(1); // Step tracker (1: Cart, 2: Delivery, 3: Payment)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [deliveryAddress, setDeliveryAddress] = useState("");
+  const { addOrder } = useOrders(); // Get addOrder function from context
 
-  
+  // New state for payment method and card details
+  const [paymentMethod, setPaymentMethod] = useState("card");
+  const [cardDetails, setCardDetails] = useState({
+    cardHolderName: "",
+    cardNumber: "",
+    expiryDate: "",
+    cvv: ""
+  });
+
   const sizes = useMemo(() => {
     return selectedProduct?.sizes || [];
   }, [selectedProduct]);
 
-
-  // Memoize the stock calculation
   const selectedStock = useMemo(() => {
     if (!selectedSize) {
-      console.log("No size selected, returning stock as 0.");
       return 0;
     }
-
-    const stock = sizes.find((size) => size.size === selectedSize)?.stock || 0;
-
-    console.log("Calculated Selected Stock:", stock); // Debugging
-    return stock;
+    return sizes.find((size) => size.size === selectedSize)?.stock || 0;
   }, [selectedSize, sizes]);
 
-  // Open modal function
   const openModal = (product) => {
     setSelectedProduct(product);
-
-    // Default to the first size in the sizes array (if available)
-    const initialSize = product.sizes?.[0]?.size || "6"; // Defaulting to "6" if no size is present
+    const initialSize = product.sizes?.[0]?.size || "6";
     setSelectedSize(initialSize);
-
-    const initialStock = product.sizes.find((size) => size.size === initialSize)?.stock || 0;
-
-    console.log("Product Sizes:", product.sizes); // Debugging
-    console.log("Initial Size:", initialSize); // Debugging
-    console.log("Initial Stock for Selected Size:", initialStock); // Debugging
-
-    setQuantity(Math.min(1, initialStock));
+    setQuantity(Math.min(1, product.sizes.find((size) => size.size === initialSize)?.stock || 0));
     setIsModalOpen(true);
   };
 
-  // Handle quantity change based on stock
   const handleQuantityChange = (newQuantity) => {
     setQuantity((prevQuantity) => {
       const maxQuantity = selectedStock;
-      const updatedQuantity = Math.max(1, Math.min(newQuantity, maxQuantity));
-      console.log("Updated Quantity:", updatedQuantity);
-      return updatedQuantity;
+      return Math.max(1, Math.min(newQuantity, maxQuantity));
     });
   };
-  
+
   const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+
   useEffect(() => {
     if (selectedSize) {
       const stock = sizes.find((size) => size.size === selectedSize)?.stock || 0;
-      setQuantity((prevQuantity) => Math.min(prevQuantity, stock)); // Clamp quantity to stock
+      setQuantity((prevQuantity) => Math.min(prevQuantity, stock));
     }
   }, [selectedSize, sizes]);
- 
-  
-  
-  
+
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedProduct(null);
@@ -79,16 +69,11 @@ const Cart = ({ product }) => {
   const handleSaveChanges = () => {
     if (selectedProduct) {
       removeFromCart(selectedProduct.id, selectedProduct.size);
-      const updatedProduct = {
-        ...selectedProduct,
-        size: selectedSize, // Updated size
-        quantity,           // Updated quantity
-      };
+      const updatedProduct = { ...selectedProduct, size: selectedSize };
       addToCart(updatedProduct, quantity, selectedSize);
       closeModal();
     }
   };
-  
 
   const proceedToNextStep = () => {
     if (
@@ -105,17 +90,42 @@ const Cart = ({ product }) => {
       alert("Please fill in all mandatory fields.");
       return;
     }
-    setCurrentStep((prev) => prev + 1);
-  };
+  
+    if (currentStep === 3) {
+      // Create an order object with real product data
+      const orderItems = cart.map(item => ({
+          product: item, // Use the item directly from cart
+          quantity: item.quantity,
+          totalPrice: item.price * item.quantity, // Calculate total price for this item
+          photo: item.image, // Assuming each product has an image property
+      }));
+
+      const orderDate = new Date().toISOString(); // Get current date in ISO format
+
+      // Add order to context
+      addOrder({
+          items: orderItems,
+          totalPrice: getTotalPrice(), // Total price of all items in cart
+          deliveryAddress,
+          orderDate, // Include order date
+          status: "Pending", // Initial status of the order
+      });
+
+      // Navigate to My Orders page
+      navigate("/orders");
+      return; // Prevent further state change
+  }
+
+  setCurrentStep((prev) => prev + 1);
+};
+  
+
   const goToPreviousStep = () => {
     if (currentStep > 1) {
       setCurrentStep((prev) => prev - 1);
     }
   };
 
-  
-
-  // Calculate the total discount based on the cart
   const getTotalDiscount = () => {
     return cart.reduce((total, item) => {
       const discount = (item.price * item.discountPercentage) / 100;
@@ -126,7 +136,6 @@ const Cart = ({ product }) => {
   const renderStepContent = () => {
     switch (currentStep) {
       case 1:
-        // Cart step
         return (
           <>
             <h2 className="cart-heading">Your Cart</h2>
@@ -136,52 +145,28 @@ const Cart = ({ product }) => {
             ) : (
               <div className="cart-items">
                 {cart.map((product) => (
-              <div key={product.id} className="product-card">
-                <img src={product.image} alt={product.name} className="product-image" />
-                <div className="product-details">
-                  <p className="product-name">{product.name}</p>
-                  <p className="product-price">₹{product.price}</p>
-                  {/* Render the selected size */}
-                  <p className="product-size">Selected Size: {product.size}</p>
-                  {/* Render the selected quantity */}
-                  <p className="product-quantity">Quantity: {product.quantity}</p>
-                  {/* Render available sizes and stock */}
-                  
-                </div>
-                <div className="product-actions">
-                  <button className="edit-btn" onClick={() => openModal(product)}>
-                    Edit
-                  </button>
-                  <button
-                    className="remove-btn"
-                    onClick={() => removeFromCart(product.id, product.size)}
-                  >
-                    Remove
-                  </button>
-                </div>
-              </div>
+                  <div key={product.id} className="product-card">
+                    <img src={product.image} alt={product.name} className="product-image" />
+                    <div className="product-details">
+                      <p className="product-name">{product.name}</p>
+                      <p className="product-price">₹{product.price}</p>
+                      <p className="product-size">Selected Size: {product.size}</p>
+                      <p className="product-quantity">Quantity: {product.quantity}</p>
+                    </div>
+                    <div className="product-actions">
+                      <button className="edit-btn" onClick={() => openModal(product)}>Edit</button>
+                      <button className="remove-btn" onClick={() => removeFromCart(product.id, product.size)}>Remove</button>
+                    </div>
+                  </div>
                 ))}
               </div>
             )}
-
             <div className="order-details">
               <h3 className="order-heading">Order Details</h3>
-              <div className="order-item">
-                <p>Cart Total:</p>
-                <p>₹{getTotalPrice()}</p>
-              </div>
-              <div className="order-item">
-                <p>Total Discount:</p>
-                <p>-₹{getTotalDiscount().toFixed(2)}</p>
-              </div>
-              <div className="order-item">
-                <p>Delivery Fee:</p>
-                <p>Free</p>
-              </div>
-              <div className="order-total">
-                <p>Order Total:</p>
-                <p>₹{getTotalPrice()}</p>
-              </div>
+              <div className="order-item"><p>Cart Total:</p><p>₹{getTotalPrice()}</p></div>
+              <div className="order-item"><p>Total Discount:</p><p>-₹{getTotalDiscount().toFixed(2)}</p></div>
+              <div className="order-item"><p>Delivery Fee:</p><p>Free</p></div>
+              <div className="order-total"><p>Order Total:</p><p>₹{getTotalPrice()}</p></div>
             </div>
           </>
         );
@@ -368,12 +353,71 @@ const Cart = ({ product }) => {
           );
         
       case 3:
-        // Payment step
         return (
           <>
             <h2 className="cart-heading">Payment</h2>
-            <p>Thank you for your order! Proceed to payment below:</p>
-            <button className="checkout-btn">Make Payment</button>
+            <label>Select Payment Method:</label>
+            <label>
+              <input
+                type="radio"
+                value="card"
+                checked={paymentMethod === "card"}
+                onChange={() => setPaymentMethod("card")}
+              />
+              Card
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="cod"
+                checked={paymentMethod === "cod"}
+                onChange={() => setPaymentMethod("cod")}
+              />
+              Cash on Delivery
+            </label>
+
+            {paymentMethod === "card" && (
+              <div className="card-details">
+                <div className="form-group">
+                  <label>Card Holder Name:</label>
+                  <input
+                    type="text"
+                    value={cardDetails.cardHolderName}
+                    onChange={(e) => setCardDetails({ ...cardDetails, cardHolderName: e.target.value })}
+                    placeholder="Enter card holder name"
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Card Number:</label>
+                  <input
+                    type="text"
+                    value={cardDetails.cardNumber}
+                    onChange={(e) => setCardDetails({ ...cardDetails, cardNumber: e.target.value })}
+                    placeholder="Enter card number"
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Expiry Date:</label>
+                  <input
+                    type="text"
+                    value={cardDetails.expiryDate}
+                    onChange={(e) => setCardDetails({ ...cardDetails, expiryDate: e.target.value })}
+                    placeholder="MM/YY"
+                  />
+                </div>
+                <div className="form-group">
+                  <label>CVV:</label>
+                  <input
+                    type="text"
+                    value={cardDetails.cvv}
+                    onChange={(e) => setCardDetails({ ...cardDetails, cvv: e.target.value })}
+                    placeholder="Enter CVV"
+                  />
+                </div>
+              </div>
+            )}
+            {/* Checkout Button */}
+            {/* Using the existing Checkout button below */}
           </>
         );
       default:
@@ -386,34 +430,32 @@ const Cart = ({ product }) => {
       {/* Progress Bar */}
       <div className="progress-bar">
         <div className={`step ${currentStep === 1 ? "active" : currentStep > 1 ? "completed" : ""}`}>
-          <span className="step-icon">🛒</span>
-          <span>Bag</span>
+          <span className="step-icon">🛒</span><span>Bag</span>
         </div>
         <div className={`step ${currentStep === 2 ? "active" : currentStep > 2 ? "completed" : ""}`}>
-          <span className="step-icon">📍</span>
-          <span>Delivery Details</span>
+          <span className="step-icon">📍</span><span>Delivery Details</span>
         </div>
         <div className={`step ${currentStep === 3 ? "active" : ""}`}>
-          <span className="step-icon">💳</span>
-          <span>Payment</span>
+          <span className="step-icon">💳</span><span>Payment</span>
         </div>
       </div>
+      {/* ... existing progress bar code ... */}
 
       {/* Render the Content for Current Step */}
       {renderStepContent()}
 
       {/* Next Button */}
       <div className="order-details">
-      {currentStep > 1 && (
+        {currentStep > 1 && (
           <button className="back-btn" onClick={goToPreviousStep}>
             Back
           </button>
         )}
+        {/* Using the Checkout button here */}
         <button className="checkout-btn" onClick={proceedToNextStep}>
           {currentStep < 3 ? "Proceed to Next Step" : "Checkout"}
         </button>
       </div>
-
       {/* Modal for Editing Product */}
       {/* Modal for Editing Product */}
       <Modal isOpen={isModalOpen} onRequestClose={closeModal}>
@@ -539,6 +581,7 @@ const Cart = ({ product }) => {
       )}
     </div>
   )}
+  
 
   <div className="modal-actions">
     <button className="modal-save-btn" onClick={handleSaveChanges}>

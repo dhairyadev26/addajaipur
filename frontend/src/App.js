@@ -13,7 +13,10 @@ import AboutUs from "./pages/Aboutus";
 import Contact from "./pages/Contact";
 import Wishlist from "./pages/Wishlist";
 import Profile from "./pages/Profile";
+import MyOrders from './pages/MyOrders';
+import CustomerCare from './pages/CustomerCare'; // Import CustomerCare component
 import { CartProvider } from "./context/CartContext";
+import { OrdersProvider } from './context/OrdersContext'; // Import OrdersProvider
 import Preloader from "./components/ElephantPreloader";
 import ShippingPolicy from "./pages/ShippingPolicy";
 
@@ -66,73 +69,77 @@ function App() {
   };
 
   return (
-    <CartProvider>
-      <GlobalStyles />
-      {isLoading ? (
-        <Preloader /> // Show preloader while loading
-      ) : (
-        <>
-          <Navbar wishlistCount={wishlist.length} />
-          <div className="notification-container">
-            {notification && <div className="notification">{notification}</div>}
-          </div>
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <Home
-                  addToWishlist={addToWishlist}
-                  removeFromWishlist={removeFromWishlist}
-                  wishlist={wishlist}
-                />
-              }
-            />
-            <Route
-              path="/products"
-              element={
-                <Products
-                  addToWishlist={addToWishlist}
-                  removeFromWishlist={removeFromWishlist}
-                  wishlist={wishlist}
-                />
-              }
-            />
-            <Route
-              path="/products/:id"
-              element={
-                <ProductDetails
-                  addToWishlist={addToWishlist}
-                  removeFromWishlist={removeFromWishlist}
-                  wishlist={wishlist}
-                />
-              }
-            />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/aboutus" element={<AboutUs />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route
-              path="/profile"
-              element={
-                <Profile userProfile={userProfile} updateProfile={updateProfile} />
-              }
-            />
-            <Route path="/shipping-policy" element={<ShippingPolicy />} />
-            <Route
-              path="/wishlist"
-              element={
-                <Wishlist
-                  wishlist={wishlist}
-                  removeFromWishlist={removeFromWishlist}
-                />
-              }
-            />
-          </Routes>
-          <Footer />
-        </>
-      )}
-    </CartProvider>
+    <OrdersProvider> {/* Wrap with OrdersProvider */}
+      <CartProvider>
+        <GlobalStyles />
+        {isLoading ? (
+          <Preloader /> // Show preloader while loading
+        ) : (
+          <>
+            <Navbar wishlistCount={wishlist.length} />
+            <div className="notification-container">
+              {notification && <div className="notification">{notification}</div>}
+            </div>
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <Home
+                    addToWishlist={addToWishlist}
+                    removeFromWishlist={removeFromWishlist}
+                    wishlist={wishlist}
+                  />
+                }
+              />
+              <Route
+                path="/products"
+                element={
+                  <Products
+                    addToWishlist={addToWishlist}
+                    removeFromWishlist={removeFromWishlist}
+                    wishlist={wishlist}
+                  />
+                }
+              />
+              <Route
+                path="/products/:id"
+                element={
+                  <ProductDetails
+                    addToWishlist={addToWishlist}
+                    removeFromWishlist={removeFromWishlist}
+                    wishlist={wishlist}
+                  />
+                }
+              />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/aboutus" element={<AboutUs />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/orders" element={<MyOrders />} />
+              <Route path="/customer-care" element={<CustomerCare />} /> {/* Route for Customer Care */}
+              <Route
+                path="/profile"
+                element={
+                  <Profile userProfile={userProfile} updateProfile={updateProfile} />
+                }
+              />
+              <Route path="/shipping-policy" element={<ShippingPolicy />} />
+              <Route
+                path="/wishlist"
+                element={
+                  <Wishlist
+                    wishlist={wishlist}
+                    removeFromWishlist={removeFromWishlist}
+                  />
+                }
+              />
+            </Routes>
+            <Footer />
+          </>
+        )}
+      </CartProvider>
+    </OrdersProvider>
   );
 }
 
