@@ -65,8 +65,8 @@ h2 {
 
 /* Image styles */
 .product-card img {
-  width: auto; /* Maintain aspect ratio */
-  height: auto; /* Maintain aspect ratio */
+  width: 50px; /* Maintain aspect ratio */
+  height: 50px; /* Maintain aspect ratio */
   max-width: 100%; /* Ensure image fits card without overflow */
   border-radius: .5rem; /* Rounded corners for images */
 }
@@ -92,7 +92,7 @@ h2 {
 /* Image styles */
 .product-card img {
    width: auto; /* Maintain aspect ratio */
-   height: auto; /* Maintain aspect ratio */
+   height: 70%; /* Maintain aspect ratio */
    max-width:100%; /* Ensure image fits card without overflow */
 }
 

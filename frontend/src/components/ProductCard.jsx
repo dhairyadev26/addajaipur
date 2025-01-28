@@ -22,8 +22,8 @@ const styles = {
     backgroundColor: 'rgb(255, 255, 255)', // Make it slightly more opaque on hover
   },
   image: {
-    width: 'auto', // Maintain aspect ratio
-    height: 'auto', // Maintain aspect ratio
+    width: '200px', // Maintain aspect ratio
+    height: '400px', // Maintain aspect ratio
     maxWidth: '100%', // Ensure image fits card without overflow
     borderRadius: '.5rem', // Rounded corners for images
   },

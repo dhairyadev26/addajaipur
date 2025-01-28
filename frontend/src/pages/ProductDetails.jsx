@@ -168,9 +168,9 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
             alt={product.name}
             style={{
               width: "90%",
-              height: "60%",
+              height: "40%",
               padding:"80px",
-              marginLeft: "35%",
+              marginLeft: "28%",
               objectFit: "cover",
               borderRadius: "10px",
               opacity: isOutOfStock ? 0.5 : 1,
@@ -211,8 +211,8 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
         width: "80px",
         height: "80px",
         objectFit: "cover",
-        marginLeft: "-350px",
-        marginTop: "-320px",
+        marginLeft: "-390px",
+        marginTop: "-340px",
         borderRadius: "5px",
         cursor: "pointer",
         border: activeImage === index ? "3px solid rgb(176, 66, 46)" : "1px solid gray",
