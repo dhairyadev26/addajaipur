@@ -262,8 +262,9 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
         <div
           style={{
             width: "50%",
-            padding: "18px",
-            marginTop: "250px",
+            padding: "70px",
+            paddingTop:"20px",
+            marginTop: "70px",
             border: "1px solid #ccc",
             borderRadius: "8px",
             backgroundColor: "rgb(254, 253, 249)",
@@ -277,64 +278,64 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
 
 
           {/* Category Filter */}
-<div style={{ marginBottom: "16px" }}>
-  <div
-    style={{
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      cursor: "pointer",
-      marginBottom: "8px",
-    }}
-    onClick={() => toggleSection("category")}
-  >
-    <h4>Category</h4>
-    {expandedSections.category ? <FaMinus /> : <FaPlus />}
-  </div>
-  {expandedSections.category && (
-    <div>
-      {[...new Set(products.map((product) => product.category))]
-        .filter(Boolean)
-        .map((category) => {
-          const productCount = products.filter(
-            (product) => product.category === category
-          ).length;
+        <div style={{ marginBottom: "16px" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              cursor: "pointer",
+              marginBottom: "8px",
+            }}
+            onClick={() => toggleSection("category")}
+          >
+            <h4>Category</h4>
+            {expandedSections.category ? <FaMinus /> : <FaPlus />}
+          </div>
+          {expandedSections.category && (
+            <div>
+              {[...new Set(products.map((product) => product.category))]
+                .filter(Boolean)
+                .map((category) => {
+                  const productCount = products.filter(
+                    (product) => product.category === category
+                  ).length;
 
-          return (
-            <div
-              key={category}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                marginBottom: "8px",
-              }}
-            >
-              <input
-                type="checkbox"
-                id={`category-${category}`}
-                name="category"
-                value={category}
-                onChange={handleFilterChange}
-                style={{ marginRight: "2px", marginLeft: "-20%"}} // Reduced space
-              />
-              <label
-                htmlFor={`category-${category}`}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  marginLeft: "-45%" ,
-                  gap: "4px", // Added gap for minimal spacing
-                }}
-              >
-                <span>{category}</span>
-                <span style={{ color: "#888" }}>({productCount})</span>
-              </label>
+                  return (
+                    <div
+                      key={category}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        marginBottom: "8px",
+                      }}
+                    >
+                      <input
+                        type="checkbox"
+                        id={`category-${category}`}
+                        name="category"
+                        value={category}
+                        onChange={handleFilterChange}
+                        style={{ marginRight: "8px",  marginBottom: "-5px"}} // Reduced space
+                      />
+                      <label
+                        htmlFor={`category-${category}`}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          marginBottom: "-4px"
+                           // Added gap for minimal spacing
+                        }}
+                      >
+                        <span  style={{ marginRight: "8px" }}>{category}</span>
+                        <span style={{ color: "#888" }}>({productCount})</span>
+                      </label>
+                    </div>
+                  );
+                })}
             </div>
-          );
-        })}
-    </div>
-  )}
-</div>
+          )}
+        </div>
 
     
           {/* Price Range Filter */}
@@ -392,16 +393,20 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
                           name="priceRange"
                           value={`${range.min}-${range.max}`}
                           onChange={handleFilterChange}
-                          style={{ marginRight: "8px", marginLeft: "-20%" }}
+                          style={{ marginRight: "8px" }}
                         />
                         <label
                           htmlFor={`price-${index}`}
-                          style={{ display: "flex", alignItems: "center", marginLeft: "-45%" }}
+                          style={{   display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            width: "100%",
+                            fontSize: "14px" }}
                         >
-                          <span style={{ marginRight: "8px" }}>
+                          <span style={{ flexGrow: 1, whiteSpace: "nowrap" }}>
                             ${range.min} - ${range.max}
                           </span>
-                          <span style={{ color: "#888" }}>({productCount})</span>
+                          <span style={{ color: "#888" ,flexShrink: 0, marginLeft: "8px", }}>({productCount})</span>
                         </label>
                       </div>
                     );
@@ -445,16 +450,22 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
                         name="discount"
                         value={`${start}-${end}`}
                         onChange={handleFilterChange}
-                        style={{ marginRight: "8px", marginLeft: "-20%" }}
+                        style={{ marginRight: "8px"}}
                       />
                       <label
                         htmlFor={`discount-${index}`}
-                        style={{ display: "flex", alignItems: "center", marginLeft: "-45%" }}
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          width: "100%",
+                          fontSize: "14px", // Adjust font size if needed
+                        }}
                       >
-                        <span style={{ marginRight: "8px" }}>
+                        <span style={{ flexGrow: 1, whiteSpace: "nowrap" }}>
                           {start}% - {end > 100 ? "100%" : `${end}%`}
                         </span>
-                        <span style={{ color: "#888" }}>({productCount})</span>
+                        <span style={{ color: "#888" ,flexShrink: 0,marginLeft: "8px",}}>({productCount})</span>
                       </label>
                     </div>
                   );
@@ -498,7 +509,7 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
                       name="rating"
                       value={stars}
                       onChange={handleFilterChange}
-                      style={{ marginRight: "8px" }}
+                      style={{ marginRight: "-20px", marginLeft: "-30%" }}
                     />
                     <label
                       htmlFor={`rating-${stars}`}
@@ -556,7 +567,7 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
                       name="size"
                       value={size}
                       onChange={handleFilterChange}
-                      style={{ marginRight: "8px" }}
+                      style={{ marginRight: "-30px", marginLeft: "-20%" }}
                     />
                     <label
                       htmlFor={`size-${size}`}
@@ -568,7 +579,7 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
                       }}
                     >
                       <span style={{ marginRight: "8px" }}>{size}</span>
-                      <span style={{ color: "#888" }}>({productCount})</span>
+                      <span style={{ color: "#888", marginLeft: "-20px"  }}>({productCount})</span>
                     </label>
                   </div>
                 );
