@@ -151,7 +151,7 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
           display: "flex",
           flexDirection: "row",
           gap: "20px",
-          backgroundColor: "#f9f9f9",
+          backgroundColor: "#fffcf1",
           padding: "20px",
           borderRadius: "10px",
           boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
@@ -168,7 +168,7 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
             alt={product.name}
             style={{
               width: "100%",
-              height: "55%",
+              height: "50%",
               padding:"80px",
               marginLeft: "20%",
               marginRight: "30px",
@@ -202,7 +202,7 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
               justifyContent: "center",
             }}
           >
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "120px"}}>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "160px"}}>
   {images.map((img, index) => (
     <img
       key={index}
@@ -213,13 +213,13 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
         height: "80px",
         objectFit: "cover",
         marginLeft: "-450px",
-        marginTop: "-420px",
-        borderRadius: "5px",
+        marginTop: "-460px",
         cursor: "pointer",
         border: activeImage === index ? "3px solid rgb(176, 66, 46)" : "1px solid gray",
         marginBottom: "100px", // Adds space between the images
       }}
       onClick={() => setActiveImage(index)}
+      
     />
   ))}
 </div>
@@ -624,7 +624,7 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
 
          {/* Similar Products Section */}
 {similarProducts.length > 0 && (
-  <div style={{ marginTop: "30px", padding: "20px", backgroundColor: "#fcf4eb", borderRadius: "10px", marginLeft: "-100%", marginRight: "20px" }}>
+  <div style={{ marginTop: "30px", padding: "20px", backgroundColor: "#fff", borderRadius: "10px", marginLeft: "-100%", marginRight: "20px" }}>
     <h3 style={{ fontSize: "22px", fontWeight: "bold", marginBottom: "20px" }}>Similar Products</h3>
     <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
       {similarProducts.map((similarProduct) => (
@@ -632,11 +632,11 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
           key={similarProduct.id}
           style={{
             width: "200px",
-            border: "1px solid #ddd",
-            borderRadius: "10px",
-            backgroundColor: "#fff",
+            
+            backgroundColor: "transparent",
+            gap:"40px",
             padding: "10px",
-            boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
+            
             textAlign: "center",
           }}
         >
@@ -645,14 +645,14 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
             alt={similarProduct.name}
             style={{
               width: "100%",
-              height: "180px",
+              height: "300px",
               objectFit: "cover",
-              borderRadius: "8px",
+             
               marginBottom: "10px",
             }}
           />
-          <h4 style={{ fontSize: "16px", fontWeight: "bold", marginBottom: "5px" }}>{similarProduct.name}</h4>
-          <p style={{ color: "#28a745", fontWeight: "bold" }}>
+          <h4 style={{ fontSize: "14px", fontWeight: "bold", marginBottom: "5px" }}>{similarProduct.name}</h4>
+          <p style={{ color: "#000", fontWeight: "bold", marginTop: "-5px" }}>
             ${(
               similarProduct.originalPrice -
               (similarProduct.originalPrice * similarProduct.discountPercentage) / 100
@@ -660,8 +660,8 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
           </p>
           <button
             style={{
-              padding: "8px 15px",
-              backgroundColor: "#007bff",
+              padding: "8px 5px",
+              backgroundColor: "#804341",
               color: "#fff",
               border: "none",
               borderRadius: "5px",

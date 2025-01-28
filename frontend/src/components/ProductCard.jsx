@@ -6,16 +6,16 @@ import "../styles/Products.css";
 const styles = {
   productCard: {
     position: 'relative', // Position relative for absolute positioning of wishlist icon
-    backgroundcolor: rgba(255, 0, 0, 0.5),
-    borderRadius: '5rem', // Rounded corners
-    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)', // Shadow for depth
+    backgroundcolor: 'transparent',
+     // Rounded corners
+   
     width: 'calc(30% - 1rem)', // Four products per row with spacing
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     paddingBottom: '0rem', // Bottom padding for spacing
-    backdropFilter: 'blur(5px)', // Optional: Adds blur effect behind the card
-    transition: 'background-color 0.3s ease', // Smooth transition for hover effect
+  
+    
   },
   productCardHover: {
     transform: 'translateY(-8px)', // Hover effect to lift the card
@@ -25,7 +25,7 @@ const styles = {
     width: '200px', // Maintain aspect ratio
     height: '400px', // Maintain aspect ratio
     maxWidth: '100%', // Ensure image fits card without overflow
-    borderRadius: '.5rem', // Rounded corners for images
+    // Rounded corners for images
   },
   productInfo: {
     textAlign: 'center', // Center text within the card

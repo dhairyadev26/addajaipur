@@ -198,7 +198,7 @@ const ProductModal = ({ product, onClose }) => {
                 alignItems: "center",
               }}
             >
-              <span style={{ color: "gold", marginRight: "8px" }}>
+              <span style={{ color: "gold", marginRight: "8px", marginLeft:"55px" }}>
                 {"★".repeat(Math.round(product.rating.rate)) +
                   "☆".repeat(5 - Math.round(product.rating.rate))}
               </span>
@@ -327,7 +327,7 @@ const ProductModal = ({ product, onClose }) => {
           style={{
             marginBottom: "10px",
             padding: "10px 20px",
-            backgroundColor: "#007bff",
+            backgroundColor: "#000",
             color: "#fff",
             border: "none",
             borderRadius: "5px",
@@ -341,7 +341,7 @@ const ProductModal = ({ product, onClose }) => {
           onClick={handleAddToCart}
           style={{
             padding: "10px 20px",
-            backgroundColor: "#28a745",
+            backgroundColor: "#9e2515",
             color: "#fff",
             border: "none",
             borderRadius: "5px",
