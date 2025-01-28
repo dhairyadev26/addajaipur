@@ -1,6 +1,6 @@
+import '../styles/HomePage.css'; // Create this CSS file
 import React, { useState } from "react";
 import styled, { keyframes } from "styled-components";
-import girl from "../assets/girl.png";
 import adaaLogo from "../assets/logo1.png";
 import img1 from "../assets/h2.jpg";
 import img2 from "../assets/h3.jpg";
@@ -9,49 +9,22 @@ import img4 from "../assets/h5.jpg";
 import img5 from "../assets/h6.jpg";
 import img6 from "../assets/h7.jpg";
 import img7 from "../assets/h8.jpg";
-import Products from "./Products"; // Import Products component
 
-// Define the keyframe animation for background color changes
-const colorAnimation = `
-  @keyframes backgroundColorChange {
-    0% { background-color: #f2bfa2; }
-    20% { background-color: #c3cb38; }
-    40% { background-color: rgb(200, 86, 73); }
-    60% { background-color: #fbc753; }
-    80% { background-color: #67b4c9; }
-    100% { background-color: #f2bfa2; }
-  }
-`;
-
-const HomeWrapper = styled.div`
-  position: relative;
-  height: 100vh;
-  background-image: url(${girl});
-  background-repeat: no-repeat;
-  background-position: right 180px top 50px;
-  background-size: contain;
-  background-attachment: fixed;
-  animation: backgroundColorChange 20s infinite;
-  ${colorAnimation}
-  z-index: 0;
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 85%, rgba(0, 0, 0, 0) 100%);
-  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 90%, rgba(0, 0, 0, 0) 100%);
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
-`;
 
 const HomeContent = styled.div`
-  position: fixed;
+  position: relative;
   top: 50%;
   left: 50%;
+  margin-top: 300px;
+  padding-left: 200px;
   transform: translate(-50%, -50%);
   text-align: center;
   color: rgb(255, 255, 255);
   font-family: "Maitree", serif;
-  z-index: 0;
+  z-index: 1;
 
   h5 {
-    font-size: 2.9rem;
+    font-size: 2.7rem;
     margin-left: 10px;
     font-family: 'Maitree', serif;
     font-weight: 400;
@@ -59,7 +32,7 @@ const HomeContent = styled.div`
   }
 
   img {
-    width: 650px;
+    width: 600px;
     height: auto;
     display: block;
     margin-left: 400px;
@@ -67,18 +40,18 @@ const HomeContent = styled.div`
   }
 
   h7 {
-    font-size: 2.3rem;
+    font-size: 2rem;
     margin-top: 10px;
     margin-left: 600px;
     display: block;
     font-family: 'Maitree', serif;
   }
 `;
-
 const NewContentSection = styled.div`
   position: relative;
   padding-bottom: 0px;
-  background-color:rgb(253, 247, 239);
+  background-color:rgb(255, 234, 206);
+
   color: #333;
 
   h2 {
@@ -98,7 +71,6 @@ const NewContentSection = styled.div`
     
   }
 `;
-
 const slideAnimation = keyframes`
   from {
     transform: translateX(0);
@@ -113,9 +85,8 @@ const SliderWrapper = styled.div`
   width: 100%;
   overflow: hidden;
   height: 420px;
-  background: linear-gradient(to bottom,rgb(251, 245, 237),rgb(255, 246, 234)60%,rgb(251, 247, 234));
+  background: linear-gradient(to bottom,rgb(255, 234, 206),rgb(255, 246, 234)60%,rgb(251, 247, 234));
 `;
-
 const SliderTrack = styled.div`
   display: flex;
   animation: ${slideAnimation} 60s linear infinite;
@@ -167,7 +138,8 @@ const ParagraphSection = styled.div`
   }
 `;
 
-const Home = ({ wishlist, addToWishlist, removeFromWishlist }) => {
+
+const Home =  ({ wishlist, addToWishlist, removeFromWishlist }) => {
   const [showAllProducts, setShowAllProducts] = useState(false);
 
   const handleViewAllClick = () => {
@@ -178,16 +150,19 @@ const Home = ({ wishlist, addToWishlist, removeFromWishlist }) => {
   const repeatedImages = [...images, ...images];
 
   return (
-    <div>
-      {/* Home Section */}
-      <HomeWrapper>
-        <HomeContent>
-          <h5>Introducing</h5>
-          <img src={adaaLogo} alt="ADAA Logo" />
-          <h7>where design tells a story.</h7>
-        </HomeContent>
-      </HomeWrapper>
-
+    <div className="page">
+      
+        <div className="banner">
+        <div className="content">
+        
+          <HomeContent>
+            <h5>Introducing</h5>
+            <img src={adaaLogo} alt="ADAA Logo" />
+            <h7>where design tells a story.</h7>
+          </HomeContent>
+          
+        </div>
+      </div>
       {/* Gallery Section */}
       <NewContentSection>
         <h2>Discover Timeless Creativity</h2>
@@ -209,32 +184,6 @@ const Home = ({ wishlist, addToWishlist, removeFromWishlist }) => {
         </p>
       </ParagraphSection>
 
-      {/* Featured Products Section */}
-      <div className="home-container">
-        <h2>Featured Products</h2>
-        <div
-          className="products-container"
-          style={{
-            padding: "20px",
-            borderRadius: "10px",
-          }}
-        >
-          <div className="product-list">
-            <Products
-              showAll={showAllProducts}
-              wishlist={wishlist}
-              addToWishlist={addToWishlist}
-              removeFromWishlist={removeFromWishlist}
-            />
-          </div>
-
-          {!showAllProducts && (
-            <button className="view-all-button" onClick={handleViewAllClick}>
-              View All
-            </button>
-          )}
-        </div>
-      </div>
     </div>
   );
 };
