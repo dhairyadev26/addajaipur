@@ -1,5 +1,6 @@
 const Product = require("../models/Product");
 
+// Get All Products
 const getAllProducts = async (req, res) => {
   try {
     const products = await Product.find();
@@ -9,6 +10,7 @@ const getAllProducts = async (req, res) => {
   }
 };
 
+// Get Product by ID
 const getProductById = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
@@ -19,8 +21,14 @@ const getProductById = async (req, res) => {
   }
 };
 
+// Create New Product (Admin)
 const createProduct = async (req, res) => {
   const { name, description, price, category, stock, image } = req.body;
+
+  // Basic validation
+  if (!name || !description || !price || !category || !stock || !image) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
 
   try {
     const product = await Product.create({ name, description, price, category, stock, image });

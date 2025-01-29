@@ -5,7 +5,7 @@ import p6 from "../assets/K-H-1.webp";
 import p7 from "../assets/K-L-1.webp";
 import p8 from "../assets/K-J-1.webp";
 import p9 from "../assets/K-S-1.webp";
-import p10 from "../assets/K-T-1.webp";
+import p10 from "../assets/K-T-1.webp"; 
 import p11 from "../assets/K-U-1.webp";
 import p12 from "../assets/K-I-1.webp";
 import p13 from "../assets/F-A-1.webp";
@@ -47,8 +47,8 @@ export const products = [
     image: p1,
     images: [
       require("../assets/K-N-1.webp"),
-      require("../assets/K-N-2.webp"),
-      require("../assets/K-N-3.webp"),
+       require("../assets/K-N-2.webp"),
+       require("../assets/K-N-3.webp"),
     ],
     description: "Yoke adorned with gold sequin and dori embroidery.",
     details: [

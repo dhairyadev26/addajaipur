@@ -87,14 +87,20 @@ const ProfileButton = styled.div`
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [userProfile, setUserProfile] = useState({ name: "" });
 
-  // Simulate user profile data
-  const [userProfile] = useState({
-    name: "John Doe", // Replace with dynamic data if available
-  });
+  useEffect(() => {
+    // Fetch user details from localStorage
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser) {
+      setUserProfile({ name: storedUser.username }); // Set the user's name dynamically
+    }
+  }, []);
 
-  // Extract initials
+
+  // Extract initials from the username
   const getInitials = (name) => {
+    if (!name) return ""; // Handle empty name case
     const [firstName, lastName] = name.split(" ");
     return `${firstName?.charAt(0) || ""}${lastName?.charAt(0) || ""}`.toUpperCase();
   };

@@ -1,8 +1,10 @@
-const express = require("express");
-const dotenv = require("dotenv");
-const cors = require("cors");
-const bodyParser = require("body-parser");
-const connectDB = require("./config/db");
+import express from 'express';
+import dotenv from 'dotenv';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import connectDB from './config/db.js'; // Ensure this path is correct
+import authRoutes from './routes/authRoutes.js'; // Import auth routes
+//import productRoutes from './routes/productRoutes.js'; // Import product routes
 
 dotenv.config();
 connectDB();
@@ -14,10 +16,11 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Routes
-app.use("/api/auth", require("./routes/authRoutes"));
-app.use("/api/products", require("./routes/productRoutes"));
-app.use("/api/cart", require("./routes/cartRoutes"));
-app.use("/api/orders", require("./routes/orderRoutes"));
+app.use('/api/auth', authRoutes); // Authentication routes
+//app.use('/api/products', productRoutes); // Product management routes
+// Uncomment these if you have them implemented
+// app.use("/api/cart", require("./routes/cartRoutes"));
+// app.use("/api/orders", require("./routes/orderRoutes"));
 
 const PORT = process.env.PORT || 5000;
 

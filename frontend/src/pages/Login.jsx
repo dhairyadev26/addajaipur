@@ -1,35 +1,53 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; 
+import axios from 'axios'; 
 import "../styles/Login.css";
 import contactimg from "../assets/about2.jpeg";
 
-
 const Login = () => {
-  const [email, setEmail] = useState("");
+  const [identifier, setIdentifier] = useState(""); // Use a single state for username/email
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(""); 
+  const navigate = useNavigate(); 
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    console.log("Login with", { email, password });
+    try {
+      const response = await axios.post("http://localhost:5000/api/auth/login", {
+        identifier, 
+        password,
+      });
+  
+      console.log("Login successful:", response.data);
+      
+      // Store user details in localStorage
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", JSON.stringify(response.data.user)); 
+  
+      navigate("/profile"); 
+    } catch (error) {
+      console.error("Login error:", error);
+      setError("Invalid email or password.");
+    }
   };
+  
 
   return (
     <div className="login-container">
-      {/* Left section with an image */}
       <div className="image-section">
-      <img src={contactimg} alt="Contact Us Banner" className="banner-image" />
+        <img src={contactimg} alt="Contact Us Banner" className="banner-image" />
       </div>
 
-      {/* Right section with the login form */}
       <div className="form-section">
         <h2>Login</h2>
+        {error && <p className="error-message">{error}</p>} 
         <form onSubmit={handleLogin} className="auth-form">
           <div className="form-group">
-            <label>Email:</label>
+            <label>Username or Email:</label>
             <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              type="text"
+              value={identifier}
+              onChange={(e) => setIdentifier(e.target.value)}
               required
             />
           </div>
@@ -42,23 +60,15 @@ const Login = () => {
               required
             />
           </div>
-          <button type="submit" className="auth-button">
-            Login
-          </button>
+          <button type="submit" className="auth-button">Login</button>
         </form>
         <div className="extra-links">
-          <div>
-            <input type="checkbox" id="rememberMe" />
-            <label htmlFor="rememberMe">Remember me</label>
-          </div>
           <Link to="/forgot-password">Forgot Password?</Link>
         </div>
-        <p>
-          Don't have an account? <Link to="/signup">Sign up</Link>
-        </p>
+        <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
       </div>
     </div>
   );
 };
 
-export default Login
+export default Login;

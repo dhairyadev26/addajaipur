@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEdit } from "react-icons/fa";
+import axios from 'axios';
 
 const ProfileContainer = styled.div`
   display: flex;
@@ -154,15 +155,25 @@ const EditEmailModal = styled.div`
   }
 `;
 
-const Profile = () => {
-  const navigate = useNavigate();
+const Profile = ({ userProfile, handleLogout }) => {
 
+  const navigate = useNavigate();
   const [user, setUser] = useState({
-    name: "John Doe",
-    email: "johndoe@example.com",
+    name: "",
+    email: "",
   });
   const [isEditing, setIsEditing] = useState(false);
   const [newEmail, setNewEmail] = useState("");
+
+  // Load user details from localStorage
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser) {
+      setUser({ name: storedUser.username, email: storedUser.email });
+    } else {
+      navigate("/login"); // Redirect to login if no user is found
+    }
+  }, [navigate]);
 
   // Extract initials
   const getInitials = (name) => {
@@ -171,26 +182,10 @@ const Profile = () => {
   };
 
   // Handle logout
-  const handleLogout = () => {
-    // Perform logout logic (e.g., clear session, redirect to login)
-    alert("You have been logged out.");
-    navigate("/login");
-  };
+const handleLogoutClick = () => {
+  handleLogout(); // Call the function from props
+};
 
-  // Handle edit email
-  const handleEditEmail = () => {
-    setIsEditing(true);
-    setNewEmail(user.email);
-  };
-
-  const handleSaveEmail = () => {
-    setUser((prevUser) => ({ ...prevUser, email: newEmail }));
-    setIsEditing(false);
-  };
-
-  const handleCancelEdit = () => {
-    setIsEditing(false);
-  };
 
   return (
     <ProfileContainer>
@@ -199,31 +194,14 @@ const Profile = () => {
         <UserInfo>
           <h2>{user.name}</h2>
           <p>{user.email}</p>
-          <FaEdit className="edit-icon" onClick={handleEditEmail} />
+          <FaEdit className="edit-icon" onClick={() => setIsEditing(true)} />
         </UserInfo>
       </AvatarSection>
       <NavigationButtons>
         <Link to="/orders">My Orders</Link>
         <Link to="/customer-care">Customer Care</Link>
-        <button onClick={handleLogout}>Logout</button>
+        <button onClick={handleLogoutClick}>Logout</button>
       </NavigationButtons>
-      {isEditing && (
-        <EditEmailModal>
-          <div className="modal-content">
-            <h3>Edit Email</h3>
-            <input
-              type="email"
-              value={newEmail}
-              onChange={(e) => setNewEmail(e.target.value)}
-              placeholder="Enter new email"
-            />
-            <button onClick={handleSaveEmail}>Save</button>
-            <button className="cancel" onClick={handleCancelEdit}>
-              Cancel
-            </button>
-          </div>
-        </EditEmailModal>
-      )}
     </ProfileContainer>
   );
 };
