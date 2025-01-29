@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState,useEffect } from "react";
+import { Link ,useLocation} from "react-router-dom";
 import "../styles/Products.css";
 import { FaHeart } from "react-icons/fa";
 import { FaPlus, FaMinus } from "react-icons/fa";
@@ -27,6 +27,20 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
     color: true,
     
   });
+
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const categoryFromURL = params.get("category");
+
+  useEffect(() => {
+    if (categoryFromURL) {window.scrollTo(0, 0);
+      setFilters((prev) => ({
+        ...prev,
+        category: [categoryFromURL],
+        
+      }));
+    }
+  }, [categoryFromURL]);
   const getUniqueColors = () => {
     const colorMap = new Map();
   
@@ -245,13 +259,7 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
               <FaHeart color={isInWishlist ? "red" : "gray"} size={24} />
             </span>
           </div>
-          <button 
-  style={{ backgroundColor: '#9e2515', color: 'white', border: 'none', padding: '0.5rem 1rem', borderRadius: '0.25rem' }} 
-  onClick={() => setSelectedProduct(product)}
->
-  Quick View
-</button>
-
+          <button onClick={() => setSelectedProduct(product)}>Quick View</button>
         </div>
       );
     });
@@ -273,7 +281,7 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
             marginTop: "70px",
             border: "1px solid #ccc",
             borderRadius: "8px",
-            backgroundColor: " rgb(255, 255, 255)",
+            backgroundColor: "rgb(254, 253, 249)",
             position: "sticky",
             top: "10px",
             height: "fit-content",

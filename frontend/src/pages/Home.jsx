@@ -1,5 +1,8 @@
 import '../styles/HomePage.css'; // Create this CSS file
-import React, { useState } from "react";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { products } from "../data/productsData";
+
 import styled, { keyframes } from "styled-components";
 import adaaLogo from "../assets/logo1.png";
 import img1 from "../assets/h2.jpg";
@@ -9,6 +12,8 @@ import img4 from "../assets/h5.jpg";
 import img5 from "../assets/h6.jpg";
 import img6 from "../assets/h7.jpg";
 import img7 from "../assets/h8.jpg";
+import kurta from "../assets/kurta.png";
+
 
 
 const HomeContent = styled.div`
@@ -123,10 +128,10 @@ const ImageWrapper = styled.div`
 `;
 
 const ParagraphSection = styled.div`
-  padding: 20px 0;
+  padding-top: 20px;
   text-align: center;
-  background-color: transparent; /* Keep it transparent or set a background if needed */
-  color: black; /* Set text color to white */
+  background: rgb(251, 247, 234);
+  color: rgb(53, 37, 29); /* Set text color to white */
   font-size: 1.2rem;
   line-height: 1.6;
   font-family: 'Maitree', serif;
@@ -137,18 +142,66 @@ const ParagraphSection = styled.div`
     text-align: center;
   }
 `;
+const ProductGrid = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 10px;
+`;
+const Categories = styled.div`
+  background-color: rgb(251, 247, 234);
+padding-top:0px ;
+`;
+const ProductCard = styled.div`
+  width: 250px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s;
+
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  }
+`;
 
 
 const Home =  ({ wishlist, addToWishlist, removeFromWishlist }) => {
-  const [showAllProducts, setShowAllProducts] = useState(false);
-
-  const handleViewAllClick = () => {
-    setShowAllProducts(true);
-  };
+ 
 
   const images = [img1, img2, img3, img4, img5, img6, img7];
   const repeatedImages = [...images, ...images];
+  const navigate = useNavigate();
 
+  // Get unique categories from products data
+  const categories = [...new Set(products.map((product) => product.category))];
+
+  const categoryImages = {
+    kurta: kurta,
+    saree: "saree-category.jpg",
+    frock:"frock.png",
+    lehenga: "lehenga-category.jpg",
+  };
+
+  const handleCategoryClick = (category) => {
+    navigate(`/products?category=${encodeURIComponent(category)}`);
+  };
+
+  const handleProductClick = (productId) => {
+    navigate(`/products/${productId}`);
+  };
   return (
     <div className="page">
       
@@ -183,7 +236,51 @@ const Home =  ({ wishlist, addToWishlist, removeFromWishlist }) => {
           Explore our gallery showcasing our passion for design, creativity, and innovation.
         </p>
       </ParagraphSection>
+      {/* Shop by Category Section */}
 
+      <Categories>
+      <div className="shop-by-category">
+      <h2>Shop by Category</h2>
+      <div className="category-grid">
+        {categories.map((category) => {
+          // Filter 4 products for the current category
+          const categoryProducts = products.filter(
+            (product) => product.category === category
+          ).slice(0, 5);
+
+      return (
+        <div
+          key={category}
+          className="category-card"
+          onClick={() => handleCategoryClick(category)}
+          style={{ cursor: "pointer" }} // Ensures the category card looks clickable
+        >
+          <img style={{ width: "100%", 
+    height: "50%", }}src={categoryImages[category]} alt={category} />
+          <h3>{category}</h3>
+
+          {/* Display Products */}
+          <ProductGrid>
+            {categoryProducts.map((product) => (
+              <ProductCard
+                key={product.id}
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevent triggering the category click
+                  handleProductClick(product.id);
+                }}
+              >
+                <img src={product.image} alt={product.name} />
+                <h3>{product.name}</h3>
+              </ProductCard>
+            ))}
+          </ProductGrid>
+        </div>
+      );
+    })}
+  </div>
+</div>
+
+</Categories>
     </div>
   );
 };
