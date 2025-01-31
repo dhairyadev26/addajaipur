@@ -3,17 +3,18 @@ import React from 'react';
 import styled from 'styled-components';
 
 const CustomerCareContainer = styled.div`
-  padding: 2rem;
+  padding: 3rem;
   max-width: 800px;
   margin: auto;
-  background-color: #f9f9f9; /* Light background for contrast */
+  font-family: Arial;
+  background-color:rgb(253, 241, 232); /* Light background for contrast */
   border-radius: 8px; /* Rounded corners */
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 `;
 
 const Question = styled.h3`
   cursor: pointer;
-  color: #007bff; /* Link color */
+  color:rgb(171, 100, 79); /* Link color */
   
   &:hover {
     text-decoration: underline; /* Underline on hover */

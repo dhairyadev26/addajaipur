@@ -1,6 +1,6 @@
 /* Main container */
 .cart-container {
-  font-family: 'Merienda', cursive;
+  font-family: 'Arail';
   background-color: #f3e1d5;
   padding: 2rem;
   border-radius: 15px;
@@ -30,42 +30,51 @@
   gap: 1rem;
 }
 
-.product-card {
-  background-color: white;
+.product-c {
+  background-color: transparent;
+  display: flex;
+  flex-direction: row;
   border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  padding: 1rem;
+  padding: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .product-image {
-  width: 80px;
-  height: auto;
+  width: 150px;
+  height: 200px;
   border-radius: 5px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
 }
 
 .product-details {
   flex-grow: 1;
+  display: flex;
+  flex-direction: row;
   margin-left: 1rem;
+  justify-content: left;
+  text-align: left;
+  margin-top: -100px;
+
 }
 
 .product-name {
   font-size: 1.2rem;
-  color: #4a4a4a;
+  color: #141414;
   font-weight: bold;
 }
 
 .product-price {
   font-size: 1rem;
   color: #9b2d20;
+  margin-left: 20px;
 }
 
 .product-size, .product-quantity {
   font-size: 0.9rem;
-  color: #777;
+  color: #2b2a2a;
+  margin-left: 10px;
 }
 
 /* Buttons */
@@ -81,13 +90,19 @@
 }
 
 .edit-btn:hover, .remove-btn:hover {
-  background-color: #ff7f00;
+  background-color: #141312;
 }
 
 .product-actions {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  align-items: center;
+  gap: 1rem; 
+  display: flex;
+  flex-direction: row;
+  margin-top: -100px;
+  margin-left: 20px;
 }
 
 /* Total and Checkout */
@@ -108,7 +123,7 @@
 }
 
 .checkout-btn:hover {
-  background-color: #ff7f00;
+  background-color: #1d1003;
 }
 
 /* Modal */
@@ -150,16 +165,19 @@
 }
 
 .modal-save-btn:hover, .modal-cancel-btn:hover {
-  background-color: #ff7f00;
+  background-color: #0c0600;
+  justify-content: space-between;
 }
 
 /* Order Details Section */
 .order-details {
-  background-color: white;
+  background-color: rgb(255, 249, 242);
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 1.5rem;
   margin-top: 1rem;
+  width: 50%;
+  margin-left: 350px;
 }
 
 .order-heading {
@@ -173,19 +191,20 @@
 .order-item {
   display: flex;
   justify-content: space-between;
-  font-size: 1rem;
-  color: #4a4a4a;
+  font-size: 5rem;
+  color: #1b1a1a;
   margin-bottom: 0.8rem;
 }
 
 .order-item p {
   margin: 0;
+  font-size: 20px;
 }
 
 .order-total {
   display: flex;
   justify-content: space-between;
-  font-size: 1.2rem;
+  font-size: 30px;
   color: #9b2d20;
   font-weight: bold;
   margin-top: 1rem;
@@ -202,7 +221,7 @@
   font-size: 1rem;
   text-transform: uppercase;
   transition: background-color 0.3s;
-  margin-top: 1rem;
+  margin-top: 0rem;
 }
   .progress-bar {
     display: flex;
@@ -217,7 +236,7 @@
     align-items: center;
     width: 33%;
     position: relative;
-    color: gray;
+    color: rgb(12, 12, 12);
   }
   
   .step .step-icon {
@@ -234,7 +253,7 @@
   }
   
   .step span {
-    font-size: 14px;
+    font-size: 15px;
   }
   
   .step.active .step-icon {
@@ -254,7 +273,7 @@
     left: 15%;
     width: 70%;
     height: 2px;
-    background-color: lightgray;
+    background-color: rgb(3, 2, 2);
     z-index: 0;
   }
   
@@ -270,7 +289,7 @@
   }
   
 .checkout-btn:hover {
-  background-color: #ff7f00;
+  background-color: #0e0401;
 }
 
 .delivery-form {
@@ -278,6 +297,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: left;
 }
 
 .delivery-input {
@@ -286,12 +306,13 @@
   padding: 1rem;
   border-radius: 10px;
   border: 1px solid #ddd;
-  margin-bottom: 1.5rem;
-  font-family: 'Merienda', cursive;
-  font-size: 1rem;
-  color: #4a4a4a;
+  margin-bottom: 7rem;
+  font-family: 'Arial';
+  font-size: 7rem;
+  color: #1b1b1b;
   background-color: #fff;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
 }
 
 .delivery-input:focus {
@@ -315,7 +336,7 @@
 }
 
 .debit-card-form {
-  margin-top: 20px;
+  margin-top: 30px;
   display: grid;
   gap: 10px;
 }
@@ -328,13 +349,21 @@
 .checkout-btn {
   background-color: #9b2d20;
   color: white;
-  padding: 0.8rem 1.5rem;
+  padding: 0.5rem 1rem; /* Reduced padding */
+  width: 400px; /* Set a fixed width to decrease length */
+  height: 40px;
+  margin-left: 4%;
+  font-size: 0.9rem;
   border: none;
+  justify-content: center;
+  align-items: center;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
+
+
 .checkout-btn:hover {
-  background-color: #ff7f00;
+  background-color: #100902;
 }

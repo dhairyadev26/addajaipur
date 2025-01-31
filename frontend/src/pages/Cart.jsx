@@ -139,13 +139,14 @@ const Cart = ({ product }) => {
         return (
           <>
             <h2 className="cart-heading">Your Cart</h2>
-            <p>Total Items: {totalItems}</p>
+            <p style={{ fontSize: "20px", fontWeight: "bold" }}>Total Items: {totalItems}</p>
+
             {cart.length === 0 ? (
               <p className="empty-cart-text">Your cart is empty.</p>
             ) : (
               <div className="cart-items">
                 {cart.map((product) => (
-                  <div key={product.id} className="product-card">
+                  <div key={product.id} className="product-c">
                     <img src={product.image} alt={product.name} className="product-image" />
                     <div className="product-details">
                       <p className="product-name">{product.name}</p>
@@ -170,261 +171,164 @@ const Cart = ({ product }) => {
             </div>
           </>
         );
+
         case 2:
-          // Delivery step
-          return (
-            <>
-              <h2 className="cart-heading">Delivery Details</h2>
-              <form className="delivery-form">
-                <div className="form-group">
-                  <label>Name:</label>
-                  <input
-                    type="text"
-                    placeholder="Enter your name"
-                    value={deliveryAddress.name || ""}
-                    onChange={(e) => setDeliveryAddress({ ...deliveryAddress, name: e.target.value })}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Mobile:</label>
-                  <input
-                    type="tel"
-                    placeholder="Enter your mobile number"
-                    value={deliveryAddress.mobile || ""}
-                    onChange={(e) => setDeliveryAddress({ ...deliveryAddress, mobile: e.target.value })}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Pincode:</label>
-                  <input
-                    type="text"
-                    placeholder="Enter your pincode"
-                    value={deliveryAddress.pincode || ""}
-                    onChange={(e) => setDeliveryAddress({ ...deliveryAddress, pincode: e.target.value })}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Locality/Area/Street:</label>
-                  <input
-                    type="text"
-                    placeholder="Enter locality/area/street"
-                    value={deliveryAddress.locality || ""}
-                    onChange={(e) => setDeliveryAddress({ ...deliveryAddress, locality: e.target.value })}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Flat Number/Building Name:</label>
-                  <input
-                    type="text"
-                    placeholder="Enter flat/building"
-                    value={deliveryAddress.flat || ""}
-                    onChange={(e) => setDeliveryAddress({ ...deliveryAddress, flat: e.target.value })}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Landmark:</label>
-                  <input
-                    type="text"
-                    placeholder="Enter landmark"
-                    value={deliveryAddress.landmark || ""}
-                    onChange={(e) => setDeliveryAddress({ ...deliveryAddress, landmark: e.target.value })}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>District/City:</label>
-                  <input
-                    type="text"
-                    placeholder="Enter city"
-                    value={deliveryAddress.city || ""}
-                    onChange={(e) => setDeliveryAddress({ ...deliveryAddress, city: e.target.value })}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>State:</label>
-                  <input
-                    type="text"
-                    placeholder="Enter state"
-                    value={deliveryAddress.state || ""}
-                    onChange={(e) => setDeliveryAddress({ ...deliveryAddress, state: e.target.value })}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Address Type:</label>
-                  <div className="radio-group">
-                    <label>
-                      <input
-                        type="radio"
-                        name="addressType"
-                        value="Home"
-                        checked={deliveryAddress.addressType === "Home"}
-                        onChange={(e) => setDeliveryAddress({ ...deliveryAddress, addressType: e.target.value })}
-                      />
-                      Home
-                    </label>
-                    <label>
-                      <input
-                        type="radio"
-                        name="addressType"
-                        value="Office"
-                        checked={deliveryAddress.addressType === "Office"}
-                        onChange={(e) => setDeliveryAddress({ ...deliveryAddress, addressType: e.target.value })}
-                      />
-                      Office
-                    </label>
-                    <label>
-                      <input
-                        type="radio"
-                        name="addressType"
-                        value="Other"
-                        checked={deliveryAddress.addressType === "Other"}
-                        onChange={(e) => setDeliveryAddress({ ...deliveryAddress, addressType: e.target.value })}
-                      />
-                      Other
-                    </label>
-                  </div>
-                </div>
-                <div className="form-group">
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={deliveryAddress.default || false}
-                      onChange={(e) => setDeliveryAddress({ ...deliveryAddress, default: e.target.checked })}
-                    />
-                    Make this my default address
-                  </label>
-                </div>
-                <div className="form-buttons">
-                  <button
-                    type="button"
-                    className="reset-btn"
-                    onClick={() =>
-                      setDeliveryAddress({
-                        name: "",
-                        mobile: "",
-                        pincode: "",
-                        locality: "",
-                        flat: "",
-                        landmark: "",
-                        city: "",
-                        state: "",
-                        addressType: "Home",
-                        default: false,
-                      })
-                    }
-                  >
-                    Reset
-                  </button>
-                  <button
-                    type="button"
-                    className="save-btn"
-                    onClick={() => {
-                      // Check if all fields are filled
-                      const {
-                        name,
-                        mobile,
-                        pincode,
-                        locality,
-                        flat,
-                        city,
-                        state,
-                        addressType,
-                      } = deliveryAddress;
-                      if (
-                        !name ||
-                        !mobile ||
-                        !pincode ||
-                        !locality ||
-                        !flat ||
-                        !city ||
-                        !state ||
-                        !addressType
-                      ) {
-                        alert("Please fill in all mandatory fields.");
-                        return;
-                      }
-                      alert("Address saved successfully!");
-                    }}
-                  >
-                    Save
-                  </button>
-                </div>
-              </form>
-            </>
-          );
+  // Delivery step
+  return (
+    <>
+      <h2 style={{ fontSize: "30px", textAlign: "center", marginBottom: "20px" }}>Delivery Details</h2>
+      <form style={{ maxWidth: "680px", margin: "auto", padding: "20px", border: "1px solid #ccc", borderRadius: "10px", backgroundColor: "#fffaf3" }}>
+        {[
+          { label: "Name", key: "name", type: "text" },
+          { label: "Mobile", key: "mobile", type: "tel" },
+          { label: "Pincode", key: "pincode", type: "text" },
+          { label: "Locality/Area/Street", key: "locality", type: "text" },
+          { label: "Flat Number/Building Name", key: "flat", type: "text" },
+          { label: "Landmark", key: "landmark", type: "text" },
+          { label: "District/City", key: "city", type: "text" },
+          { label: "State", key: "state", type: "text" },
+        ].map(({ label, key, type }) => (
+          <div key={key} style={{ marginBottom: "15px" }}>
+            <label style={{ fontSize: "18px", fontWeight: "bold", display: "block", marginBottom: "5px" }}>{label}:</label>
+            <input
+              type={type}
+              placeholder={`Enter ${label.toLowerCase()}`}
+              value={deliveryAddress[key] || ""}
+              onChange={(e) => setDeliveryAddress({ ...deliveryAddress, [key]: e.target.value })}
+              style={{ width: "100%", padding: "10px", fontSize: "16px", borderRadius: "5px", border: "1px solid #ccc" }}
+            />
+          </div>
+        ))}
+
+        <div style={{ marginBottom: "15px" }}>
+          <label style={{ fontSize: "18px", fontWeight: "bold", display: "block", marginBottom: "5px" }}>Address Type:</label>
+          <div style={{ display: "flex", gap: "15px" }}>
+            {["Home", "Office", "Other"].map((type) => (
+              <label key={type} style={{ fontSize: "16px" }}>
+                <input
+                  type="radio"
+                  name="addressType"
+                  value={type}
+                  checked={deliveryAddress.addressType === type}
+                  onChange={(e) => setDeliveryAddress({ ...deliveryAddress, addressType: e.target.value })}
+                  style={{ marginRight: "5px" }}
+                />
+                {type}
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <div style={{ marginBottom: "15px", display: "flex", alignItems: "center" }}>
+          <input
+            type="checkbox"
+            checked={deliveryAddress.default || false}
+            onChange={(e) => setDeliveryAddress({ ...deliveryAddress, default: e.target.checked })}
+            style={{ marginLeft: "-300px", marginTop:"-4px" }}
+          />
+          <label style={{ fontSize: "16px", marginLeft: "-300px" }}>Make this my default address</label>
+        </div>
+
+        <div style={{ display: "flex", justifyContent: "space-between", marginTop: "20px" }}>
+          <button
+            type="button"
+            style={{ padding: "10px 20px", fontSize: "16px", backgroundColor: "#ccc", border: "none", borderRadius: "5px", cursor: "pointer" }}
+            onClick={() =>
+              setDeliveryAddress({
+                name: "",
+                mobile: "",
+                pincode: "",
+                locality: "",
+                flat: "",
+                landmark: "",
+                city: "",
+                state: "",
+                addressType: "Home",
+                default: false,
+              })
+            }
+          >
+            Reset
+          </button>
+          <button
+            type="button"
+            style={{ padding: "10px 20px", fontSize: "16px", backgroundColor: "#28a745", color: "#fff", border: "none", borderRadius: "5px", cursor: "pointer" }}
+            onClick={() => {
+              const { name, mobile, pincode, locality, flat, city, state, addressType } = deliveryAddress;
+              if (!name || !mobile || !pincode || !locality || !flat || !city || !state || !addressType) {
+                alert("Please fill in all mandatory fields.");
+                return;
+              }
+              alert("Address saved successfully!");
+            }}
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    </>
+  );
+
         
-      case 3:
-        return (
-          <>
-            <h2 className="cart-heading">Payment</h2>
-            <label>Select Payment Method:</label>
-            <label>
-              <input
-                type="radio"
-                value="card"
-                checked={paymentMethod === "card"}
-                onChange={() => setPaymentMethod("card")}
-              />
-              Card
-            </label>
-            <label>
-              <input
-                type="radio"
-                value="cod"
-                checked={paymentMethod === "cod"}
-                onChange={() => setPaymentMethod("cod")}
-              />
-              Cash on Delivery
-            </label>
+  case 3:
+    return (
+      <>
+        <h2 style={{ fontSize: "24px", textAlign: "center", marginBottom: "20px" }}>Payment</h2>
+        <div style={{ maxWidth: "680px", margin: "auto", padding: "20px", border: "1px solid #ccc", borderRadius: "10px", backgroundColor: "#fffaf3" }}>
+          <label style={{ fontSize: "18px", fontWeight: "bold", display: "block", marginBottom: "10px" }}>Select Payment Method:</label>
+          <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginBottom: "20px" }}>
+          <label style={{ fontSize: "16px", display: "flex", alignItems: "center", marginRight:"auto", marginLeft:"10px" }}>
+            <input
+              type="radio"
+              value="card"
+              checked={paymentMethod === "card"}
+              onChange={() => setPaymentMethod("card")}
+              style={{ marginLeft: "auto", marginRight:"20px"  }}
+            />
+            Card
+          </label>
+          <label style={{ fontSize: "16px", display: "flex", alignItems: "center", marginLeft:"-20px", marginRight:"auto" }}>
+            <input
+              type="radio"
+              value="cod"
+              checked={paymentMethod === "cod"}
+              onChange={() => setPaymentMethod("cod")}
+              style={{ marginLeft: "auto", marginRight:"auto" }}
+            />
+            Cash on Delivery
+          </label>
+          </div>
+  
+          {paymentMethod === "card" && (
+            <div className="card-details" style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
+              {[
+                { label: "Card Holder Name", key: "cardHolderName", placeholder: "Enter card holder name" },
+                { label: "Card Number", key: "cardNumber", placeholder: "Enter card number" },
+                { label: "Expiry Date", key: "expiryDate", placeholder: "MM/YY" },
+                { label: "CVV", key: "cvv", placeholder: "Enter CVV" },
+              ].map(({ label, key, placeholder }) => (
+                <div key={key} style={{ display: "flex", flexDirection: "column" }}>
+                  <label style={{ fontSize: "16px", fontWeight: "bold", marginBottom: "5px" }}>{label}:</label>
+                  <input
+                    type="text"
+                    value={cardDetails[key] || ""}
+                    onChange={(e) => setCardDetails({ ...cardDetails, [key]: e.target.value })}
+                    placeholder={placeholder}
+                    style={{ width: "100%", padding: "10px", fontSize: "16px", borderRadius: "5px", border: "1px solid #ccc" }}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </>
+    );
+  default:
+    return null;
 
-            {paymentMethod === "card" && (
-              <div className="card-details">
-                <div className="form-group">
-                  <label>Card Holder Name:</label>
-                  <input
-                    type="text"
-                    value={cardDetails.cardHolderName}
-                    onChange={(e) => setCardDetails({ ...cardDetails, cardHolderName: e.target.value })}
-                    placeholder="Enter card holder name"
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Card Number:</label>
-                  <input
-                    type="text"
-                    value={cardDetails.cardNumber}
-                    onChange={(e) => setCardDetails({ ...cardDetails, cardNumber: e.target.value })}
-                    placeholder="Enter card number"
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Expiry Date:</label>
-                  <input
-                    type="text"
-                    value={cardDetails.expiryDate}
-                    onChange={(e) => setCardDetails({ ...cardDetails, expiryDate: e.target.value })}
-                    placeholder="MM/YY"
-                  />
-                </div>
-                <div className="form-group">
-                  <label>CVV:</label>
-                  <input
-                    type="text"
-                    value={cardDetails.cvv}
-                    onChange={(e) => setCardDetails({ ...cardDetails, cvv: e.target.value })}
-                    placeholder="Enter CVV"
-                  />
-                </div>
-              </div>
-            )}
-            {/* Checkout Button */}
-            {/* Using the existing Checkout button below */}
-          </>
-        );
-      default:
-        return null;
-    }
-  };
-
+  }
+};     
+  
   return (
     <div className="cart-container">
       {/* Progress Bar */}
@@ -447,7 +351,12 @@ const Cart = ({ product }) => {
       {/* Next Button */}
       <div className="order-details">
         {currentStep > 1 && (
-          <button className="back-btn" onClick={goToPreviousStep}>
+          <button
+            type="button"
+            className="back-btn"
+            onClick={goToPreviousStep}
+            style={{ padding: "10px 60px", fontSize: "16px", backgroundColor: "#000", color: "#fff", border: "none", borderRadius: "5px", cursor: "pointer", marginLeft:"5%", }}
+          >
             Back
           </button>
         )}
@@ -559,7 +468,7 @@ const Cart = ({ product }) => {
           style={{
             padding: "5px 10px",
             borderRadius: "5px",
-            border: "1px solid gray",
+            border: "1px solid ",
             cursor: selectedStock > quantity ? "pointer" : "not-allowed",
           }}
           onClick={() => handleQuantityChange(quantity + 1)}

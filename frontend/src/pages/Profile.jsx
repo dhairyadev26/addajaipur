@@ -27,7 +27,7 @@ const Avatar = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #000000;
+  background-color:rgb(150, 50, 50);
   color: #ffffff;
   font-family: "Cinzel", serif;
   font-size: 2rem;
@@ -85,7 +85,7 @@ const NavigationButtons = styled.div`
     font-family: "Cinzel", serif;
     font-size: 1rem;
     color: #fff;
-    background-color: #000;
+    background-color:rgb(150, 50, 50);;
     padding: 0.8rem 1rem;
     text-align: center;
     border-radius: 8px;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FaHeart } from "react-icons/fa"; // Import heart icon
 
 const Nav = styled.nav`
@@ -16,7 +16,7 @@ const Nav = styled.nav`
   align-items: center;
   padding: ${(props) => (props.scrolled ? "0.5rem 1.5rem" : "1rem 2rem")};
   background-color: ${(props) => (props.scrolled ? "#ffffff" : "transparent")};
-  color: ${(props) => (props.scrolled ? "#000000" : "#ffffff")};
+  color: ${(props) => (props.isHomePage && !props.scrolled ? "#ffffff" : "#000000")};
   border-radius: ${(props) => (props.scrolled ? "50px" : "0")};
   box-shadow: ${(props) =>
     props.scrolled ? "0px 4px 6px rgba(0, 0, 0, 0.2)" : "none"};
@@ -88,6 +88,8 @@ const ProfileButton = styled.div`
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [userProfile, setUserProfile] = useState({ name: "" });
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
 
   useEffect(() => {
     // Fetch user details from localStorage
@@ -121,7 +123,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <Nav scrolled={scrolled}>
+    <Nav scrolled={scrolled} isHomePage={isHomePage}>
       <Logo scrolled={scrolled}>A D A A</Logo>
       <Menu scrolled={scrolled}>
         <Link to="/">Home</Link>

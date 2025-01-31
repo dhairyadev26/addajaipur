@@ -251,15 +251,22 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
           <div className="wishlist-icon-container">
             <span
               className="wishlist-icon"
+              style={{ marginLeft: "-60px" }} // Adjust the value as needed
               onClick={(e) => {
                 e.stopPropagation();
                 handleWishlistToggle(product);
               }}
             >
-              <FaHeart color={isInWishlist ? "red" : "gray"} size={24} />
+              <FaHeart color={isInWishlist ? "red" : "white"} size={24} />
             </span>
           </div>
-          <button onClick={() => setSelectedProduct(product)}>Quick View</button>
+          <button 
+  style={{ backgroundColor: '#9e2515', color: 'white', border: 'none', padding: '0.5rem 1rem', borderRadius: '0.25rem' }} 
+  onClick={() => setSelectedProduct(product)}
+>
+  Quick View
+</button>
+
         </div>
       );
     });
@@ -281,7 +288,7 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
             marginTop: "70px",
             border: "1px solid #ccc",
             borderRadius: "8px",
-            backgroundColor: "rgb(254, 253, 249)",
+            backgroundColor: " rgb(255, 255, 255)",
             position: "sticky",
             top: "10px",
             height: "fit-content",
