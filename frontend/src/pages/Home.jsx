@@ -18,6 +18,17 @@ import frock from "../assets/frock.jpg";
 import lehengas from "../assets/lehenga.jpg";
 
 
+import flipkartLogo from "../assets/flipkart.png";
+import myntraLogo from "../assets/myntra.png";
+import dmMartLogo from "../assets/dmart.png";
+import ajioLogo from "../assets/ajio.png";
+import aj from "../assets/jaipur.png";
+import ah from "../assets/hyderabad.png";
+
+
+
+
+
 const HomeContent = styled.div`
   position: relative;
   top: 50%;
@@ -154,9 +165,11 @@ const ProductGrid = styled.div`
   
 `;
 const Categories = styled.div`
-  background-color: rgb(251, 247, 234);
+background-color: rgb(251, 247, 234);
 padding-top:40px ;
- margin-top: -80px;
+margin-top: -80px;
+padding-bottom:15px;
+
 `;
 const ProductCard = styled.div`
   width: 250px;
@@ -182,6 +195,64 @@ const ProductCard = styled.div`
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   }
 `;
+const FindUsSection = styled.div`
+  background: rgb(251, 247, 234);
+  padding: 5px 0px;
+  text-align: center;
+  h2{
+  }
+`;
+
+const Scroller = styled.div`
+  max-width: 100%;
+  overflow: hidden;
+  position: relative;
+  background: white;
+  
+`;
+
+const ScrollerInner = styled.div`
+background: rgb(251, 247, 234);
+  display: flex;
+  gap: 8rem;
+  width: max-content;
+  animation: scroll 30s linear infinite;
+
+  @keyframes scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+`;
+
+const BrandCard = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 100px;
+  white-space: nowrap;
+
+  img {
+    width: 120px;
+    height: auto;
+    paddingright:100px;
+    object-fit: contain;
+  }
+
+
+`;
+
+const brands = [
+  { name: "Adaa Jaipur", logo: aj },
+  { name: "Adaa Hyderabad", logo: ah },
+  { name: "Flipkart", logo: flipkartLogo },
+  { name: "Myntra", logo: myntraLogo },
+  { name: "D Mart", logo: dmMartLogo },
+  { name: "Ajio", logo: ajioLogo },
+];
+
 
 
 const Home =  ({ wishlist, addToWishlist, removeFromWishlist }) => {
@@ -286,6 +357,20 @@ const Home =  ({ wishlist, addToWishlist, removeFromWishlist }) => {
 </div>
 
 </Categories>
+{/* Find Us On Section */}
+ {/* Find Us Section */}
+ <FindUsSection>
+        <h2>Find Us On</h2>
+        <Scroller>
+          <ScrollerInner>
+            {brands.concat(brands).map((brand, index) => (
+              <BrandCard key={index}>
+                <img src={brand.logo} alt={brand.name} />
+              </BrandCard>
+            ))}
+          </ScrollerInner>
+        </Scroller>
+      </FindUsSection>
     </div>
   );
 };

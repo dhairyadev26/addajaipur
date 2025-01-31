@@ -1,6 +1,6 @@
 import React from "react";
 import "../styles/Contact.css";
-import contactimg from "../assets/horse.png"; // Replace with your image path
+import contactimg from "../assets/contact.png"; // Replace with your image path
 
 
 const Contact = () => {

@@ -5,8 +5,9 @@
   }
   
   .banner-image {
+    padding-top: 60px;
     width: 100%;
-    height: 550px;
+    height: 600px;
     object-fit: cover;
   }
   
@@ -15,7 +16,8 @@
     display: flex;
     flex-direction: column;
     gap: 50px;
-    padding: 30px 90px;
+    margin-top: -50px;
+    padding: 60px 90px;
     background-color: #fef9ef;
     font-family: Arial, sans-serif;
   }
