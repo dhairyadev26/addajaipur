@@ -12,8 +12,10 @@ import img4 from "../assets/h5.jpg";
 import img5 from "../assets/h6.jpg";
 import img6 from "../assets/h7.jpg";
 import img7 from "../assets/h8.jpg";
-import kurta from "../assets/kurta.png";
-
+import kurta from "../assets/kurta.jpg";
+import saree from "../assets/saree.jpg";
+import frock from "../assets/frock.jpg";
+import lehengas from "../assets/lehenga.jpg";
 
 
 const HomeContent = styled.div`
@@ -146,11 +148,15 @@ const ProductGrid = styled.div`
   display: flex;
   justify-content: center;
   gap: 20px;
-  margin-top: 10px;
+  margin-top: 30px;
+  margin-bottom: 50px;
+
+  
 `;
 const Categories = styled.div`
   background-color: rgb(251, 247, 234);
-padding-top:0px ;
+padding-top:40px ;
+ margin-top: -80px;
 `;
 const ProductCard = styled.div`
   width: 250px;
@@ -190,9 +196,9 @@ const Home =  ({ wishlist, addToWishlist, removeFromWishlist }) => {
 
   const categoryImages = {
     kurta: kurta,
-    saree: "saree-category.jpg",
-    frock:"frock.png",
-    lehenga: "lehenga-category.jpg",
+    saree: saree,
+    frock: frock,
+    lehengas: lehengas,
   };
 
   const handleCategoryClick = (category) => {
@@ -246,7 +252,7 @@ const Home =  ({ wishlist, addToWishlist, removeFromWishlist }) => {
           // Filter 4 products for the current category
           const categoryProducts = products.filter(
             (product) => product.category === category
-          ).slice(0, 5);
+          ).slice(0, 4);
 
       return (
         <div
@@ -255,9 +261,8 @@ const Home =  ({ wishlist, addToWishlist, removeFromWishlist }) => {
           onClick={() => handleCategoryClick(category)}
           style={{ cursor: "pointer" }} // Ensures the category card looks clickable
         >
-          <img style={{ width: "100%", 
-    height: "50%", }}src={categoryImages[category]} alt={category} />
-          <h3>{category}</h3>
+          <img style={{ width: "100%", height: "10%", }}src={categoryImages[category]} alt={category} />
+          <h3 style={{paddingLeft:100 }}>{category}</h3>
 
           {/* Display Products */}
           <ProductGrid>

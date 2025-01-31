@@ -1,5 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFacebook, faInstagram, faPinterest, faYoutube } from "@fortawesome/free-brands-svg-icons";
+
 
 const Footer = () => {
   return (
@@ -27,27 +30,28 @@ const Footer = () => {
         {/* Contact Section */}
         <FooterSection>
           <h3>Contact Us</h3>
-          <p>Email: support@jaypurethnics.com</p>
+          <p>Email: adaajaipur4india@gmail.com</p>
           <p>Phone: +91 98765 43210</p>
-          <p>Address: Jaipur, Rajasthan, India</p>
+          <p>H-5, RIICO Industrial Area, Mansarovar, Jaipur, Rajasthan 302020</p>
         </FooterSection>
       </FooterContent>
 
       {/* Social Media and Copyright */}
-      <FooterBottom>
-        <SocialLinks>
-          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-            <i className="fab fa-facebook"></i>
-          </a>
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-            <i className="fab fa-instagram"></i>
-          </a>
-          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-            <i className="fab fa-twitter"></i>
-          </a>
-        </SocialLinks>
-        <p>&copy; 2025 Jaypur Ethnics. All rights reserved.</p>
-      </FooterBottom>
+      <SocialLinks>
+  <a href="https://www.facebook.com/Adaajaipur.official" target="_blank" rel="noopener noreferrer">
+    <FontAwesomeIcon icon={faFacebook} />
+  </a>
+  <a href="https://www.instagram.com/adaajaipur.official/" target="_blank" rel="noopener noreferrer">
+    <FontAwesomeIcon icon={faInstagram} />
+  </a>
+  <a href="https://www.youtube.com/channel/UC9Ccd68grj8EgEwHd3d8G_A" target="_blank" rel="noopener noreferrer">
+    <FontAwesomeIcon icon={faYoutube} />
+  </a>
+  <a href="https://in.pinterest.com/adaajaipur/" target="_blank" rel="noopener noreferrer">
+    <FontAwesomeIcon icon={faPinterest} />
+  </a>
+</SocialLinks>
+
     </FooterContainer>
   );
 };
@@ -104,15 +108,7 @@ const FooterSection = styled.div`
   }
 `;
 
-const FooterBottom = styled.div`
-  text-align: center;
-  margin-top: 2rem;
 
-  p {
-    font-size: 0.8rem;
-    margin-top: 1rem;
-  }
-`;
 
 const SocialLinks = styled.div`
   display: flex;
