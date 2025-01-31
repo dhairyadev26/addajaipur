@@ -2,7 +2,7 @@ import React from "react";
 import "../styles/Aboutus.css";
 import founder from "../assets/Founder.png";
 import cofounder from "../assets/Cofounder.png";
-import about1img from "../assets/about1.jpg"; // Add Rajasthan image
+import about1img from "../assets/a1.jpg"; // Add Rajasthan image
 
 
 const Aboutus = () => {
@@ -16,6 +16,12 @@ const Aboutus = () => {
         <div className="rajasthan-description">
           <h2>Rajasthan's Rich Culture</h2>
           <p>
+            Rajasthan, the largest state in India, is known for its rich cultural
+            heritage, vibrant traditions, and historical significance. The royal
+            state of Rajasthan is steeped in art and culture that reflects the
+            Indian way of life. The Culture of Rajasthan, which developed over
+            the past millennia, is a blend of various elements, including music,
+            dance, cuisine, festivals, art, and architecture.
             Rajasthan, the largest state in India, is known for its rich cultural
             heritage, vibrant traditions, and historical significance. The royal
             state of Rajasthan is steeped in art and culture that reflects the
