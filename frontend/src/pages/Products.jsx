@@ -207,11 +207,6 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
     return sortedProducts;
   };
 
-
-
-
-  
-
   const renderProducts = () =>
     getSortedProducts().map((product) => {
       const discountedPrice =
