@@ -1,117 +1,163 @@
 /* Full-Width Banner Image */
 .banner-container {
-    width: 100%;
-    margin-bottom: 50px;
-  }
-  
-  .banner-image {
-    padding-top: 60px;
-    width: 100%;
-    height: 600px;
-    object-fit: cover;
-  }
-  
-  /* Contact Page Layout */
-  .contact-container {
-    display: flex;
-    flex-direction: column;
-    gap: 50px;
-    margin-top: -50px;
-    padding: 60px 90px;
-    background-color: #fef9ef;
-    font-family: Arial, sans-serif;
-  }
-  
-  /* Flexbox layout for details and form sections */
-  .contact-layout {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 50px;
-  }
-  
-  /* Contact Details Section */
-  .contact-details {
-    flex: 1;
-    background-color: rgb(253, 250, 241);
-    padding: 20px;
-    border-radius: 20px;
-    
-  }
+  width: 100%;
+  margin-bottom: 50px;
+}
 
-  /* Align Labels and Values */
-  .contact-info {
-    display: grid;
-    gap: 30px;
-    margin-top: 50px;
+.banner-image {
+  padding-top: 60px;
+  width: 100%;
+  height: auto;
+  max-height: 550px;
+  object-fit: cover;
+}
+
+/* Contact Page Layout */
+.contact-container {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  margin-top: -50px;
+  padding: 30px 5%;
+  background-color: #fef9ef;
+  font-family: Arial, sans-serif;
+}
+
+/* Flexbox layout for details and form sections */
+.contact-layout {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 50px;
+}
+
+/* Contact Details Section */
+.contact-details {
+  flex: 1;
+  min-width: 300px;
+  background-color: rgb(253, 250, 241);
+  padding: 20px;
+  border-radius: 20px;
+}
+
+/* Align Labels and Values */
+.contact-info {
+  display: grid;
+  gap: 30px;
+  margin-top: 50px;
+}
+
+.info-row {
+  display: grid;
+  grid-template-columns: 120px auto;
+  align-items: center;
+}
+
+.info-row h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+.info-row p {
+  margin: 0;
+  font-size: 16px;
+  color: #555;
+  text-align: left;
+}
+
+/* Contact Form Section */
+.contact-form {
+  flex: 1;
+  min-width: 300px;
+  background-color: #9b4738db;
+  padding: 50px;
+  border-radius: 20px;
+  box-shadow: #0b0b0b;
+}
+
+.contact-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact-form .form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.contact-form button {
+  background-color: #d5a495bd;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.contact-form button:hover {
+  background-color: #53251d96;
+}
+
+/* Map Section */
+.map-section iframe {
+  border: 0;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 300%;
+  height: 400px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+  .contact-layout {
+      flex-direction: column;
+      align-items: center;
   }
-  
-  .info-row {
-    display: grid;
-    grid-template-columns: 120px auto; /* Fixed width for labels */
-    align-items: center; /* Vertically center-align items */
+  .contact-details, .contact-form {
+      width: 100%;
+      max-width: 600px;
   }
-  
-  .info-row h3 {
-    margin: 0;
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
+}
+
+@media (max-width: 768px) {
+  .banner-image {
+      height: 400px;
   }
-  
-  .info-row p {
-    margin: 0;
-    font-size: 16px;
-    color: #555;
-    text-align:left ; 
+  .contact-container {
+      padding: 20px;
   }
-  
-  /* Contact Form Section */
   .contact-form {
-    flex: 1;
-    background-color: #9b4738db;
-    padding: 50px;
-    border-radius: 20px;
-    box-shadow: #0b0b0b;
+      padding: 30px;
   }
-  
-  .contact-form form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+}
+
+@media (max-width: 480px) {
+  .banner-image {
+      height: 300px;
   }
-  
-  .contact-form .form-row {
-    display: flex;
-    gap: 15px;
+  .contact-container {
+      padding: 15px;
   }
-  
-  .contact-form input,
-  .contact-form textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
+  .contact-form {
+      padding: 20px;
   }
-  
-  .contact-form button {
-    background-color: #d5a495bd;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
+  .info-row {
+      grid-template-columns: 1fr;
+      text-align: center;
   }
-  
-  .contact-form button:hover {
-    background-color: #53251d96;
-  }
-  
-  /* Map Section */
-  .map-section iframe {
-    border: 0;
-    border-radius: 10px;
-  }
-  
+}

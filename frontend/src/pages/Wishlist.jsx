@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const Wishlist = ({ wishlist, removeFromWishlist }) => {
+  useEffect(() => {
+    // Scroll to top when the page is loaded (ensures it starts from the top)
+    window.scrollTo(0, 0);
+  }, []); // Empty dependency array ensures this effect runs only once when the component is mounted.
+
+  
   const cardStyle = {
     display: "flex",
     alignItems: "center",

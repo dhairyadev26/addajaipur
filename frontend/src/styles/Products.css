@@ -15,21 +15,30 @@ body {
 
 /* Container for products */
 .products-container {
-  background-color: rgb(254, 250, 243); /* Set background color to maroon */
+  background-color: rgb(254, 250, 243); /* Set background color */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   text-align: center;
-  height: auto; /* Change to auto to accommodate content */
+  position: relative; /* Keeps it in place */
+  top: 0; /* Sticks to the top */
+  width: 80vw; /* Ensures the container covers the full viewport width */
+  min-height: 100vh; /* Prevents shrinking when content is reduced */
   padding: 2rem;
+  overflow: auto; /* Enables scrolling if content overflows */
 }
+
+
+
+
+
 
 /* Page heading */
 h2 {
   color: #fff; /* Make the heading white for contrast against maroon */
   font-size: 2.5rem;
-  margin-top: 2cm;
+  margin-top: 80px;
 }
 
 /* Flexbox container for product cards */
@@ -243,7 +252,7 @@ button:hover {
   margin-right: .5rem; /* Spacing between images */
 }
 
-/* Responsive design adjustments */
+/*Responsive design adjustments*/
 @media (max-width: 768px) {
  .product-list {
      flex-direction: column; 
@@ -255,3 +264,35 @@ button:hover {
      margin-bottom: .5rem; 
  }
 }
+
+
+
+
+.filter-container {
+  display: flex;
+  gap: 0px;
+  margin-bottom: 0%;
+  position: sticky;
+  margin-left: 0px;
+  margin-right: 20%px;
+  
+}
+
+.filter-sidebar {
+  width: 20%;
+  padding: 80px;
+  padding-top: 110px;
+  margin-top: 0px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: rgb(254, 250, 243);
+  height: cover;
+  display: block;
+  padding-left: 7%;
+  margin-right: 0px;
+  padding-right: 30px;
+  position: sticky;
+  top: 10px; /* Adjust this value based on your header */
+}
+
+

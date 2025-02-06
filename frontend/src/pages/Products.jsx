@@ -6,6 +6,10 @@ import { FaPlus, FaMinus } from "react-icons/fa";
 import ProductModal from "../components/ProductModal";
 import { products } from "../data/productsData";
 
+
+
+
+
 const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [sortOption, setSortOption] = useState("");
@@ -32,6 +36,13 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
   const params = new URLSearchParams(location.search);
   const categoryFromURL = params.get("category");
 
+  useEffect(() => {
+    // Scroll to the top when the component is mounted or navigated to
+    window.scrollTo(0, 0);
+  }, [location.pathname]); // Runs only when the pathname changes
+
+
+  
   useEffect(() => {
     if (categoryFromURL) {window.scrollTo(0, 0);
       setFilters((prev) => ({
@@ -256,11 +267,20 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
             </span>
           </div>
           <button 
-  style={{ backgroundColor: '#9e2515', color: 'white', border: 'none', padding: '0.5rem 1rem', borderRadius: '0.25rem' }} 
+  style={{ 
+    backgroundColor: '#9e2515', 
+    color: 'white', 
+    border: 'none', 
+    padding: '0.5rem 1rem', 
+    borderRadius: '0.25rem', 
+    marginBottom: '20px',
+    marginTop: '-30px',
+  }} 
   onClick={() => setSelectedProduct(product)}
 >
   Quick View
 </button>
+
 
         </div>
       );
@@ -273,26 +293,12 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
 
 
     return (
-      <div style={{ display: "flex", gap: "20px" }}>
-        {/* Left Sidebar for Filters */}
-        <div
-          style={{
-            width: "50%",
-            padding: "70px",
-            paddingTop:"20px",
-            marginTop: "70px",
-            border: "1px solid #ccc",
-            borderRadius: "8px",
-            backgroundColor: " rgb(255, 255, 255)",
-            position: "sticky",
-            top: "10px",
-            height: "fit-content",
-          }}
-        >
-          <h3 style={{ marginBottom: "16px" }}>Filters</h3>
-    
 
 
+      <div className="filter-container">
+    {/* Left Sidebar for Filters */}
+    <div className="filter-sidebar">
+      <h3 style={{ marginBottom: "30px", marginLeft: "-20px", fontSize: "23px", marginTop:"30px"}}>Filters</h3>
           {/* Category Filter */}
         <div style={{ marginBottom: "16px" }}>
           <div
@@ -583,7 +589,7 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
                       name="size"
                       value={size}
                       onChange={handleFilterChange}
-                      style={{ marginRight: "-30px", marginLeft: "-20%" }}
+                      style={{ marginRight: "20px", marginLeft: "-10%" }}
                     />
                     <label
                       htmlFor={`size-${size}`}
@@ -595,7 +601,7 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
                       }}
                     >
                       <span style={{ marginRight: "8px" }}>{size}</span>
-                      <span style={{ color: "#888", marginLeft: "-20px"  }}>({productCount})</span>
+                      <span style={{ color: "#888", marginLeft: "-10px"  }}>({productCount})</span>
                     </label>
                   </div>
                 );
@@ -685,9 +691,6 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
             </div>
           )}
         </div>
-
-
-
       </div>
 
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -714,6 +717,7 @@ const Products = ({ addToWishlist, removeFromWishlist, wishlist = [] }) => {
       </div>
       </div>
     </div>
+
   );
 };
 

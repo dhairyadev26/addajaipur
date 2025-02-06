@@ -145,8 +145,7 @@ const handleLogout = () => {
                 path="/wishlist"
                 element={<Wishlist wishlist={wishlist} removeFromWishlist={removeFromWishlist} />}
               />
-              
-
+            
             </Routes>
             <Footer />
           </>

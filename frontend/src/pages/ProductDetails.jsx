@@ -144,88 +144,96 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
 
 
   return (
-    <div style={{ padding: "20px" }}>
-      {/* Main Product Details */}
+    <div style={{ padding: "0px" }}>
+  {/* Main Product Details */}
+  <div
+    style={{
+      display: "flex",
+      flexDirection: "row",
+      flexWrap: "wrap",
+      gap: "20px",
+      backgroundColor: "#fffcf1",
+      padding: "20px",
+      borderRadius: "10px",
+      boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+    }}
+  >
+    {/* Image Slider */}
+    <div style={{ flex: "1", position: "relative", minWidth: "300px" }}>
+      <img
+        src={images[activeImage]}
+        alt={product.name}
+        style={{
+          width: "100%",
+          maxWidth: "500px",
+          height: "auto",
+          padding: "40px",
+          margin: "0 auto",
+          display: "block",
+          objectFit: "cover",
+          borderRadius: "10px",
+          opacity: isOutOfStock ? 0.5 : 1,
+          marginTop:"50px",
+        }}
+      />
+      {isOutOfStock && (
+        <p
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            backgroundColor: "rgba(0, 0, 0, 0.7)",
+            color: "#fff",
+            padding: "10px 20px",
+            borderRadius: "5px",
+            fontSize: "18px",
+          }}
+        >
+          Product is out of stock
+        </p>
+      )}
       <div
         style={{
           display: "flex",
-          flexDirection: "row",
-          gap: "20px",
-          backgroundColor: "#fffcf1",
-          padding: "20px",
-          borderRadius: "10px",
-          boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+          flexWrap: "wrap",
+          marginTop: "10px",
+          gap: "10px",
+          justifyContent: "center",
         }}
       >
-
-
-
-
-       {/* Image Slider */}
-       <div style={{ flex: "1", position: "relative" }}>
-          <img
-            src={images[activeImage]}
-            alt={product.name}
-            style={{
-              width: "100%",
-              height: "50%",
-              padding:"80px",
-              marginLeft: "20%",
-              marginRight: "30px",
-              objectFit: "cover",
-              borderRadius: "10px",
-              opacity: isOutOfStock ? 0.5 : 1,
-            }}
-          />
-          {isOutOfStock && (
-            <p
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "10px",
+          }}
+        >
+          {images.map((img, index) => (
+            <img
+              key={index}
+              src={img}
+              alt={`Thumbnail ${index}`}
               style={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                backgroundColor: "rgba(0, 0, 0, 0.7)",
-                color: "#fff",
-                padding: "10px 20px",
-                borderRadius: "5px",
-                fontSize: "18px",
+                width: "60px",
+                height: "60px",
+                objectFit: "cover",
+                cursor: "pointer",
+                border:
+                  activeImage === index
+                    ? "3px solid rgb(176, 66, 46)"
+                    : "1px solid gray",
               }}
-            >
-              Product is out of stock
-            </p>
-          )}
-          <div
-            style={{
-              display: "flex",
-              marginTop: "10px",
-              gap: "10px",
-              justifyContent: "center",
-            }}
-          >
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "160px"}}>
-  {images.map((img, index) => (
-    <img
-      key={index}
-      src={img}
-      alt={`Thumbnail ${index}`}
-      style={{
-        width: "80px",
-        height: "80px",
-        objectFit: "cover",
-        marginLeft: "-450px",
-        marginTop: "-460px",
-        cursor: "pointer",
-        border: activeImage === index ? "3px solid rgb(176, 66, 46)" : "1px solid gray",
-        marginBottom: "100px", // Adds space between the images
-      }}
-      onClick={() => setActiveImage(index)}
-      
-    />
-  ))}
-</div>
-</div>
-</div>
-
+              onClick={() => setActiveImage(index)}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  
 
 
 
@@ -520,7 +528,7 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
             <p>
               <strong>ADAA JAIPUR</strong>
             </p>
-            <p>
+            <p style={{maxwidth: '600px', width: '70%', margin: '0 auto',}} >
               We ship through registered and trusted courier partners for orders
               within India. Please note that Saturdays, Sundays, and Public
               Holidays are not set as working days for standard deliveries.
@@ -528,7 +536,7 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
             <p>
               <strong>DOMESTIC SHIPPING:</strong>
             </p>
-            <p>
+            <p style={{maxwidth: '600px', width: '70%', margin: '0 auto',}} >
               We offer free shipping for all domestic orders. Delivery time for
               shipping is an estimated 3-10 days. The deliveries are dispatched
               to the shipping address recorded at checkout. All orders are
@@ -622,21 +630,48 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
 
 
 
-         {/* Similar Products Section */}
+        {/* Similar Products Section */}
 {similarProducts.length > 0 && (
-  <div style={{ marginTop: "30px", padding: "20px", backgroundColor: "#fff", borderRadius: "10px", marginLeft: "-100%", marginRight: "20px" }}>
-    <h3 style={{ fontSize: "22px", fontWeight: "bold", marginBottom: "20px" }}>Similar Products</h3>
-    <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
-      {similarProducts.map((similarProduct) => (
+  <div
+    style={{
+      marginTop: "30px",
+      padding: "20px",
+      backgroundColor: "#fff",
+      borderRadius: "10px",
+      width: "100%", // Make it responsive
+      maxWidth: "1200px", // Prevent excessive stretching
+      margin: "0 auto", // Fully center the container
+      textAlign: "center", // Ensures content inside stays centered
+    }}
+  >
+    <h3
+      style={{
+        fontSize: "22px",
+        fontWeight: "bold",
+        marginBottom: "20px",
+      }}
+    >
+      Similar Products
+    </h3>
+
+    <div
+      style={{
+        display: "flex",
+        gap: "20px",
+        flexWrap: "wrap",
+        justifyContent: "center",
+        width: "100%",
+      }}
+    >
+      {similarProducts.slice(0, 3).map((similarProduct) => ( // Display ALL similar products
         <div
           key={similarProduct.id}
           style={{
-            width: "200px",
-            
+            width: "30%", // Responsive width for desktop
+            minWidth: "200px", // Prevents from becoming too small
+            maxWidth: "250px", // Ensures consistent sizing
             backgroundColor: "transparent",
-            gap:"40px",
             padding: "10px",
-            
             textAlign: "center",
           }}
         >
@@ -645,15 +680,31 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
             alt={similarProduct.name}
             style={{
               width: "100%",
-              height: "300px",
-              objectFit: "cover",
-             
-              marginBottom: "10px",
+              height: "70%",
+              padding:"10px",
+              maxHeight: "250px",
+              objectFit: "auto",
+              marginBottom: "0px",
+              borderRadius: "5px",
             }}
           />
-          <h4 style={{ fontSize: "14px", fontWeight: "bold", marginBottom: "5px" }}>{similarProduct.name}</h4>
-          <p style={{ color: "#000", fontWeight: "bold", marginTop: "-5px" }}>
-            ${(
+          <h4
+            style={{
+              fontSize: "clamp(12px, 1.5vw, 14px)",
+              fontWeight: "bold",
+              marginBottom: "2px",
+              maxWidth: "200px", // Keeps it from stretching too wide
+              width: "80%", // Ensures it fills its container properly
+              textAlign: "center", // Centers the text properly
+              display: "block", // Ensures it behaves as a block element
+              margin: "0 auto", // Centers it horizontally
+            }}
+          >
+            {similarProduct.name}
+          </h4>
+          <p style={{ color: "#000", fontWeight: "bold", marginTop: "-5px",  }}>
+            $
+            {(
               similarProduct.originalPrice -
               (similarProduct.originalPrice * similarProduct.discountPercentage) / 100
             ).toFixed(2)}
@@ -667,6 +718,7 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
               borderRadius: "5px",
               cursor: "pointer",
               marginTop: "10px",
+              width: "100%", // Ensures the button spans full width of the product
             }}
             onClick={() => navigate(`/products/${similarProduct.id}`)}
           >
@@ -677,6 +729,8 @@ const ProductDetails = ({ addToWishlist, removeFromWishlist, wishlist = [] }) =>
     </div>
   </div>
 )}
+
+
 
         </div>
       </div>

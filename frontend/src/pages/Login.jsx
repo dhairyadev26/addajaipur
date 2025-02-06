@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; 
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom"; 
 import axios from 'axios'; 
 import "../styles/Login.css";
 import contactimg from "../assets/about2.jpeg";
@@ -9,6 +9,12 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(""); 
   const navigate = useNavigate(); 
+  const location = useLocation(); // Get current location
+
+  // Ensure the login page opens from the top when navigated to
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]); // Runs only when the path changes
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -30,7 +36,6 @@ const Login = () => {
       setError("Invalid email or password.");
     }
   };
-  
 
   return (
     <div className="login-container">

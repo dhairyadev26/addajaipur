@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Link, useLocation } from "react-router-dom";
-import { FaHeart } from "react-icons/fa"; // Import heart icon
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { FaHeart, FaBars, FaTimes, FaSearch } from "react-icons/fa";
 
 const Nav = styled.nav`
   position: fixed;
@@ -14,33 +14,75 @@ const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: ${(props) => (props.scrolled ? "0.5rem 1.5rem" : "1rem 2rem")};
+  padding: ${(props) => (props.scrolled ? "0.5rem 1rem" : "1rem 2rem")};
   background-color: ${(props) => (props.scrolled ? "#ffffff" : "transparent")};
   color: ${(props) => (props.isHomePage && !props.scrolled ? "#ffffff" : "#000000")};
   border-radius: ${(props) => (props.scrolled ? "50px" : "0")};
-  box-shadow: ${(props) =>
-    props.scrolled ? "0px 4px 6px rgba(0, 0, 0, 0.2)" : "none"};
+  box-shadow: ${(props) => (props.scrolled ? "0px 4px 6px rgba(0, 0, 0, 0.2)" : "none")};
   transition: all 0.4s ease;
 `;
 
+const SearchBar = styled.div`
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 0.3rem 1rem;
+  background: white;
+
+  input {
+    border: none;
+    outline: none;
+    padding: 0.3rem;
+    font-size: 1rem;
+    width: 150px;
+
+    @media (max-width: 768px) {
+      width: 100px;
+    }
+
+    @media (max-width: 480px) {
+      width: 80px;
+    }
+  }
+
+  svg {
+    margin-left: 5px;
+    cursor: pointer;
+  }
+`;
+
 const Logo = styled.div`
-  font-size: ${(props) => (props.scrolled ? "1.5rem" : "1.5rem")};
+  font-size: 1.8rem;
   font-weight: bold;
   font-family: "The Seasons";
   color: inherit;
   text-decoration: none;
+  white-space: nowrap;
 
   @media (max-width: 768px) {
-    font-size: ${(props) => (props.scrolled ? "1.2rem" : "1.2rem")};
+    font-size: 1.4rem;
+  }
+  @media (max-width: 480px) {
+    font-size: 1rem;
   }
 `;
 
 const Menu = styled.div`
   display: flex;
   gap: 1.5rem;
+  white-space: nowrap;
 
   @media (max-width: 768px) {
-    display: none;
+    display: ${(props) => (props.isOpen ? "flex" : "none")};
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: white;
+    padding: 1rem 0;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
   }
 
   a {
@@ -48,19 +90,36 @@ const Menu = styled.div`
     font-family: "Cinzel", serif;
     color: inherit;
     text-decoration: none;
-    padding: 0.1rem 0.8rem;
-    border-radius: 15px;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+
     transition: background-color 0.3s ease, color 0.3s ease;
 
     &:hover {
       background-color: ${(props) =>
-        props.scrolled ? "#000000" : "rgba(255, 255, 255, 0.2)"};
-      color: ${(props) => (props.scrolled ? "#ffffff" : "#ffffff")};
+        props.scrolled ? "#000000" : "rgba(255, 255, 255, 0.73)"};
+      color: ${(props) => (props.scrolled ? "#ffffff" : "#C11B17")};
     }
 
-    display: flex;
-    align-items: center;
-    gap: 0.5rem; /* Space between icon and text */
+    @media (max-width: 768px) {
+      font-size: 0.9rem;
+      padding: 0.4rem;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 0.8rem;
+      padding: 0.3rem;
+    }
+  }
+`;
+
+const MobileMenuIcon = styled.div`
+  display: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+
+  @media (max-width: 768px) {
+    display: block;
   }
 `;
 
@@ -76,65 +135,98 @@ const ProfileButton = styled.div`
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  text-transform: uppercase;
   cursor: pointer;
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #444444;
+    background-color: ${(props) => (props.scrolled ? "#000000" : "rgba(255, 255, 255, 0.2)")};
+    color: ${(props) => (props.scrolled ? "#ffffff" : "#ffffff")};
+    border-radius: 10px;
+    padding: 0.5rem 1rem;
+  }
+
+  @media (max-width: 768px) {
+    width: 35px;
+    height: 35px;
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 480px) {
+    width: 30px;
+    height: 30px;
+    font-size: 0.8rem;
   }
 `;
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const [userProfile, setUserProfile] = useState({ name: "" });
   const location = useLocation();
+  const navigate = useNavigate(); // useNavigate for redirection
   const isHomePage = location.pathname === "/";
+  
+  const categories = ["kurta", "frock", "saree", "lehengas"]; // Available categories for search
 
   useEffect(() => {
-    // Fetch user details from localStorage
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     if (storedUser) {
-      setUserProfile({ name: storedUser.username }); // Set the user's name dynamically
+      setUserProfile({ name: storedUser.username });
     }
   }, []);
 
-
-  // Extract initials from the username
   const getInitials = (name) => {
-    if (!name) return ""; // Handle empty name case
+    if (!name) return "";
     const [firstName, lastName] = name.split(" ");
     return `${firstName?.charAt(0) || ""}${lastName?.charAt(0) || ""}`.toUpperCase();
   };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  const handleSearch = () => {
+    const query = searchQuery.trim().toLowerCase();
+    if (categories.includes(query)) {
+      // Redirect to the corresponding category section on the products page
+      navigate(`/products?category=${query}`);
+    } else {
+      // Show a notification if the product is not found
+      alert("Product not found.");
+    }
+  };
 
   return (
     <Nav scrolled={scrolled} isHomePage={isHomePage}>
-      <Logo scrolled={scrolled}>A D A A</Logo>
-      <Menu scrolled={scrolled}>
-        <Link to="/">Home</Link>
-        <Link to="/products">Products</Link>
-        <Link to="/aboutus">Aboutus</Link>
-        <Link to="/contact">Contact</Link>
-        <Link to="/cart">Cart</Link>
-        <Link to="/login">Login</Link>
-        <Link to="/wishlist">
-          <FaHeart /> Wishlist
+      <Logo>A D A A</Logo>
+      <MobileMenuIcon onClick={() => setMenuOpen(!menuOpen)}>
+        {menuOpen ? <FaTimes /> : <FaBars />}
+      </MobileMenuIcon>
+      <Menu scrolled={scrolled} isOpen={menuOpen}>
+        <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
+        <Link to="/products" onClick={() => setMenuOpen(false)}>Products</Link>
+        <Link to="/cart" onClick={() => setMenuOpen(false)}>Cart</Link>
+        <Link to="/login" onClick={() => setMenuOpen(false)}>Login</Link>
+        <Link to="/wishlist" onClick={() => setMenuOpen(false)}>
+          <FaHeart style={{ fontSize: "1rem" }} /> Wishlist
         </Link>
+        <SearchBar>
+          <input
+            type="text"
+            placeholder="Search..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleSearch()} // Allow search on "Enter" key press
+          />
+          <span onClick={handleSearch}>
+            <FaSearch />
+          </span>
+        </SearchBar>
       </Menu>
       <Link to="/profile">
         <ProfileButton>{getInitials(userProfile.name)}</ProfileButton>

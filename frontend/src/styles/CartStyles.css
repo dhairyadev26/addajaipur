@@ -211,7 +211,7 @@
 }
 
 .checkout-btn {
-  width: 100%;
+  width: 5%;
   background-color: #9b2d20;
   color: white;
   padding: 0.8rem;
@@ -222,7 +222,102 @@
   text-transform: uppercase;
   transition: background-color 0.3s;
   margin-top: 0rem;
+}   
+
+.checkout-btn:hover {
+  background-color: #0e0401;
 }
+
+/* Responsive Styles */
+
+/* For tablet screens (max-width: 1024px) */
+@media (max-width: 1024px) {
+  .order-details {
+    width: 70%; /* Adjust width of order container for tablets */
+    margin-left: 15%; /* Center it on the screen */
+  }
+
+  .order-heading {
+    font-size: 1.5rem; /* Slightly smaller heading on tablets */
+  }
+
+  .order-item {
+    font-size: 2rem; /* Adjust font size of items */
+  }
+
+  .order-total {
+    font-size: 25px; /* Adjust font size of total */
+  }
+
+  .checkout-btn {
+    font-size: 0.9rem; /* Smaller button font size */
+    padding: 0.7rem; /* Adjust padding for tablets */
+  }
+}
+
+/* For smaller screens (max-width: 768px) */
+@media (max-width: 768px) {
+  .order-details {
+    width: 90%; /* Order details container takes more space */
+    margin-left: 5%; /* Center it with a smaller margin */
+  }
+
+  .order-heading {
+    font-size: 1.3rem; /* Even smaller font size for the heading */
+  }
+
+  .order-item {
+    flex-direction: column; /* Stack items vertically */
+    font-size: 1.5rem; /* Smaller font size for better readability */
+    margin-bottom: 1rem;
+  }
+
+  .order-item p {
+    font-size: 18px; /* Adjust item text size */
+  }
+
+  .order-total {
+    font-size: 22px; /* Adjust total font size for smaller screens */
+  }
+
+  .checkout-btn {
+    font-size: 1rem; /* Adjust button text size */
+    padding: 1rem; /* Adjust button padding */
+  }
+}
+
+/* For mobile screens (max-width: 480px) */
+@media (max-width: 480px) {
+  .order-details {
+    width: 100%; /* Full width for mobile */
+    margin-left: 0; /* Remove the left margin */
+    padding: 1rem; /* Adjust padding for mobile */
+  }
+
+  .order-heading {
+    font-size: 1.2rem; /* Smaller heading size */
+  }
+
+  .order-item {
+    flex-direction: column; /* Stack items vertically */
+    font-size: 1.2rem; /* Adjust item font size */
+  }
+
+  .order-item p {
+    font-size: 16px; /* Adjust item text size */
+  }
+
+  .order-total {
+    font-size: 18px; /* Adjust font size of the total */
+  }
+
+  .checkout-btn {
+    font-size: 1rem; /* Button font size */
+    padding: 1.2rem; /* Adjust padding */
+  }
+}
+
+
   .progress-bar {
     display: flex;
     justify-content: space-between;
@@ -288,9 +383,7 @@
     z-index: 1;
   }
   
-.checkout-btn:hover {
-  background-color: #0e0401;
-}
+
 
 .delivery-form {
   margin-top: 2rem;
@@ -350,10 +443,10 @@
   background-color: #9b2d20;
   color: white;
   padding: 0.5rem 1rem; /* Reduced padding */
-  width: 400px; /* Set a fixed width to decrease length */
+  width: 200px; /* Set a fixed width to decrease length */
   height: 40px;
   margin-left: 4%;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   border: none;
   justify-content: center;
   align-items: center;

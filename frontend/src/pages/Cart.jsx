@@ -1,21 +1,32 @@
+
+
 import React, { useEffect, useMemo, useState } from "react";
 import { useCart } from "../context/CartContext";
 import { useOrders } from '../context/OrdersContext'; 
 import Modal from "react-modal";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "../styles/CartStyles.css";
+
 Modal.setAppElement("#root");
 
 const Cart = ({ product }) => {
   const { cart, addToCart, removeFromCart, getTotalPrice } = useCart();
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate(); 
+  const location = useLocation(); // Get current location
+  
   const [currentStep, setCurrentStep] = useState(1); // Step tracker (1: Cart, 2: Delivery, 3: Payment)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [deliveryAddress, setDeliveryAddress] = useState("");
-  const { addOrder } = useOrders(); // Get addOrder function from context
+  const { addOrder } = useOrders(); // Get addOrder function from context 
+
+  // Ensure the cart page opens from the top when navigated to
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]); // Runs only when the path changes
+
 
   // New state for payment method and card details
   const [paymentMethod, setPaymentMethod] = useState("card");
@@ -224,9 +235,9 @@ const Cart = ({ product }) => {
             type="checkbox"
             checked={deliveryAddress.default || false}
             onChange={(e) => setDeliveryAddress({ ...deliveryAddress, default: e.target.checked })}
-            style={{ marginLeft: "-300px", marginTop:"-4px" }}
+            style={{ marginTop:"-4px", marginLeft:"-40%" }}
           />
-          <label style={{ fontSize: "16px", marginLeft: "-300px" }}>Make this my default address</label>
+          <label style={{ fontSize: "16px", marginLeft:"-45%" }}>Make this my default address</label>
         </div>
 
         <div style={{ display: "flex", justifyContent: "space-between", marginTop: "20px" }}>
@@ -355,9 +366,9 @@ const Cart = ({ product }) => {
             type="button"
             className="back-btn"
             onClick={goToPreviousStep}
-            style={{ padding: "10px 60px", fontSize: "16px", backgroundColor: "#000", color: "#fff", border: "none", borderRadius: "5px", cursor: "pointer", marginLeft:"5%", }}
+            style={{ padding: "11px 40px", fontSize: "14px", backgroundColor: "#000", color: "#fff", border: "none", borderRadius: "5px", cursor: "pointer", marginLeft:"5%", }}
           >
-            Back
+            BACK
           </button>
         )}
         {/* Using the Checkout button here */}

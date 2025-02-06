@@ -1,8 +1,7 @@
 import '../styles/HomePage.css'; // Create this CSS file
-import React from "react";
+import React, { useEffect } from 'react'; // Import useEffect from React
 import { useNavigate } from "react-router-dom";
 import { products } from "../data/productsData";
-
 import styled, { keyframes } from "styled-components";
 import adaaLogo from "../assets/logo1.png";
 import img1 from "../assets/h2.jpg";
@@ -16,8 +15,6 @@ import kurta from "../assets/kurta.jpg";
 import saree from "../assets/saree.jpg";
 import frock from "../assets/frock.jpg";
 import lehengas from "../assets/lehenga.jpg";
-
-
 import flipkartLogo from "../assets/flipkart.png";
 import myntraLogo from "../assets/myntra.png";
 import dmMartLogo from "../assets/dmart.png";
@@ -30,41 +27,54 @@ import ah from "../assets/hyderabad.png";
 
 
 const HomeContent = styled.div`
-  position: relative;
+ 
   top: 50%;
   left: 50%;
-  margin-top: 300px;
-  padding-left: 200px;
+  margin-left: 30%;
+  margin-top: 50%;
+  padding-left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
   color: rgb(255, 255, 255);
   font-family: "Maitree", serif;
-  z-index: 1;
+  z-index: 10;
 
   h5 {
-    font-size: 2.7rem;
-    margin-left: 10px;
-    font-family: 'Maitree', serif;
+    font-size: clamp(1.5rem, 2.5vw, 2.7rem);
     font-weight: 400;
-    margin-top: 20px;
+    position: relative;
+    margin-bottom: 20px;
+    margin-left: 60%;
   }
 
   img {
-    width: 600px;
+    width: clamp(200px, 40vw, 600px);
     height: auto;
+    position: relative;
     display: block;
-    margin-left: 400px;
-    margin-top: 0px;
+    margin-left: 70%;
+    margin-top:10%;
   }
 
   h7 {
-    font-size: 2rem;
-    margin-top: 10px;
-    margin-left: 600px;
+    font-size: clamp(1.2rem, 2vw, 2rem);
     display: block;
-    font-family: 'Maitree', serif;
+    white-space: nowrap;
+    text-align: center;
+    margin-top: 10px;
+    
+  }
+
+  .text-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 30rem;
+    margin-bottom: 50%;
   }
 `;
+
+
 const NewContentSection = styled.div`
   position: relative;
   padding-bottom: 0px;
@@ -244,6 +254,7 @@ const BrandCard = styled.div`
 
 `;
 
+// Define the brands array (if it's not passed as a prop)
 const brands = [
   { name: "Adaa Jaipur", logo: aj },
   { name: "Adaa Hyderabad", logo: ah },
@@ -253,14 +264,15 @@ const brands = [
   { name: "Ajio", logo: ajioLogo },
 ];
 
-
-
-const Home =  ({ wishlist, addToWishlist, removeFromWishlist }) => {
- 
-
+const Home = ({ wishlist, addToWishlist, removeFromWishlist }) => {
   const images = [img1, img2, img3, img4, img5, img6, img7];
   const repeatedImages = [...images, ...images];
   const navigate = useNavigate();
+
+  // Scroll to top when Home component is mounted
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to top of the page
+  }, []); // Empty dependency array ensures it only runs once when the component is mounted
 
   // Get unique categories from products data
   const categories = [...new Set(products.map((product) => product.category))];
@@ -279,20 +291,21 @@ const Home =  ({ wishlist, addToWishlist, removeFromWishlist }) => {
   const handleProductClick = (productId) => {
     navigate(`/products/${productId}`);
   };
+
   return (
     <div className="page">
-      
-        <div className="banner">
+      <div className="banner">
         <div className="content">
-        
           <HomeContent>
             <h5>Introducing</h5>
             <img src={adaaLogo} alt="ADAA Logo" />
-            <h7>where design tells a story.</h7>
+            <div className="text-container">
+              <h7>where design tells a story.</h7>
+            </div>
           </HomeContent>
-          
         </div>
       </div>
+
       {/* Gallery Section */}
       <NewContentSection>
         <h2>Discover Timeless Creativity</h2>
@@ -313,53 +326,52 @@ const Home =  ({ wishlist, addToWishlist, removeFromWishlist }) => {
           Explore our gallery showcasing our passion for design, creativity, and innovation.
         </p>
       </ParagraphSection>
+
       {/* Shop by Category Section */}
-
       <Categories>
-      <div className="shop-by-category">
-      <h2>Shop by Category</h2>
-      <div className="category-grid">
-        {categories.map((category) => {
-          // Filter 4 products for the current category
-          const categoryProducts = products.filter(
-            (product) => product.category === category
-          ).slice(0, 4);
+        <div className="shop-by-category">
+          <h2>Shop by Category</h2>
+          <div className="category-grid">
+            {categories.map((category) => {
+              // Filter 4 products for the current category
+              const categoryProducts = products
+                .filter((product) => product.category === category)
+                .slice(0, 4);
 
-      return (
-        <div
-          key={category}
-          className="category-card"
-          onClick={() => handleCategoryClick(category)}
-          style={{ cursor: "pointer" }} // Ensures the category card looks clickable
-        >
-          <img style={{ width: "100%", height: "10%", }}src={categoryImages[category]} alt={category} />
-          <h3 style={{paddingLeft:100 }}>{category}</h3>
+              return (
+                <div
+                  key={category}
+                  className="category-card"
+                  onClick={() => handleCategoryClick(category)}
+                  style={{ cursor: 'pointer' }} // Ensures the category card looks clickable
+                >
+                  <img style={{ width: '100%', height: '10%' }} src={categoryImages[category]} alt={category} />
+                  <h3 style={{ paddingLeft: 100 }}>{category}</h3>
 
-          {/* Display Products */}
-          <ProductGrid>
-            {categoryProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                onClick={(e) => {
-                  e.stopPropagation(); // Prevent triggering the category click
-                  handleProductClick(product.id);
-                }}
-              >
-                <img src={product.image} alt={product.name} />
-                <h3>{product.name}</h3>
-              </ProductCard>
-            ))}
-          </ProductGrid>
+                  {/* Display Products */}
+                  <ProductGrid>
+                    {categoryProducts.map((product) => (
+                      <ProductCard
+                        key={product.id}
+                        onClick={(e) => {
+                          e.stopPropagation(); // Prevent triggering the category click
+                          handleProductClick(product.id);
+                        }}
+                      >
+                        <img src={product.image} alt={product.name} />
+                        <h3>{product.name}</h3>
+                      </ProductCard>
+                    ))}
+                  </ProductGrid>
+                </div>
+              );
+            })}
+          </div>
         </div>
-      );
-    })}
-  </div>
-</div>
+      </Categories>
 
-</Categories>
-{/* Find Us On Section */}
- {/* Find Us Section */}
- <FindUsSection>
+      {/* Find Us On Section */}
+      <FindUsSection>
         <h2>Find Us On</h2>
         <Scroller>
           <ScrollerInner>

@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../styles/Aboutus.css";
 import founder from "../assets/Founder.png";
 import cofounder from "../assets/Cofounder.png";
 import about1img from "../assets/a1.jpg"; // Add Rajasthan image
-
+import { useLocation } from "react-router-dom";
 
 const Aboutus = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    // Scroll to top when the component is mounted
+    window.scrollTo(0, 0);
+  }, [location.pathname]); // Runs only when the pathname changes
+
   return (
     <div className="about-container">
       {/* Top Section with Vertical Image and Description */}
@@ -22,16 +29,9 @@ const Aboutus = () => {
             Indian way of life. The Culture of Rajasthan, which developed over
             the past millennia, is a blend of various elements, including music,
             dance, cuisine, festivals, art, and architecture.
-            Rajasthan, the largest state in India, is known for its rich cultural
-            heritage, vibrant traditions, and historical significance. The royal
-            state of Rajasthan is steeped in art and culture that reflects the
-            Indian way of life. The Culture of Rajasthan, which developed over
-            the past millennia, is a blend of various elements, including music,
-            dance, cuisine, festivals, art, and architecture.
           </p>
         </div>
       </div>
-
 
       {/* Highlighted Banner Section */}
       <div className="about-banner">
